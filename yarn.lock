@@ -4655,7 +4655,7 @@ __metadata:
     aws-cdk-lib: "npm:2.124.0"
     constructs: "npm:10.3.0"
     eslint: "npm:^8.57.0"
-    eslint-config-next: "npm:14.1.0"
+    eslint-config-next: "npm:^14.1.0"
     eslint-config-prettier: "npm:^9.1.0"
     eslint-plugin-react: "npm:^7.33.2"
     eslint-plugin-react-hooks: "npm:^4.6.0"
@@ -5056,7 +5056,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-next@npm:14.1.0":
+"eslint-config-next@npm:^14.1.0":
   version: 14.1.0
   resolution: "eslint-config-next@npm:14.1.0"
   dependencies:
