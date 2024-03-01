@@ -16,12 +16,12 @@
 .banner {
   all: unset;
   display: flex;
-  column-gap: 4px;
+  column-gap: 6px;
   justify-items: baseline;
   font-weight: 600;
   font-size: 22px;
-  color: rgba(#000, 0.9);
-
+  color: rgba(#000, 0.8);
+  font-family: cursive;
   cursor: pointer;
 }
 
