@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const san = Open_Sans({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: '北美直连',
+  title: '北境咨询 - 北美直连项目',
   description: '帮你选择加拿大移民项目和机构',
   applicationName: '北美直连',
   authors: { name: 'Yuan Huang', url: 'https://github.com/huangyuan3h' },
