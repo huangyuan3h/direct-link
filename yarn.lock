@@ -4848,6 +4848,7 @@ __metadata:
     aws-cdk-lib: "npm:2.124.0"
     bootstrap: "npm:^5.3.3"
     clsx: "npm:^2.1.0"
+    constructs: "npm:10.3.0"
     eslint: "npm:^8.57.0"
     eslint-config-next: "npm:^14.1.0"
     eslint-config-prettier: "npm:^9.1.0"

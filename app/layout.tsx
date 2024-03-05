@@ -11,7 +11,6 @@ export const metadata: Metadata = {
   applicationName: '北美直连',
   authors: { name: 'Yuan Huang', url: 'https://github.com/huangyuan3h' },
   keywords: ['加拿大', '移民'],
-  viewport: { width: 'device-width', initialScale: 1 },
   icons: [
     { url: '/favicon.ico' },
     { url: '/apple-touch-icon.png', rel: 'apple-touch-icon', sizes: '180x180' },
