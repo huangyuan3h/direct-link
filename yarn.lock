@@ -4990,6 +4990,7 @@ __metadata:
     prettier: "npm:^3.2.5"
     react: "npm:^18"
     react-bootstrap: "npm:^2.10.1"
+    react-bootstrap-icons: "npm:^1.11.3"
     react-dom: "npm:^18"
     react-markdown: "npm:^9.0.1"
     sass: "npm:^1.71.1"
@@ -9020,7 +9021,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.6.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -9141,6 +9142,17 @@ __metadata:
     iconv-lite: "npm:0.4.24"
     unpipe: "npm:1.0.0"
   checksum: 10c0/b201c4b66049369a60e766318caff5cb3cc5a900efd89bdac431463822d976ad0670912c931fdbdcf5543207daf6f6833bca57aa116e1661d2ea91e12ca692c4
+  languageName: node
+  linkType: hard
+
+"react-bootstrap-icons@npm:^1.11.3":
+  version: 1.11.3
+  resolution: "react-bootstrap-icons@npm:1.11.3"
+  dependencies:
+    prop-types: "npm:^15.7.2"
+  peerDependencies:
+    react: ">=16.8.6"
+  checksum: 10c0/4434b0fedc68685df8389e35457641835877fb2f93df7b7f51c46c8031f32e877d18ebbf85cd75a606ad411c6819af6e7eafb0824c55565e7b4237117590b69f
   languageName: node
   linkType: hard
 

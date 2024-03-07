@@ -2,6 +2,7 @@ import { mockData } from './mockData';
 import styles from './show-partner.module.scss';
 import Image from 'next/image';
 import Markdown from 'react-markdown';
+import { Envelope, Wechat } from 'react-bootstrap-icons';
 
 export const ShowPartner: React.FC = () => {
   const {
@@ -37,7 +38,16 @@ export const ShowPartner: React.FC = () => {
           </div>
         </div>
         <div className="col-md-4">
-          <p className="h4">联系方式</p>
+          <div className="mt-4 ml-8 flex flex-col">
+            <div className="flex items-center">
+              <Envelope />
+              <div className="ml-2">xxx@xx.com</div>
+            </div>
+            <div className="flex items-center">
+              <Wechat />
+              <div className="ml-2">xxx@xx.com</div>
+            </div>
+          </div>
         </div>
       </div>
 
