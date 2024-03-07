@@ -1,0 +1,31 @@
+.headerArea {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 100%;
+  z-index: 1000;
+  padding: 0 24px;
+  height: 64px;
+  box-shadow: inset 0 -1px 0 0 #eaeaea;
+  transform: translateZ(0);
+  -webkit-backdrop-filter: saturate(180%) blur(5px);
+  backdrop-filter: saturate(180%) blur(5px);
+  background: hsla(0, 0%, 100%, 0.8);
+}
+
+.banner {
+  all: unset;
+  display: flex;
+  column-gap: 6px;
+  justify-items: baseline;
+  font-weight: 600;
+  font-size: 22px;
+  color: rgba(#000, 0.8);
+  font-family: cursive;
+  cursor: pointer;
+}
+
+.iconImage {
+  width: 28px;
+  height: 28px;
+}

@@ -1,9 +1,11 @@
-
+import { Header } from '../components/header';
+import { SelectProgram } from './pages/select-program';
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      home page
+    <main className="">
+      <Header />
+      <SelectProgram />
     </main>
   );
 }
