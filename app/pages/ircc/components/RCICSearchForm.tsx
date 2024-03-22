@@ -7,12 +7,31 @@ export interface RCICSearchFormProps {
   onSubmit: (rcic: string) => void;
 }
 
+const regex = /^R\d{6}$/;
+
+const regexKeyDown = /^[R|r](\d)*$/;
+
 export const RCICSearchForm: React.FC<RCICSearchFormProps> = ({ onSubmit }) => {
   const [rcicId, setRcicId] = useState('');
 
+  const rcicHasError = (): boolean => {
+    return !regex.test(rcicId);
+  };
+
   const handleRcicIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
-    setRcicId(e.target.value);
+    setRcicId(e.target.value.toUpperCase());
+  };
+
+  const handleKeydDown = (e: React.KeyboardEvent) => {
+    if (e.code === 'Backspace') {
+      return true;
+    }
+
+    if (regexKeyDown.test(rcicId + e.key)) {
+      return true;
+    }
+
+    e.preventDefault();
   };
 
   const handleClickSearch = () => {
@@ -29,6 +48,7 @@ export const RCICSearchForm: React.FC<RCICSearchFormProps> = ({ onSubmit }) => {
         placeholder="例如：R534829"
         value={rcicId}
         onChange={handleRcicIdChange}
+        onKeyDown={handleKeydDown}
         maxLength={7}
       />
       <small id="RCICHelp" className="form-text text-muted">
@@ -36,7 +56,11 @@ export const RCICSearchForm: React.FC<RCICSearchFormProps> = ({ onSubmit }) => {
         例如：R534829，R421239（这是一个反例）
       </small>
       <div className="pt-4 flex flex-row-reverse">
-        <Button variant="primary" onClick={handleClickSearch}>
+        <Button
+          variant="primary"
+          disabled={rcicHasError()}
+          onClick={handleClickSearch}
+        >
           开始验证
         </Button>
       </div>
