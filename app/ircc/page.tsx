@@ -1,11 +1,11 @@
-import { ShowPartner } from '@/app/pages/show-partner';
 import { Header } from '@/components/header';
+import IRCCContent from '@/app/pages/ircc';
 
-export default function Home() {
+export default function IRCC() {
   return (
     <main className="">
       <Header />
-      <ShowPartner />
+      <IRCCContent />
     </main>
   );
 }
