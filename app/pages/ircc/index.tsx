@@ -5,7 +5,7 @@ import { SearchSection } from './components/SearchSection';
 const IRCC = () => {
   return (
     <section className={styles.mainArea}>
-      <h3>验证加拿大持牌加拿大移民顾问</h3>
+      <h3>验证持牌加拿大移民顾问（RCIC）</h3>
 
       <Row>
         <div className="col-md-8">
@@ -16,12 +16,18 @@ const IRCC = () => {
             <br />
             在这里输入RCIC号，可以查询对应持牌顾问的详细信息，从而保护你的个人权益！
             信息来自于官网数据库。
-            <br />
-            <b>
-              只有显示为“Active”
-              状态的移民顾问并和你本人签IMM5476文件才可以被信任！
-            </b>
           </p>
+        </div>
+        <div className="alert alert-danger" role="alert">
+          ⚠️注意： 只有显示为“
+          <strong>
+            <u>Active</u>
+          </strong>
+          ” 状态的移民顾问并
+          <strong>
+            <u>和你本人签IMM5476文件</u>
+          </strong>
+          才可以被信任！
         </div>
       </Row>
       <SearchSection />
