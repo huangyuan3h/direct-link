@@ -1,20 +1,31 @@
 'use client';
 import APIClient from '@/utils/apiClient';
 import { RCICSearchForm } from './RCICSearchForm';
+import { RCIC, RCICSearchResponse } from '../types';
+import { useState } from 'react';
+import { ShowProfile } from './ShowProfile';
+import { Loading } from './Loading';
 
 export const SearchSection: React.FC = () => {
-  const handleSubmit = (rcic: string) => {
-    console.log(process.env.NEXT_PUBLIC_BACKEND_API);
-    console.log(rcic);
+  const [rcic, setRcic] = useState<RCIC | null>(null);
+  const [loading, setLoading] = useState(false);
 
+  const handleSubmit = (rcic: string) => {
+    setLoading(true);
     const client = new APIClient();
-    client.post('rcic/search', { rcic }).then((response) => {
-      console.log(response);
-    });
+    client
+      .post('rcic/search', { rcic })
+      .then((response: RCICSearchResponse) => {
+        if (response) {
+          setRcic(response.results[0]);
+          setLoading(false);
+        }
+      });
   };
   return (
     <div>
       <RCICSearchForm onSubmit={handleSubmit} />
+      {loading ? <Loading /> : <ShowProfile rcic={rcic} />}
     </div>
   );
 };
