@@ -1,7 +1,7 @@
 import { Header } from '@/components/header';
 import IRCCContent from '@/app/pages/ircc';
 
-export default function IRCC() {
+export default function RCIC() {
   return (
     <main className="">
       <Header />

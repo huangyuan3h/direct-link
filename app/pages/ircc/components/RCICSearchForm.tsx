@@ -19,11 +19,16 @@ export const RCICSearchForm: React.FC<RCICSearchFormProps> = ({ onSubmit }) => {
   };
 
   const handleRcicIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setRcicId(e.target.value.toUpperCase());
+    if (regexKeyDown.test(e.target.value)) {
+      setRcicId(e.target.value.toUpperCase());
+    }
   };
 
   const handleKeydDown = (e: React.KeyboardEvent) => {
     if (e.code === 'Backspace') {
+      return true;
+    }
+    if ((e.ctrlKey || e.metaKey) && e.key === 'v') {
       return true;
     }
 
