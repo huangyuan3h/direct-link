@@ -5,10 +5,10 @@ import { SearchSection } from './components/SearchSection';
 const IRCC = () => {
   return (
     <section className={styles.mainArea}>
-      <h3>验证持牌加拿大移民顾问（RCIC）</h3>
+      <div className="container">
+        <h3>验证持牌加拿大移民顾问（RCIC）</h3>
 
-      <Row>
-        <div className="col-md-8">
+        <div>
           <p>
             RCIC 是 Regulated Canadian Immigration Consultant 的缩写，中文意思是
             <b>持牌加拿大移民顾问</b>。它是加拿大移民、难民和公民部 (IRCC)
@@ -29,7 +29,8 @@ const IRCC = () => {
           </strong>
           才可以被信任！
         </div>
-      </Row>
+      </div>
+
       <SearchSection />
     </section>
   );
