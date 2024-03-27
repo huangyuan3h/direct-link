@@ -4,7 +4,7 @@ export type State = 'AB' | 'British Columbia';
 
 export type City = 'CALGARY' | 'Richmond';
 
-export type status = 'Active' | 'Administrative Revocation';
+export type Status = 'Active' | 'Administrative Revocation';
 
 export interface RCIC {
   step1_surname: string;
@@ -16,7 +16,7 @@ export interface RCIC {
   postal: string;
   address: string;
   companies: string[];
-  form_membership_status_text: 'Active';
+  form_membership_status_text: Status;
   form_date_status_changed: string;
   form_reason_text: string;
 }

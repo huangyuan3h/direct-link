@@ -32,6 +32,29 @@ const IRCC = () => {
       </div>
 
       <SearchSection />
+      <div className="container mt-8">
+        <h6>官网链接</h6>
+
+        <div>
+          <ul className="list-unstyled">
+            <li>
+              <a href="https://college-ic.ca/protecting-the-public/find-an-immigration-consultant?l=en-CA">
+                Find an immigration consultant
+              </a>
+            </li>
+            <li>
+              <a href="https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/imm5476.html">
+                Representative Form (IMM 5476)
+              </a>
+            </li>
+            <li>
+              <a href="https://secure-archive.college-ic.ca/default/search">
+                Search form
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </section>
   );
 };
