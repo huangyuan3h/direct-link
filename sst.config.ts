@@ -3,13 +3,13 @@ import { NextjsSite } from 'sst/constructs';
 import { Certificate } from 'aws-cdk-lib/aws-certificatemanager';
 
 const certArn =
-  'arn:aws:acm:us-east-1:319653899185:certificate/bb667839-82b3-4e9a-8de5-372516089971';
+  'arn:aws:acm:us-east-1:319653899185:certificate/a54f1d93-e441-42eb-9165-29ca329446ad';
 
 export default {
   config(_input) {
     return {
       name: 'north-path',
-      region: 'ap-southeast-1',
+      region: 'us-east-1',
     };
   },
   stacks(app) {
