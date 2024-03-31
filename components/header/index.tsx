@@ -1,13 +1,3 @@
-import clsx from 'clsx';
-import styles from './header.module.scss';
-import { Banner } from './Banner';
+export * from './DistrictionFreeHeader';
 
-export interface HeaderProps {}
-
-export const Header: React.FC<HeaderProps> = () => {
-  return (
-    <header className={clsx(styles.headerArea)}>
-      <Banner />
-    </header>
-  );
-};
+export * from './Header';
