@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Alert, Form } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -14,6 +14,12 @@ const has1LowCase = /[a-z]+/;
 const has1UpCase = /[A-Z]+/;
 const has1Number = /[0-9]+/;
 
+type BlurStateType = {
+  email: boolean;
+  password: boolean;
+  confirmPassword: boolean;
+};
+
 export const LoginModal: React.FC<LoginModalProps> = ({
   show,
   onHide,
@@ -22,6 +28,11 @@ export const LoginModal: React.FC<LoginModalProps> = ({
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [blurState, setBlurState] = useState<BlurStateType>({
+    email: false,
+    password: false,
+    confirmPassword: false,
+  });
 
   const handleClickSwitch = () => {
     setIsLogin((prev) => !prev);
@@ -77,11 +88,33 @@ export const LoginModal: React.FC<LoginModalProps> = ({
     }
   };
 
+  useEffect(() => {
+    if (!show) return;
+    setEmail('');
+    setPassword('');
+    setConfirmPassword('');
+    setBlurState({
+      email: false,
+      password: false,
+      confirmPassword: false,
+    });
+  }, [show]);
+
+  const handleEmailBlur = () => {
+    setBlurState({ ...blurState, email: true });
+  };
+
+  const handlePasswordBlur = () => {
+    setBlurState({ ...blurState, password: true });
+  };
+
+  const handleConfirmPasswordBlur = () => {
+    setBlurState({ ...blurState, confirmPassword: true });
+  };
+
   return (
-    <Modal size="lg" show={show} centered>
-      <Modal.Header closeButton onHide={onHide}>
-        <Modal.Title>{isLogin ? '登陆' : '注册'}</Modal.Title>
-      </Modal.Header>
+    <Modal show={show} centered>
+      <Modal.Header closeButton onHide={onHide}></Modal.Header>
       <Modal.Body>
         <Form>
           <Form.Group className="mb-3">
@@ -91,9 +124,13 @@ export const LoginModal: React.FC<LoginModalProps> = ({
               autoFocus
               value={email}
               onChange={handleEmailChange}
-              isInvalid={email.length > 0 && !isEmailValid()}
-              isValid={email.length > 0 && isEmailValid()}
+              isInvalid={email.length > 0 && blurState.email && !isEmailValid()}
+              isValid={email.length > 0 && blurState.email && isEmailValid()}
+              onBlur={handleEmailBlur}
             />
+            {email.length > 0 && blurState.email && !isEmailValid() && (
+              <small className="text-danger">邮箱格式存在问题</small>
+            )}
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>密码：</Form.Label>
@@ -101,9 +138,29 @@ export const LoginModal: React.FC<LoginModalProps> = ({
               type="password"
               value={password}
               onChange={handlePasswordChange}
-              isInvalid={password.length > 0 && !isPasswordValid()}
-              isValid={password.length > 0 && isPasswordValid()}
+              isInvalid={
+                password.length > 0 && blurState.password && !isPasswordValid()
+              }
+              isValid={
+                password.length > 0 && blurState.password && isPasswordValid()
+              }
+              onBlur={handlePasswordBlur}
             />
+            {password.length > 0 &&
+              blurState.password &&
+              !isPasswordValid() && (
+                <small className="text-danger">
+                  <ul>
+                    {!has1LowCase.test(password) && (
+                      <li>密码需包含一个小写字母</li>
+                    )}
+                    {!has1UpCase.test(password) && (
+                      <li>密码需包含一个大写字母</li>
+                    )}
+                    {!has1Number.test(password) && <li>密码需包含一个数字</li>}
+                  </ul>
+                </small>
+              )}
           </Form.Group>
           {!isLogin && (
             <Form.Group className="mb-3">
@@ -113,30 +170,23 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                 value={confirmPassword}
                 onChange={handleConfirmPasswordChange}
                 isInvalid={
-                  confirmPassword.length > 0 && !isConfirmPasswordValid()
+                  confirmPassword.length > 0 &&
+                  blurState.confirmPassword &&
+                  !isConfirmPasswordValid()
                 }
-                isValid={confirmPassword.length > 0 && isConfirmPasswordValid()}
+                isValid={
+                  confirmPassword.length > 0 &&
+                  blurState.confirmPassword &&
+                  isConfirmPasswordValid()
+                }
+                onBlur={handleConfirmPasswordBlur}
               />
+              {confirmPassword.length > 0 &&
+                blurState.confirmPassword &&
+                !isConfirmPasswordValid() && (
+                  <small className="text-danger">两次密码不一致</small>
+                )}
             </Form.Group>
-          )}
-          {!allCorrect() && email.length > 0 && (
-            <div className="container">
-              <small className="text-danger">
-                <ul>
-                  {!isEmailValid() && <li>邮箱存在问题</li>}
-                  {!has1LowCase.test(password) && (
-                    <li>密码需包含一个小写字母</li>
-                  )}
-                  {!has1UpCase.test(password) && (
-                    <li>密码需包含一个大写字母</li>
-                  )}
-                  {!has1Number.test(password) && <li>密码需包含一个数字</li>}
-                  {!isConfirmPasswordValid() && !isLogin && (
-                    <li>两次密码不一致</li>
-                  )}
-                </ul>
-              </small>
-            </div>
           )}
 
           <div className="flex gap-x-2 justify-between">
