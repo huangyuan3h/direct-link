@@ -4745,6 +4745,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cookiejs@npm:^2.1.3":
+  version: 2.1.3
+  resolution: "cookiejs@npm:2.1.3"
+  checksum: 10c0/735d20c49a02d9cd089dcd4384542ad12b6d02accb27772a229092dbfefa09e57c061e534819c81d924f4c56a7333c80755bfccfd5b528c083d1c0172a33d3c9
+  languageName: node
+  linkType: hard
+
 "core-util-is@npm:~1.0.0":
   version: 1.0.3
   resolution: "core-util-is@npm:1.0.3"
@@ -4980,6 +4987,7 @@ __metadata:
     bootstrap: "npm:^5.3.3"
     clsx: "npm:^2.1.0"
     constructs: "npm:10.3.0"
+    cookiejs: "npm:^2.1.3"
     eslint: "npm:^8.57.0"
     eslint-config-next: "npm:^14.1.0"
     eslint-config-prettier: "npm:^9.1.0"
@@ -4993,6 +5001,7 @@ __metadata:
     react-bootstrap-icons: "npm:^1.11.3"
     react-dom: "npm:^18"
     react-markdown: "npm:^9.0.1"
+    react-toastify: "npm:^10.0.5"
     sass: "npm:^1.71.1"
     sst: "npm:^2.40.1"
     tailwindcss: "npm:^3.3.0"
@@ -9239,6 +9248,18 @@ __metadata:
   peerDependencies:
     react: ^18.2.0
   checksum: 10c0/637442f98ee816b8f86586f537712a0463b53e12c0f4dec716dfdde68dfa52cef1d10138acfad194d5571296cde8715c331aa3986e538087acdc1ef83187a9b0
+  languageName: node
+  linkType: hard
+
+"react-toastify@npm:^10.0.5":
+  version: 10.0.5
+  resolution: "react-toastify@npm:10.0.5"
+  dependencies:
+    clsx: "npm:^2.1.0"
+  peerDependencies:
+    react: ">=18"
+    react-dom: ">=18"
+  checksum: 10c0/66c68ec3d6c017d9f32652d73bb925224921c6a80b629b9d481430d5b4fd504abb7a99995a64b9aef0fc31326c74f3cbe088b3287b978dd0c355079c4bbf4158
   languageName: node
   linkType: hard
 

@@ -1,7 +1,13 @@
-import { useEffect, useState } from 'react';
-import { Alert, Form } from 'react-bootstrap';
+import APIClient from '@/utils/apiClient';
+import { useContext, useEffect, useState } from 'react';
+import { Form } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { LoadingArea } from './LoadingArea';
+import { toastMessages } from './toastMessage';
+import cookie from 'cookiejs';
+import { ToastContext, ToastContextType } from '../toast';
+import { toast } from 'react-toastify';
 
 export interface LoginModalProps {
   show: boolean;
@@ -33,6 +39,8 @@ export const LoginModal: React.FC<LoginModalProps> = ({
     password: false,
     confirmPassword: false,
   });
+  const [loading, setLoading] = useState(false);
+  const { setToastMessage } = useContext(ToastContext);
 
   const handleClickSwitch = () => {
     setIsLogin((prev) => !prev);
@@ -112,92 +120,135 @@ export const LoginModal: React.FC<LoginModalProps> = ({
     setBlurState({ ...blurState, confirmPassword: true });
   };
 
+  const handleClickSumbit = () => {
+    const client = new APIClient();
+    setLoading(true);
+    if (isLogin) {
+      client.post('auth/login', { email, password }).then((response) => {
+        if (response.Authorization) {
+          cookie('Authorization', response.Authorization);
+          setLoading(false);
+          onHide();
+          toast.success(toastMessages.LOGIN_SUCCESS, {
+            position: 'top-center',
+          });
+        }
+      });
+    } else {
+      client
+        .post('auth/create_account', { email, password })
+        .then((response) => {
+          if (response.message === 'created') {
+            setLoading(false);
+            onHide();
+            toast.success(toastMessages.REGISTER_SUCCESS, {
+              position: 'top-center',
+            });
+          }
+        });
+    }
+  };
+
   return (
     <Modal show={show} centered>
       <Modal.Header closeButton onHide={onHide}></Modal.Header>
       <Modal.Body>
-        <Form>
-          <Form.Group className="mb-3">
-            <Form.Label>邮箱:</Form.Label>
-            <Form.Control
-              type="email"
-              autoFocus
-              value={email}
-              onChange={handleEmailChange}
-              isInvalid={email.length > 0 && blurState.email && !isEmailValid()}
-              isValid={email.length > 0 && blurState.email && isEmailValid()}
-              onBlur={handleEmailBlur}
-            />
-            {email.length > 0 && blurState.email && !isEmailValid() && (
-              <small className="text-danger">邮箱格式存在问题</small>
-            )}
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>密码：</Form.Label>
-            <Form.Control
-              type="password"
-              value={password}
-              onChange={handlePasswordChange}
-              isInvalid={
-                password.length > 0 && blurState.password && !isPasswordValid()
-              }
-              isValid={
-                password.length > 0 && blurState.password && isPasswordValid()
-              }
-              onBlur={handlePasswordBlur}
-            />
-            {password.length > 0 &&
-              blurState.password &&
-              !isPasswordValid() && (
-                <small className="text-danger">
-                  <ul>
-                    {!has1LowCase.test(password) && (
-                      <li>密码需包含一个小写字母</li>
-                    )}
-                    {!has1UpCase.test(password) && (
-                      <li>密码需包含一个大写字母</li>
-                    )}
-                    {!has1Number.test(password) && <li>密码需包含一个数字</li>}
-                  </ul>
-                </small>
-              )}
-          </Form.Group>
-          {!isLogin && (
+        {loading ? (
+          <LoadingArea />
+        ) : (
+          <Form>
             <Form.Group className="mb-3">
-              <Form.Label>验证密码：</Form.Label>
+              <Form.Label>邮箱:</Form.Label>
+              <Form.Control
+                type="email"
+                autoFocus
+                value={email}
+                onChange={handleEmailChange}
+                isInvalid={
+                  email.length > 0 && blurState.email && !isEmailValid()
+                }
+                isValid={email.length > 0 && blurState.email && isEmailValid()}
+                onBlur={handleEmailBlur}
+              />
+              {email.length > 0 && blurState.email && !isEmailValid() && (
+                <small className="text-danger mt-1">邮箱格式存在问题</small>
+              )}
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>密码：</Form.Label>
               <Form.Control
                 type="password"
-                value={confirmPassword}
-                onChange={handleConfirmPasswordChange}
+                value={password}
+                onChange={handlePasswordChange}
                 isInvalid={
-                  confirmPassword.length > 0 &&
-                  blurState.confirmPassword &&
-                  !isConfirmPasswordValid()
+                  password.length > 0 &&
+                  blurState.password &&
+                  !isPasswordValid()
                 }
                 isValid={
-                  confirmPassword.length > 0 &&
-                  blurState.confirmPassword &&
-                  isConfirmPasswordValid()
+                  password.length > 0 && blurState.password && isPasswordValid()
                 }
-                onBlur={handleConfirmPasswordBlur}
+                onBlur={handlePasswordBlur}
               />
-              {confirmPassword.length > 0 &&
-                blurState.confirmPassword &&
-                !isConfirmPasswordValid() && (
-                  <small className="text-danger">两次密码不一致</small>
+              {password.length > 0 &&
+                blurState.password &&
+                !isPasswordValid() && (
+                  <small className="text-danger mt-1">
+                    <ul>
+                      {!has1LowCase.test(password) && (
+                        <li>密码需包含一个小写字母</li>
+                      )}
+                      {!has1UpCase.test(password) && (
+                        <li>密码需包含一个大写字母</li>
+                      )}
+                      {!has1Number.test(password) && (
+                        <li>密码需包含一个数字</li>
+                      )}
+                    </ul>
+                  </small>
                 )}
             </Form.Group>
-          )}
+            {!isLogin && (
+              <Form.Group className="mb-3">
+                <Form.Label>验证密码：</Form.Label>
+                <Form.Control
+                  type="password"
+                  value={confirmPassword}
+                  onChange={handleConfirmPasswordChange}
+                  isInvalid={
+                    confirmPassword.length > 0 &&
+                    blurState.confirmPassword &&
+                    !isConfirmPasswordValid()
+                  }
+                  isValid={
+                    confirmPassword.length > 0 &&
+                    blurState.confirmPassword &&
+                    isConfirmPasswordValid()
+                  }
+                  onBlur={handleConfirmPasswordBlur}
+                />
+                {confirmPassword.length > 0 &&
+                  blurState.confirmPassword &&
+                  !isConfirmPasswordValid() && (
+                    <small className="text-danger mt-1">两次密码不一致</small>
+                  )}
+              </Form.Group>
+            )}
 
-          <div className="flex gap-x-2 justify-between">
-            <Button variant="secondary" onClick={handleClickSwitch}>
-              {isLogin ? '注册一个账号' : '登陆到系统'}
-            </Button>
-            <Button variant="primary" disabled={!allCorrect()}>
-              {isLogin ? '登陆' : '注册'}
-            </Button>
-          </div>
-        </Form>
+            <div className="flex gap-x-2 justify-between">
+              <Button variant="secondary" onClick={handleClickSwitch}>
+                {isLogin ? '注册一个账号' : '登陆到系统'}
+              </Button>
+              <Button
+                variant="primary"
+                disabled={!allCorrect()}
+                onClick={handleClickSumbit}
+              >
+                {isLogin ? '登陆' : '注册'}
+              </Button>
+            </div>
+          </Form>
+        )}
       </Modal.Body>
     </Modal>
   );
