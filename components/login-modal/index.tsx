@@ -1,12 +1,11 @@
 import APIClient from '@/utils/apiClient';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { LoadingArea } from './LoadingArea';
 import { toastMessages } from './toastMessage';
 import cookie from 'cookiejs';
-import { ToastContext, ToastContextType } from '../toast';
 import { toast } from 'react-toastify';
 
 export interface LoginModalProps {
@@ -40,7 +39,6 @@ export const LoginModal: React.FC<LoginModalProps> = ({
     confirmPassword: false,
   });
   const [loading, setLoading] = useState(false);
-  const { setToastMessage } = useContext(ToastContext);
 
   const handleClickSwitch = () => {
     setIsLogin((prev) => !prev);
