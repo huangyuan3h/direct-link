@@ -4,28 +4,32 @@ import { RCICSearchForm } from './RCICSearchForm';
 import { RCIC, RCICSearchResponse } from '../types';
 import { useState } from 'react';
 import { ShowProfile } from './ShowProfile';
-import { Loading } from './Loading';
+import { toast } from 'react-toastify';
+import { toastMessages } from '@/utils/toastMessage';
 
 export const SearchSection: React.FC = () => {
   const [rcic, setRcic] = useState<RCIC | null>(null);
-  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (rcic: string) => {
-    setLoading(true);
+  const handleSubmit = async (rcic: string) => {
     const client = new APIClient();
-    client
-      .post('rcic/search', { rcic })
-      .then((response: RCICSearchResponse) => {
-        if (response) {
-          setRcic(response.results[0]);
-          setLoading(false);
-        }
-      });
+    const response: RCICSearchResponse = await toast.promise(
+      client.post('rcic/search', { rcic }),
+      {
+        success: toastMessages.LOADING_RCIC_SUCCESS,
+        pending: toastMessages.LOADING,
+        error: toastMessages.REQUEST_ERROR,
+      },
+      { position: 'top-center' }
+    );
+
+    if (response) {
+      setRcic(response.results[0]);
+    }
   };
   return (
     <div>
       <RCICSearchForm onSubmit={handleSubmit} />
-      {loading ? <Loading /> : <ShowProfile rcic={rcic} />}
+      {rcic && <ShowProfile rcic={rcic} />}
     </div>
   );
 };

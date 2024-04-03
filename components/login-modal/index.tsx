@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { toastMessages } from './toastMessage';
+import { toastMessages } from '../../utils/toastMessage';
 import cookie from 'cookiejs';
 import { toast } from 'react-toastify';
 

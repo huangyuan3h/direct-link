@@ -3,6 +3,8 @@ export const toastMessages = {
 
   REGISTER_SUCCESS: '注册成功，请尝试重新登陆',
 
+  //rcic page
+  LOADING_RCIC_SUCCESS: '加载持牌顾问信息成功',
   // common pending
   LOADING: '加载中....',
   // error common
