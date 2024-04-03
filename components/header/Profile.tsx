@@ -22,7 +22,7 @@ export const Profile: React.FC<ProfileProps> = ({ user }) => {
   if (!user) {
     return (
       <div>
-        <Button variant="primary" size="sm" onClick={handleClickLogin}>
+        <Button variant="outline-primary" onClick={handleClickLogin}>
           登陆
         </Button>
         <LoginModal show={showLoginModal} onHide={handleHideModal} />
