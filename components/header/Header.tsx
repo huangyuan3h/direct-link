@@ -10,7 +10,7 @@ export const Header: React.FC<HeaderProps> = () => {
     <header className={clsx(styles.headerArea)}>
       <div className={'container flex justify-between'}>
         <Banner />
-        <Profile user={undefined} />
+        <Profile />
       </div>
     </header>
   );

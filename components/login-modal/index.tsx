@@ -4,8 +4,10 @@ import { Form } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { toastMessages } from '../../utils/toastMessage';
-import cookie from 'cookiejs';
+import { setCookie } from 'nookies';
 import { toast } from 'react-toastify';
+import { useUser } from '../user-context';
+import { decodeJWT } from '@/utils/auth';
 
 export interface LoginModalProps {
   show: boolean;
@@ -37,6 +39,8 @@ export const LoginModal: React.FC<LoginModalProps> = ({
     password: false,
     confirmPassword: false,
   });
+
+  const { updateUser } = useUser();
 
   const handleClickSwitch = () => {
     setIsLogin((prev) => !prev);
@@ -102,6 +106,8 @@ export const LoginModal: React.FC<LoginModalProps> = ({
       password: false,
       confirmPassword: false,
     });
+
+    setIsLogin(true);
   }, [show]);
 
   const handleEmailBlur = () => {
@@ -132,7 +138,8 @@ export const LoginModal: React.FC<LoginModalProps> = ({
         }
       );
       if (response.Authorization) {
-        cookie('Authorization', response.Authorization);
+        setCookie(null, 'Authorization', response.Authorization);
+        updateUser(decodeJWT(response.Authorization));
         onHide();
       }
     } else {

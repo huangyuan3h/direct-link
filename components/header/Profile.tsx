@@ -3,14 +3,14 @@
 import { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { LoginModal } from '../login-modal';
+import { useUser } from '../user-context';
 
-export interface ProfileProps {
-  user: string | undefined; // placeholder
-}
+export interface ProfileProps {}
 
-export const Profile: React.FC<ProfileProps> = ({ user }) => {
+export const Profile: React.FC<ProfileProps> = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
 
+  const { user } = useUser();
   const handleClickLogin = () => {
     setShowLoginModal(true);
   };
