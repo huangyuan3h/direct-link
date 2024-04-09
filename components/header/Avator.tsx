@@ -19,11 +19,11 @@ export const Avator: React.FC<AvatorProps> = ({ className }) => {
     <div className={clsx(styles.avatarArea, className)}>
       <Image
         src={defaultUserImage}
-        width={20}
-        height={20}
+        width={32}
+        height={32}
+        className={styles.avatar}
         alt={user?.userName ?? ''}
       />
-      <div>{user?.userName}</div>
     </div>
   );
 };
