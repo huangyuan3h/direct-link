@@ -1,6 +1,8 @@
 'use client';
 import { User } from '@/types/user';
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { parseCookies } from 'nookies';
+import { decodeJWT } from '@/utils/auth';
 
 interface UserContextType {
   user: User | null;
@@ -21,6 +23,15 @@ export const UserProvider: React.FC<UserProviderProps> = ({
   const updateUser = (userInfo: User) => {
     setUser(userInfo);
   };
+
+  useEffect(() => {
+    const cookies = parseCookies();
+    const authCookie = cookies['Authorization'];
+    if (authCookie) {
+      const userInfo = decodeJWT(authCookie);
+      updateUser(userInfo);
+    }
+  }, []);
 
   return (
     <UserContext.Provider value={{ user, updateUser }}>
