@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Open_Sans } from 'next/font/google';
 import './globals.scss';
 import { ToastContainer } from 'react-toastify';
+import { UserProvider } from '@/components/user-context';
 
 const san = Open_Sans({ subsets: ['latin'] });
 
@@ -38,8 +39,7 @@ export default function RootLayout({
   return (
     <html lang="zh-CN">
       <body className={san.className}>
-        {children}
-
+        <UserProvider>{children}</UserProvider>
         <ToastContainer />
       </body>
     </html>

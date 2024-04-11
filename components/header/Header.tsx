@@ -1,16 +1,16 @@
 import clsx from 'clsx';
 import styles from './header.module.scss';
 import { Banner } from './Banner';
-import { Profile } from './Profile';
+import { Profile, ProfileProps } from './Profile';
 
-export interface HeaderProps {}
+export interface HeaderProps extends ProfileProps {}
 
-export const Header: React.FC<HeaderProps> = () => {
+export const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
   return (
     <header className={clsx(styles.headerArea)}>
-      <div className={'container flex justify-between'}>
+      <div className={'container flex justify-between items-center'}>
         <Banner />
-        <Profile user={undefined} />
+        <Profile onMenuClick={onMenuClick} />
       </div>
     </header>
   );
