@@ -7,7 +7,7 @@ import Image from 'next/image';
 import styles from './header.module.scss';
 
 interface AvatorProps {
-  className: string | string[];
+  className?: string | string[];
 }
 
 export const Avator: React.FC<AvatorProps> = ({ className }) => {

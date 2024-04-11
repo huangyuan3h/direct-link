@@ -38,3 +38,23 @@
     outline: 2px solid #0d6efd;
   }
 }
+
+.MenuIconArea {
+  outline: 1px solid rgba(#000, 0.4);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background-color: rgba(#000, 0.02);
+  &:hover {
+    background-color: rgba(#000, 0.1);
+  }
+}
+
+.MenuIcon {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
