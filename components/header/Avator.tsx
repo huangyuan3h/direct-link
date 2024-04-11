@@ -16,9 +16,13 @@ export const Avator: React.FC<AvatorProps> = ({ className }) => {
   const defaultUserImage = '/images/anonymous.svg';
 
   return (
-    <div className={clsx(styles.avatarArea, className)}>
+    <div className={clsx(className)}>
       <Image
-        src={defaultUserImage}
+        src={
+          user?.avatar && user?.avatar.length > 0
+            ? user?.avatar
+            : defaultUserImage
+        }
         width={32}
         height={32}
         className={styles.avatar}
