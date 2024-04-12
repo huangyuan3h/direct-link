@@ -1,11 +1,11 @@
 import { Header } from '../components/header';
-import { SelectProgram } from './pages/select-program';
+import { Post } from './pages/post';
 
 export default function Home() {
   return (
     <main className="">
       <Header />
-      <SelectProgram />
+      <Post />
     </main>
   );
 }

@@ -1,4 +1,3 @@
-import { Row, Button } from 'react-bootstrap';
 import styles from './ircc.module.scss';
 import { SearchSection } from './components/SearchSection';
 
