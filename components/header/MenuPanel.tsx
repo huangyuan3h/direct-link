@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useUser } from '../user-context';
 import { Button, ListGroup, Offcanvas } from 'react-bootstrap';
+import { Avator } from './Avator';
 
 export interface MenuPanelProps {
   showPanel: boolean;
@@ -11,21 +12,12 @@ export const MenuPanel: React.FC<MenuPanelProps> = ({
   showPanel,
   onMenuClose,
 }) => {
-  const [showLoginModal, setShowLoginModal] = useState(false);
-  const { user } = useUser();
-
-  const handleClickLogin = () => {
-    setShowLoginModal(true);
-  };
-
-  const handleHideModal = () => {
-    setShowLoginModal(false);
-  };
-
   return (
     <Offcanvas show={showPanel} onHide={onMenuClose}>
       <Offcanvas.Header closeButton>
-        <Offcanvas.Title>Menu</Offcanvas.Title>
+        <Offcanvas.Title>
+          <Avator />
+        </Offcanvas.Title>
       </Offcanvas.Header>
       <Offcanvas.Body>
         <ListGroup variant="flush">
