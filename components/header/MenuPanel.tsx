@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useUser } from '../user-context';
 import { Accordion, Button, ListGroup, Offcanvas } from 'react-bootstrap';
 import { Avator } from './Avator';
@@ -13,6 +12,7 @@ export const MenuPanel: React.FC<MenuPanelProps> = ({
   showPanel,
   onMenuClose,
 }) => {
+  const { user } = useUser();
   return (
     <Offcanvas show={showPanel} onHide={onMenuClose}>
       <Offcanvas.Header closeButton>
@@ -21,6 +21,11 @@ export const MenuPanel: React.FC<MenuPanelProps> = ({
         </Offcanvas.Title>
       </Offcanvas.Header>
       <Offcanvas.Body>
+        {user && (
+          <div className="d-grid gap-2 mb-4">
+            <Button href="/post">发帖</Button>
+          </div>
+        )}
         <Accordion defaultActiveKey="0" flush>
           {menuConfig.map((menu, idx) => {
             return (

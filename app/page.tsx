@@ -1,11 +1,11 @@
 import { Header } from '../components/header';
-import { Post } from './pages/post';
+import { PostList } from './pages/posts/list';
 
 export default function Home() {
   return (
     <main className="">
       <Header />
-      <Post />
+      <PostList />
     </main>
   );
 }
