@@ -1,6 +1,7 @@
 export enum Action {
   SET_SUBJECT = 'SET_SUBJECT',
   SET_CONTENT = 'SET_CONTENT',
+  SET_CATEGORIES = 'SET_CATEGORIES',
 }
 
 export interface SetSubject {
@@ -27,4 +28,16 @@ export const setContent = (content: string): SetContent => {
   };
 };
 
-export type ActionType = SetSubject | SetContent;
+export interface SetCategories {
+  type: Action.SET_CATEGORIES;
+  categories: string[];
+}
+
+export const setCategories = (categories: string[]): SetCategories => {
+  return {
+    type: Action.SET_CATEGORIES,
+    categories,
+  };
+};
+
+export type ActionType = SetSubject | SetContent | SetCategories;

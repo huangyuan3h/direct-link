@@ -16,6 +16,12 @@ export const reducer = (
         ...state,
         content: action.content,
       };
+    case Action.SET_CATEGORIES:
+      console.log(action.categories);
+      return {
+        ...state,
+        categories: action.categories,
+      };
     default:
       return state;
   }

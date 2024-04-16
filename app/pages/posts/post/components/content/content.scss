@@ -1,20 +1,12 @@
 .quill {
   margin-top: 12px;
   .ql-toolbar {
+    border: var(--bs-border-width) solid var(--bs-border-color) !important;
     border-radius: 4px;
   }
   .ql-container {
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-  }
-}
-
-.quill_active {
-  margin-top: 12px;
-  .ql-toolbar {
-    border-radius: 4px;
-  }
-  .ql-container {
+    border: var(--bs-border-width) solid var(--bs-border-color) !important;
+    border-top-color: transparent !important;
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
   }

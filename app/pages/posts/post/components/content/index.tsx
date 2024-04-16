@@ -44,7 +44,6 @@ export const ContentInput: React.FC<ContentProps> = ({
   };
 
   const handleBlur = () => {
-    console.log(c);
     onChange(c);
   };
 
