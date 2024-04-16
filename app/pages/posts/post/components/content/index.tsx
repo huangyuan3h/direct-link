@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import './content.scss';
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
@@ -34,6 +34,7 @@ export const ContentInput: React.FC<ContentProps> = ({
   onChange,
 }: ContentProps) => {
   const [c, setContent] = useState(content);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setContent(content);
@@ -47,14 +48,26 @@ export const ContentInput: React.FC<ContentProps> = ({
     onChange(c);
   };
 
+  const handleClick = () => {
+    if (ref.current) {
+      const eles = ref.current.getElementsByClassName('ql-editor');
+      if (eles && eles.length > 0) {
+        (eles[0] as HTMLElement).focus();
+      }
+    }
+  };
+
   return (
-    <ReactQuill
-      value={c}
-      formats={formats}
-      modules={modules}
-      theme="snow"
-      onChange={handleChange}
-      onBlur={handleBlur}
-    />
+    <div onClick={handleClick} ref={ref}>
+      <ReactQuill
+        value={c}
+        formats={formats}
+        modules={modules}
+        theme="snow"
+        onChange={handleChange}
+        onBlur={handleBlur}
+        placeholder="填写详细信息，让更多人看到你！"
+      />
+    </div>
   );
 };
