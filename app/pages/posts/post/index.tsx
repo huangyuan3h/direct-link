@@ -8,6 +8,7 @@ import { ContentInput } from './components/content';
 import 'react-quill/dist/quill.snow.css';
 import { Categories } from './components/categories';
 import S3Uploader from './components/upload-image';
+import { Button } from 'react-bootstrap';
 
 export const Post: React.FC = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -31,6 +32,10 @@ export const Post: React.FC = () => {
       <ContentInput content={content} onChange={handleContentChange} />
       <Categories categories={categories} onChange={handleCategoriesChange} />
       <S3Uploader />
+
+      <div className="my-3 flex flex-row-reverse">
+        <Button className="primary">发布帖子</Button>
+      </div>
     </div>
   );
 };

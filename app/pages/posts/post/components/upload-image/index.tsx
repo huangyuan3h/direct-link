@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { S3 } from 'aws-sdk';
 import styles from './upload-image.module.scss';
 import Image from 'next/image';
+import { CloseButton } from 'react-bootstrap';
 
 const MAX_NUMBER = 9;
 
@@ -51,14 +52,18 @@ export const S3Uploader: React.FC<{}> = () => {
 
   const renderImages = () => {
     return files.map((file, index) => (
-      <div key={index} style={{ display: 'inline-block', margin: '5px' }}>
+      <div key={index} className={styles.imageWrapper}>
         <Image
           src={URL.createObjectURL(file)}
           alt={`Image ${index}`}
           width={100}
           height={100}
+          className={styles.image}
         />
-        <button onClick={() => handleDelete(index)}>Delete</button>
+        <CloseButton
+          onClick={() => handleDelete(index)}
+          className={styles.closeButton}
+        />
       </div>
     ));
   };
@@ -81,7 +86,7 @@ export const S3Uploader: React.FC<{}> = () => {
       >
         + 拖动或点击来添加图片
       </div>
-      <div>{renderImages()}</div>
+      <div className={styles.imageDisplayArea}>{renderImages()}</div>
     </div>
   );
 };
