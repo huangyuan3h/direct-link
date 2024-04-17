@@ -1,64 +1,87 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { S3 } from 'aws-sdk';
+import styles from './upload-image.module.scss';
+import Image from 'next/image';
+
+const MAX_NUMBER = 9;
 
 export const S3Uploader: React.FC<{}> = () => {
-  const [file, setFile] = useState<File>();
+  const [files, setFiles] = useState<File[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleDivClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const uploadFiles = (filesToUpload: File[]) => {
+    console.log('Uploading files:', filesToUpload);
+  };
+
+  const uploadFileProcess = (uploadedFiles: File[]) => {
+    const toAddFiles = uploadedFiles.slice(0, MAX_NUMBER - files.length);
+
+    const currentFiles = [...files, ...toAddFiles];
+    setFiles(currentFiles);
+    uploadFiles(currentFiles);
+  };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const uploadedFile = event.target.files?.[0];
-    if (uploadedFile) {
-      setFile(uploadedFile);
-    }
+    let uploadedFiles = event.target.files
+      ? Array.from(event.target.files)
+      : [];
+
+    uploadFileProcess(uploadedFiles);
   };
 
-  const handleFileDrop = (event: React.DragEvent<HTMLInputElement>) => {
+  const handleFileDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
-    const uploadedFile = event.dataTransfer.files[0];
-    setFile(uploadedFile);
+    let uploadedFiles = event.dataTransfer.files
+      ? Array.from(event.dataTransfer.files)
+      : [];
+
+    uploadFileProcess(uploadedFiles);
+  };
+  const handleDelete = (index: number) => {
+    const updatedFiles = [...files];
+    updatedFiles.splice(index, 1);
+    setFiles(updatedFiles);
   };
 
-  const handleUpload = async () => {
-    if (!file) {
-      alert('Please select a file first!');
-      return;
-    }
-
-    const s3 = new S3({
-      region: 'your-region',
-      accessKeyId: 'your-access-key-id',
-      secretAccessKey: 'your-secret-access-key',
-    });
-
-    const params = {
-      Bucket: 'your-bucket-name',
-      Key: file.name,
-      Body: file,
-    };
-
-    try {
-      await s3.upload(params).promise();
-      alert('File uploaded successfully!');
-    } catch (error) {
-      console.error('Error uploading file:', error);
-      alert('Error uploading file. Please try again.');
-    }
+  const renderImages = () => {
+    return files.map((file, index) => (
+      <div key={index} style={{ display: 'inline-block', margin: '5px' }}>
+        <Image
+          src={URL.createObjectURL(file)}
+          alt={`Image ${index}`}
+          width={100}
+          height={100}
+        />
+        <button onClick={() => handleDelete(index)}>Delete</button>
+      </div>
+    ));
   };
 
   return (
     <div>
-      <input type="file" onChange={handleFileChange} />
+      <input
+        type="file"
+        ref={fileInputRef}
+        style={{ display: 'none' }}
+        onChange={handleFileChange}
+        accept=".jpg,.jpeg,.png,.webp"
+        multiple
+      />
       <div
+        className={styles.uploadImageArea}
         onDrop={handleFileDrop}
         onDragOver={(event) => event.preventDefault()}
-        style={{
-          border: '2px dashed #ccc',
-          padding: '20px',
-          marginTop: '20px',
-        }}
+        onClick={handleDivClick}
       >
-        Drop your file here
+        + 拖动或点击来添加图片
       </div>
-      <button onClick={handleUpload}>Upload</button>
+      <div>{renderImages()}</div>
     </div>
   );
 };
