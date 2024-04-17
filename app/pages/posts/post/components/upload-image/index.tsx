@@ -6,6 +6,10 @@ import { CloseButton } from 'react-bootstrap';
 
 const MAX_NUMBER = 9;
 
+function removeDuplicate(array: any[]): any[] {
+  return array.filter((item, index) => array.indexOf(item) === index);
+}
+
 export const S3Uploader: React.FC<{}> = () => {
   const [files, setFiles] = useState<File[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -23,7 +27,7 @@ export const S3Uploader: React.FC<{}> = () => {
   const uploadFileProcess = (uploadedFiles: File[]) => {
     const toAddFiles = uploadedFiles.slice(0, MAX_NUMBER - files.length);
 
-    const currentFiles = [...files, ...toAddFiles];
+    const currentFiles = removeDuplicate([...files, ...toAddFiles]);
     setFiles(currentFiles);
     uploadFiles(currentFiles);
   };
@@ -85,6 +89,9 @@ export const S3Uploader: React.FC<{}> = () => {
         onClick={handleDivClick}
       >
         + 拖动或点击来添加图片
+      </div>
+      <div className="text-muted  mt-1">
+        <small>添加图片来提高曝光度，图片不能重复，最多添加9张图片</small>
       </div>
       <div className={styles.imageDisplayArea}>{renderImages()}</div>
     </div>
