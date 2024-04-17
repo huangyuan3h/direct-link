@@ -11,6 +11,7 @@ import { Categories } from './components/categories';
 export const Post: React.FC = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { subject, content, categories } = state;
+
   const handleSubjectChange = (subject: string) => {
     dispatch(setSubject(subject));
   };
