@@ -3,6 +3,5 @@ export enum DragType {
 }
 
 export type ImageDragItem = {
-  index: number;
   file: File;
 };

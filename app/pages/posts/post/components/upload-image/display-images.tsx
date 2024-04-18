@@ -14,16 +14,19 @@ export const DisplayImages: React.FC<DisplayImagesProps> = ({
   images,
   onChange,
 }: DisplayImagesProps) => {
-  const handleDelete = (index: number) => {
+  const handleDelete = (name: string) => {
     const updatedFiles = [...images];
+    const index = updatedFiles.findIndex((file) => file.name === name);
     updatedFiles.splice(index, 1);
     onChange(updatedFiles);
   };
 
-  const handleDrop = (item: File, index: number, targetIndex: number) => {
+  const handleDrop = (item: File, targetIndex: number) => {
+    const index = images.findIndex((file) => file.name === item.name);
     if (index == targetIndex) {
       return;
     }
+
     const targetItem = images[targetIndex];
 
     const replaceTargetItem = images.toSpliced(targetIndex, 1, item);
@@ -44,7 +47,6 @@ export const DisplayImages: React.FC<DisplayImagesProps> = ({
           >
             <ImageItem
               file={file}
-              index={index}
               key={`image-item-${file.name}`}
               onDelete={handleDelete}
             />

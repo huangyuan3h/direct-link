@@ -5,7 +5,7 @@ import styles from './upload-image.module.scss';
 interface DropAreaProps {
   index: number;
   children: React.ReactNode;
-  onDrop: (item: File, index: number, targetIndex: number) => void;
+  onDrop: (item: File, targetIndex: number) => void;
 }
 
 export const DropArea: React.FC<DropAreaProps> = ({
@@ -14,7 +14,7 @@ export const DropArea: React.FC<DropAreaProps> = ({
   onDrop,
 }: DropAreaProps) => {
   const handleDrop = (item: ImageDragItem) => {
-    onDrop(item.file, item.index, index);
+    onDrop(item.file, index);
   };
 
   const [{ isOver }, drop] = useDrop(

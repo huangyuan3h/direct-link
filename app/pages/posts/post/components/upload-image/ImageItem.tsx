@@ -6,25 +6,23 @@ import { DragType, ImageDragItem } from './dragItem';
 
 interface ImageItemProps {
   file: File;
-  index: number;
-  onDelete: (index: number) => void;
+  onDelete: (name: string) => void;
 }
 
 export const ImageItem: React.FC<ImageItemProps> = ({
   file,
-  index,
   onDelete,
 }: ImageItemProps) => {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: DragType.Image,
-    item: { index, file } as ImageDragItem,
+    item: { file } as ImageDragItem,
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
   }));
 
   const handleDelete = () => {
-    onDelete(index);
+    onDelete(file.name);
   };
   return (
     <div
@@ -38,7 +36,7 @@ export const ImageItem: React.FC<ImageItemProps> = ({
     >
       <Image
         src={URL.createObjectURL(file)}
-        alt={`Image ${index}`}
+        alt={`Image ${file.name}`}
         width={100}
         height={100}
         className={styles.image}
