@@ -22,6 +22,11 @@ export const reducer = (
         ...state,
         categories: action.categories,
       };
+    case Action.SET_IMAGES:
+      return {
+        ...state,
+        images: [...action.images],
+      };
     default:
       return state;
   }

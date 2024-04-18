@@ -3,7 +3,7 @@ export type PostFormType = {
   subject: string;
   content: string;
   categories: string[];
-  images: string[];
+  images: File[];
   updatedDate?: string;
   createdDate?: string;
 };

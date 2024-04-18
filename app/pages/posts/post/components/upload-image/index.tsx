@@ -1,5 +1,4 @@
-import React, { useRef, useState } from 'react';
-import { S3 } from 'aws-sdk';
+import React, { useRef } from 'react';
 import styles from './upload-image.module.scss';
 
 import { DisplayImages } from './display-images';
@@ -21,8 +20,15 @@ function removeDuplicateFile(array: File[]): File[] {
   return uniqueFiles;
 }
 
-export const S3Uploader: React.FC<{}> = () => {
-  const [files, setFiles] = useState<File[]>([]);
+export interface ImageUploadViewProps {
+  images: File[];
+  onImageChange: (images: File[]) => void;
+}
+
+export const ImageUploadView: React.FC<ImageUploadViewProps> = ({
+  images,
+  onImageChange,
+}: ImageUploadViewProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleDivClick = () => {
@@ -31,16 +37,14 @@ export const S3Uploader: React.FC<{}> = () => {
     }
   };
 
-  const uploadFiles = (filesToUpload: File[]) => {
-    console.log('Uploading files:', filesToUpload);
-  };
-
   const uploadFileProcess = (uploadedFiles: File[]) => {
-    const toAddFiles = uploadedFiles.slice(0, MAX_NUMBER - files.length);
+    const toAddFiles = uploadedFiles.slice(0, MAX_NUMBER - images.length);
 
-    const currentFiles = removeDuplicateFile([...files, ...toAddFiles]);
-    setFiles(currentFiles);
-    uploadFiles(currentFiles);
+    const currentFiles = removeDuplicateFile([...images, ...toAddFiles]);
+    onImageChange(currentFiles);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,7 +65,7 @@ export const S3Uploader: React.FC<{}> = () => {
   };
 
   const handleChange = (files: File[]) => {
-    setFiles(files);
+    onImageChange(files);
   };
 
   return (
@@ -85,9 +89,9 @@ export const S3Uploader: React.FC<{}> = () => {
       <div className="text-muted  mt-1">
         <small>添加图片来提高曝光度，图片不能重复，最多添加9张图片</small>
       </div>
-      <DisplayImages images={files} onChange={handleChange} />
+      <DisplayImages images={images} onChange={handleChange} />
     </div>
   );
 };
 
-export default S3Uploader;
+export default ImageUploadView;
