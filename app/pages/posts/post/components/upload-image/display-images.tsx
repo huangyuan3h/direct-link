@@ -1,12 +1,9 @@
 import styles from './upload-image.module.scss';
-import Image from 'next/image';
-import { CloseButton } from 'react-bootstrap';
-import {
-  DragDropContext,
-  Droppable,
-  Draggable,
-  DropResult,
-} from 'react-beautiful-dnd';
+
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { ImageItem } from './ImageItem';
+import { DropArea } from './DropArea';
 
 export interface DisplayImagesProps {
   images: File[];
@@ -23,60 +20,37 @@ export const DisplayImages: React.FC<DisplayImagesProps> = ({
     onChange(updatedFiles);
   };
 
-  const handleDragEnd = (result: DropResult) => {
-    if (!result.destination) return;
+  const handleDrop = (item: File, index: number, targetIndex: number) => {
+    if (index == targetIndex) {
+      return;
+    }
+    const targetItem = images[targetIndex];
 
-    const newImages = Array.from(images);
-    const [removed] = newImages.splice(result.source.index, 1);
-    newImages.splice(result.destination.index, 0, removed);
+    const replaceTargetItem = images.toSpliced(targetIndex, 1, item);
 
-    onChange(newImages);
+    const swapperedFiles = replaceTargetItem.toSpliced(index, 1, targetItem);
+
+    onChange(swapperedFiles);
   };
 
   return (
-    <div>
-      <DragDropContext onDragEnd={handleDragEnd}>
-        <Droppable droppableId="imageGrid">
-          {(provided) => (
-            <div
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-              className={styles.imageDisplayArea}
-            >
-              {images.map((file, index) => (
-                <Draggable
-                  key={file.name}
-                  draggableId={file.name}
-                  index={index}
-                >
-                  {(provided) => (
-                    <div
-                      key={`display-image-${file.name}`}
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      className={styles.imageWrapper}
-                    >
-                      <Image
-                        src={URL.createObjectURL(file)}
-                        alt={`Image ${index}`}
-                        width={100}
-                        height={100}
-                        className={styles.image}
-                      />
-                      <CloseButton
-                        onClick={() => handleDelete(index)}
-                        className={styles.closeButton}
-                      />
-                    </div>
-                  )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
-    </div>
+    <DndProvider backend={HTML5Backend}>
+      <div className={styles.imageDisplayArea}>
+        {images.map((file, index) => (
+          <DropArea
+            index={index}
+            key={`drop-area-${file.name}`}
+            onDrop={handleDrop}
+          >
+            <ImageItem
+              file={file}
+              index={index}
+              key={`image-item-${file.name}`}
+              onDelete={handleDelete}
+            />
+          </DropArea>
+        ))}
+      </div>
+    </DndProvider>
   );
 };
