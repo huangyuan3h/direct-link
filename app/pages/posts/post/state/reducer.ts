@@ -17,7 +17,6 @@ export const reducer = (
         content: action.content,
       };
     case Action.SET_CATEGORIES:
-      console.log(action.categories);
       return {
         ...state,
         categories: action.categories,

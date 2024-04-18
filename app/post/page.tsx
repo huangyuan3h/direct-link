@@ -25,11 +25,11 @@ async function getData() {
 
 export default async function Home() {
   const data = await getData();
-  console.log(data); // todo: get the url of s3 to upload
+
   return (
     <main className="">
       <Header />
-      <Post />
+      <Post imageUrl={data.url} />
     </main>
   );
 }

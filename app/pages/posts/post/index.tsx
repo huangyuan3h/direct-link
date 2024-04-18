@@ -15,7 +15,11 @@ import { Categories } from './components/categories';
 import ImageUploadView from './components/upload-image';
 import { Button } from 'react-bootstrap';
 
-export const Post: React.FC = () => {
+interface PostProps {
+  imageUrl: string;
+}
+
+export const Post: React.FC<PostProps> = ({ imageUrl }: PostProps) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { subject, content, categories, images } = state;
 
@@ -33,6 +37,10 @@ export const Post: React.FC = () => {
   const handleImagesChange = (imgs: File[]) => {
     dispatch(setImages(imgs));
   };
+
+  const handleClickPost = () => {
+    console.log(imageUrl, state);
+  };
   return (
     <div className="container pt-8">
       <h5>发布帖子：</h5>
@@ -42,7 +50,9 @@ export const Post: React.FC = () => {
       <ImageUploadView images={images} onImageChange={handleImagesChange} />
 
       <div className="my-3 flex flex-row-reverse">
-        <Button className="primary">发布帖子</Button>
+        <Button className="primary" onClick={handleClickPost}>
+          发布帖子
+        </Button>
       </div>
     </div>
   );
