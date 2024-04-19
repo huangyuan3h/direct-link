@@ -1,5 +1,5 @@
 'use client';
-import { useReducer } from 'react';
+import { useReducer, useState } from 'react';
 import { SubjectInput } from './components/subject';
 import { reducer } from './state/reducer';
 import { initialState } from './state/state';
@@ -14,6 +14,9 @@ import 'react-quill/dist/quill.snow.css';
 import { Categories } from './components/categories';
 import ImageUploadView from './components/upload-image';
 import { Button } from 'react-bootstrap';
+import { uploadFiles } from './components/upload-image/uploadImageProcess';
+import { toast } from 'react-toastify';
+import { toastMessages } from '@/utils/toastMessage';
 
 interface PostProps {
   signedURLs: string[];
@@ -21,6 +24,7 @@ interface PostProps {
 
 export const Post: React.FC<PostProps> = ({ signedURLs }: PostProps) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [loading, setLoading] = useState(false);
   const { subject, content, categories, images } = state;
 
   const handleSubjectChange = (subject: string) => {
@@ -38,38 +42,30 @@ export const Post: React.FC<PostProps> = ({ signedURLs }: PostProps) => {
     dispatch(setImages(imgs));
   };
 
-  async function uploadFileToS3(url: string, file: File) {
-    try {
-      const response = await fetch(url, {
-        method: 'PUT',
-        body: file,
-        headers: {
-          'Content-Type': file.type,
-          'Content-Disposition': `attachment; filename="${file.name}"`,
-        },
-      });
-
-      return response.url.split('?')[0];
-    } catch (error) {
-      console.error('Error uploading file:', error);
-    }
-  }
-
-  async function uploadFiles(files: File[]) {
-    try {
-      const uploadPromises = files.map(
-        async (file, idx) => await uploadFileToS3(signedURLs[idx], file)
-      );
-
-      return Promise.all(uploadPromises);
-    } catch (error) {
-      console.error('Error uploading files:', error);
-    }
-  }
-
   const handleClickPost = async () => {
-    const responses = await uploadFiles(state.images);
-    console.log(responses);
+    setLoading(true);
+    // step 1 check if the content is satisified to post
+    if (subject.length < 6) {
+      toast.error('标题内容太少，再加点吧', {
+        position: 'top-center',
+      });
+      setLoading(false);
+      return;
+    }
+
+    // step 2: upload images
+    const response = await toast.promise(
+      uploadFiles(state.images, signedURLs),
+      {
+        success: toastMessages.UPLOAD_IMAGE_SUCCESS,
+        pending: toastMessages.UPLOAD_IMAGE_LOADING,
+        error: toastMessages.UPLOAD_IMAGE_ERROR,
+      },
+      { position: 'top-center' }
+    );
+
+    // step 3 post success and do redirect
+    console.log(response, state);
   };
   return (
     <div className="container pt-8">
@@ -80,7 +76,11 @@ export const Post: React.FC<PostProps> = ({ signedURLs }: PostProps) => {
       <ImageUploadView images={images} onImageChange={handleImagesChange} />
 
       <div className="my-3 flex flex-row-reverse">
-        <Button className="primary" onClick={handleClickPost}>
+        <Button
+          className="primary"
+          disabled={loading}
+          onClick={handleClickPost}
+        >
           发布帖子
         </Button>
       </div>
