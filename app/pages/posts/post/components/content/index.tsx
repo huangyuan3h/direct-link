@@ -29,6 +29,8 @@ const formats = [
   'indent',
 ];
 
+const MAX_LENGTH = 5000;
+
 export const ContentInput: React.FC<ContentProps> = ({
   content,
   onChange,
@@ -41,7 +43,7 @@ export const ContentInput: React.FC<ContentProps> = ({
   }, [content]);
 
   const handleChange = (v: string) => {
-    setContent(v);
+    setContent(v.substring(0, MAX_LENGTH));
   };
 
   const handleBlur = () => {
