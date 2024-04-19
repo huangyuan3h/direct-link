@@ -11,7 +11,7 @@ export interface ContentProps {
 const modules = {
   toolbar: [
     [{ header: [1, 2, 3, 4, false] }],
-    ['bold', 'italic', 'underline', 'strike'],
+    ['bold', 'italic', 'underline'],
     [{ list: 'ordered' }, { list: 'bullet' }],
     ['clean'],
   ],

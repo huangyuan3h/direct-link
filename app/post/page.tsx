@@ -4,32 +4,34 @@ import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { randomUUID } from 'crypto';
 
-async function getData() {
-  let url = '';
-  try {
-    const command = new PutObjectCommand({
-      ACL: 'public-read',
-      Key: randomUUID(),
-      Bucket: process.env.NEXT_PUBLIC_BUCKET_NAME,
-    });
+const MAX_NUMBER = 9;
 
-    const client = new S3Client({});
-    url = await getSignedUrl(client, command);
+const generateSignedURL = async (): Promise<string> => {
+  const uuid = randomUUID();
 
-    return { url };
-  } catch (error) {
-    console.error('Error:', error);
-    return { url: '' };
-  }
-}
+  const command = new PutObjectCommand({
+    ACL: 'public-read',
+    Key: randomUUID(),
+    Bucket: process.env.NEXT_PUBLIC_BUCKET_NAME,
+  });
+  return getSignedUrl(new S3Client({}), command);
+};
+
+const generateMultipleURLS = async (): Promise<string[]> => {
+  return Promise.all(
+    Array.from({ length: MAX_NUMBER }, async () => {
+      return await generateSignedURL();
+    })
+  );
+};
 
 export default async function Home() {
-  const data = await getData();
+  const urls = await generateMultipleURLS();
 
   return (
     <main className="">
       <Header />
-      <Post imageUrl={data.url} />
+      <Post signedURLs={urls} />
     </main>
   );
 }

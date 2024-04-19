@@ -37,8 +37,17 @@ export const ImageUploadView: React.FC<ImageUploadViewProps> = ({
     }
   };
 
+  const filterFilesBySize = (files: File[]) => {
+    const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+
+    return files.filter((file) => file.size <= maxSize);
+  };
+
   const uploadFileProcess = (uploadedFiles: File[]) => {
-    const toAddFiles = uploadedFiles.slice(0, MAX_NUMBER - images.length);
+    const toAddFiles = filterFilesBySize(uploadedFiles).slice(
+      0,
+      MAX_NUMBER - images.length
+    );
 
     const currentFiles = removeDuplicateFile([...images, ...toAddFiles]);
     onImageChange(currentFiles);
@@ -87,7 +96,9 @@ export const ImageUploadView: React.FC<ImageUploadViewProps> = ({
         + 拖动或点击来添加图片
       </div>
       <div className="text-muted  mt-1">
-        <small>添加图片来提高曝光度，图片不能重复，最多添加9张图片</small>
+        <small>
+          添加图片来提高曝光度，图片不能重复，最多添加9张图片(文件小于5mb)
+        </small>
       </div>
       <DisplayImages images={images} onChange={handleChange} />
     </div>

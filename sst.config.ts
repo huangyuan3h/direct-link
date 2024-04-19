@@ -14,20 +14,18 @@ export default {
   },
   stacks(app) {
     app.stack(function Site({ stack }) {
-      const bucket = new Bucket(stack, 'public');
+      const bucket = new Bucket(stack, 'public-image');
+
+      const customDomain = {
+        domainName: 'www.north-path.site',
+        isExternalDomain: true,
+        cdk: {
+          certificate: Certificate.fromCertificateArn(stack, 'MyCert', certArn),
+        },
+      };
 
       const site = new NextjsSite(stack, 'site', {
-        customDomain: {
-          domainName: 'www.north-path.site',
-          isExternalDomain: true,
-          cdk: {
-            certificate: Certificate.fromCertificateArn(
-              stack,
-              'MyCert',
-              certArn
-            ),
-          },
-        },
+        customDomain: stack.stage === 'prod' ? customDomain : undefined,
         bind: [bucket],
         environment: {
           NEXT_PUBLIC_BACKEND_API: process.env.NEXT_PUBLIC_BACKEND_API ?? '',

@@ -16,10 +16,10 @@ import ImageUploadView from './components/upload-image';
 import { Button } from 'react-bootstrap';
 
 interface PostProps {
-  imageUrl: string;
+  signedURLs: string[];
 }
 
-export const Post: React.FC<PostProps> = ({ imageUrl }: PostProps) => {
+export const Post: React.FC<PostProps> = ({ signedURLs }: PostProps) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { subject, content, categories, images } = state;
 
@@ -38,8 +38,38 @@ export const Post: React.FC<PostProps> = ({ imageUrl }: PostProps) => {
     dispatch(setImages(imgs));
   };
 
-  const handleClickPost = () => {
-    console.log(imageUrl, state);
+  async function uploadFileToS3(url: string, file: File) {
+    try {
+      const response = await fetch(url, {
+        method: 'PUT',
+        body: file,
+        headers: {
+          'Content-Type': file.type,
+          'Content-Disposition': `attachment; filename="${file.name}"`,
+        },
+      });
+
+      return response.url.split('?')[0];
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    }
+  }
+
+  async function uploadFiles(files: File[]) {
+    try {
+      const uploadPromises = files.map(
+        async (file, idx) => await uploadFileToS3(signedURLs[idx], file)
+      );
+
+      return Promise.all(uploadPromises);
+    } catch (error) {
+      console.error('Error uploading files:', error);
+    }
+  }
+
+  const handleClickPost = async () => {
+    const responses = await uploadFiles(state.images);
+    console.log(responses);
   };
   return (
     <div className="container pt-8">
