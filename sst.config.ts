@@ -1,5 +1,5 @@
 import { SSTConfig } from 'sst';
-import { NextjsSite } from 'sst/constructs';
+import { NextjsSite, Bucket } from 'sst/constructs';
 import { Certificate } from 'aws-cdk-lib/aws-certificatemanager';
 
 const certArn =
@@ -14,20 +14,22 @@ export default {
   },
   stacks(app) {
     app.stack(function Site({ stack }) {
-      const site = new NextjsSite(stack, 'site', {
-        customDomain: {
-          domainName: 'www.north-path.site',
-          isExternalDomain: true,
-          cdk: {
-            certificate: Certificate.fromCertificateArn(
-              stack,
-              'MyCert',
-              certArn
-            ),
-          },
+      const bucket = new Bucket(stack, 'public-image');
+
+      const customDomain = {
+        domainName: 'www.north-path.site',
+        isExternalDomain: true,
+        cdk: {
+          certificate: Certificate.fromCertificateArn(stack, 'MyCert', certArn),
         },
+      };
+
+      const site = new NextjsSite(stack, 'site', {
+        customDomain: stack.stage === 'prod' ? customDomain : undefined,
+        bind: [bucket],
         environment: {
           NEXT_PUBLIC_BACKEND_API: process.env.NEXT_PUBLIC_BACKEND_API ?? '',
+          NEXT_PUBLIC_BUCKET_NAME: bucket.bucketName,
         },
       });
 

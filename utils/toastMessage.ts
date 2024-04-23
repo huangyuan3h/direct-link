@@ -9,4 +9,9 @@ export const toastMessages = {
   LOADING: '加载中....',
   // error common
   REQUEST_ERROR: '请求失败，请稍后重试',
+
+  // post page
+  CREATE_POST_SUCCESS: '创建成功',
+  CREATE_POST_LOADING: '创建中...',
+  CREATE_POST_ERROR: '创建失败',
 };

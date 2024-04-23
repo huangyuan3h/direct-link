@@ -1,5 +1,5 @@
 import { Header } from '@/components/header';
-import IRCCContent from '@/app/pages/ircc';
+import IRCCContent from '@/app/pages/immigation/ircc';
 
 export default function RCIC() {
   return (

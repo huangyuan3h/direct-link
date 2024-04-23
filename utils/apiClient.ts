@@ -1,12 +1,19 @@
+import { parseCookies } from 'nookies';
+
 class APIClient {
   private static readonly baseUrl: string =
     process.env.NEXT_PUBLIC_BACKEND_API ?? '';
 
   async post(url: string, body: object): Promise<any> {
+    const cookies = parseCookies();
+    const authStr = cookies['Authorization'];
     const response = await fetch(APIClient.baseUrl + url, {
       method: 'POST',
       body: JSON.stringify(body),
       credentials: 'include',
+      headers: {
+        Authorization: authStr,
+      },
     });
     if (!response.ok) {
       throw new Error(`API call failed with status ${response.status}`);
