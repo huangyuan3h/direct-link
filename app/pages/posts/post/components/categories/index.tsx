@@ -29,7 +29,11 @@ export const Categories: React.FC<CategoriesProps> = ({
     const toAddVal = inputValue.trim();
 
     setInputValue('');
-    if (categories.includes(toAddVal) || categories.length === MAX_CATEOGRY) {
+    if (
+      categories.includes(toAddVal) ||
+      categories.length === MAX_CATEOGRY ||
+      toAddVal.length === 0
+    ) {
       return;
     }
 
@@ -50,6 +54,7 @@ export const Categories: React.FC<CategoriesProps> = ({
           value={inputValue}
           onChange={handleInputChange}
           onKeyDown={handleKeyDownPress}
+          maxLength={50}
         />
         <Button variant="outline-secondary" onClick={handleAddButtonClick}>
           添加
