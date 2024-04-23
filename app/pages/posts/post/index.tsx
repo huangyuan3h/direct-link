@@ -17,6 +17,10 @@ import { Button } from 'react-bootstrap';
 import { uploadFiles } from './components/upload-image/uploadImageProcess';
 import { toast } from 'react-toastify';
 import { toastMessages } from '@/utils/toastMessage';
+import APIClient from '@/utils/apiClient';
+import { useRouter } from 'next/navigation';
+import { routes } from '@/config/routes';
+import { PostResponseType } from '../types';
 
 interface PostProps {
   signedURLs: string[];
@@ -26,6 +30,8 @@ export const Post: React.FC<PostProps> = ({ signedURLs }: PostProps) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [loading, setLoading] = useState(false);
   const { subject, content, categories, images } = state;
+
+  const router = useRouter();
 
   const handleSubjectChange = (subject: string) => {
     dispatch(setSubject(subject));
@@ -53,19 +59,34 @@ export const Post: React.FC<PostProps> = ({ signedURLs }: PostProps) => {
       return;
     }
 
-    // step 2: upload images
-    const response = await toast.promise(
-      uploadFiles(state.images, signedURLs),
+    const postProcess = async () => {
+      // step 2: upload images
+      const images = await uploadFiles(state.images, signedURLs);
+
+      // step 3 post success and do redirect
+
+      const client = new APIClient();
+      const post = (await client.post('post/create', {
+        subject,
+        content,
+        categories,
+        images,
+      })) as PostResponseType;
+
+      setTimeout(() => {
+        router.push(routes.viewPost(post.id));
+      }, 3000);
+    };
+
+    await toast.promise(
+      postProcess(),
       {
-        success: toastMessages.UPLOAD_IMAGE_SUCCESS,
-        pending: toastMessages.UPLOAD_IMAGE_LOADING,
-        error: toastMessages.UPLOAD_IMAGE_ERROR,
+        success: toastMessages.CREATE_POST_SUCCESS,
+        pending: toastMessages.CREATE_POST_LOADING,
+        error: toastMessages.CREATE_POST_ERROR,
       },
       { position: 'top-center' }
     );
-
-    // step 3 post success and do redirect
-    console.log(response, state);
   };
   return (
     <div className="container pt-8">

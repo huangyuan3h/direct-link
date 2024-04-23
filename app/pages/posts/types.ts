@@ -7,3 +7,11 @@ export type PostFormType = {
   updatedDate?: string;
   createdDate?: string;
 };
+
+export type PostResponseType = {
+  id: string;
+  subject: string;
+  content: string;
+  categories: string[];
+  images: string[];
+};
