@@ -1,3 +1,4 @@
+import { View } from '@/app/pages/posts/view';
 import { Header } from '@/components/header';
 import APIClient from '@/utils/apiClient';
 
@@ -12,10 +13,10 @@ const getPostsById = async (id: string) => {
 
 export default async function Home({ params }: ViewPostParamsProps) {
   const posts = await getPostsById(params.id);
-  console.log(posts);
   return (
     <main className="">
       <Header />
+      <View {...posts} />
     </main>
   );
 }
