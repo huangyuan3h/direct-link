@@ -5,8 +5,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname:
-          'dev-north-path-site-publicbucket5c3dbab0-e3wdaigzrpyo.s3.us-east-1.amazonaws.com',
+        hostname: '**.s3.us-east-1.amazonaws.com',
         pathname: '/**',
       },
     ],

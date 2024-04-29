@@ -3,34 +3,18 @@ import Carousel from 'react-bootstrap/Carousel';
 import { CarouselGallery } from './CarouselGallery';
 
 import Image from 'next/image';
+import { breakpoints, goldenDivider } from './config';
+import { useWindowWidth } from './useWindowWidth';
 
 interface ImageCarouselProps {
   images: string[];
 }
 
-const breakpoints = {
-  sm: 768,
-};
-
-const goldenDivider = 0.618;
-
 const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
   const [index, setIndex] = useState<number>(0);
   const [showModal, setShowModal] = useState<boolean>(false);
 
-  const [windowWidth, setWidth] = useState(window.innerWidth);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setWidth(window.innerWidth);
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+  const windowWidth = useWindowWidth();
 
   // when no image, show nothing
   if (!images || images.length === 0) {
@@ -88,8 +72,6 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
         images={images}
         showModal={showModal}
         handleCloseModal={handleCloseModal}
-        handleSelect={handleSelect}
-        selectedIndex={index}
       />
     </>
   );

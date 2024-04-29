@@ -1,40 +1,45 @@
 import React from 'react';
-import Carousel from 'react-bootstrap/Carousel';
 import Modal from 'react-bootstrap/Modal';
+import Image from 'next/image';
+import { useWindowWidth } from './useWindowWidth';
+import { breakpoints, goldenDivider } from './config';
+import styles from './imageCarousel.module.scss';
+import clsx from 'clsx';
+import { CloseButton } from 'react-bootstrap';
 
 interface CarouselGalleryProps {
   images: string[];
   showModal: boolean;
   handleCloseModal: () => void;
-  handleSelect: (selectedIndex: number) => void;
-  selectedIndex: number;
 }
 
 export const CarouselGallery: React.FC<CarouselGalleryProps> = ({
   images,
   showModal,
   handleCloseModal,
-  handleSelect,
-  selectedIndex,
 }) => {
+  const windowWidth = useWindowWidth();
   return (
     <Modal show={showModal} onHide={handleCloseModal} fullscreen centered>
+      <Modal.Header closeButton={true}></Modal.Header>
       <Modal.Body>
-        <Carousel
-          activeIndex={selectedIndex}
-          onSelect={handleSelect}
-          indicators={false}
-        >
-          {images.map((imageUrl, i) => (
-            <Carousel.Item key={i}>
-              {/* <img
-                className="d-block w-100"
+        {windowWidth < breakpoints.sm ? (
+          <div className={clsx(styles.galleryArea)}>
+            {images.map((imageUrl, i) => (
+              <Image
                 src={imageUrl}
+                key={`image-gallery-${i}`}
                 alt={`Slide ${i}`}
-              /> */}
-            </Carousel.Item>
-          ))}
-        </Carousel>
+                width={800}
+                height={600}
+                style={{ height: windowWidth * goldenDivider }}
+                className={clsx(styles.galleryImage)}
+              />
+            ))}
+          </div>
+        ) : (
+          <div>desktop</div>
+        )}
       </Modal.Body>
     </Modal>
   );
