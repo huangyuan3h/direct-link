@@ -1,5 +1,6 @@
 import sanitizeHtml from 'sanitize-html';
-import './content.css';
+import styles from './content.module.scss';
+import clsx from 'clsx';
 
 export interface ContentProps {
   content: string;
@@ -10,7 +11,7 @@ export const Content: React.FC<ContentProps> = ({ content }: ContentProps) => {
 
   return (
     <div
-      className="mt-2 np-content"
+      className={clsx(styles.npContent, 'mt-2')}
       dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
     />
   );
