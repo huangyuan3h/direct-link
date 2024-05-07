@@ -5,6 +5,8 @@ import { CarouselGallery } from './CarouselGallery';
 import Image from 'next/image';
 import { breakpoints, goldenDivider } from './config';
 import { useWindowWidth } from './useWindowWidth';
+import { DesktopCarousel } from './DesktopCarousel';
+import { LoadingCarousel } from './LoadingCarousel';
 
 interface ImageCarouselProps {
   images: string[];
@@ -13,8 +15,16 @@ interface ImageCarouselProps {
 const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
   const [index, setIndex] = useState<number>(0);
   const [showModal, setShowModal] = useState<boolean>(false);
-
+  const [loading, setLoading] = useState<boolean>(true);
   const windowWidth = useWindowWidth();
+
+  useEffect(() => {
+    setLoading(false);
+  }, []);
+
+  if (loading) {
+    return <LoadingCarousel />;
+  }
 
   // when no image, show nothing
   if (!images || images.length === 0) {
@@ -65,7 +75,7 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
           ))}
         </Carousel>
       ) : (
-        <div>desktop</div>
+        <DesktopCarousel images={images} />
       )}
 
       <CarouselGallery
