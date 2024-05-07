@@ -75,7 +75,9 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
           ))}
         </Carousel>
       ) : (
-        <DesktopCarousel images={images} />
+        <div className="container">
+          <DesktopCarousel images={images} />
+        </div>
       )}
 
       <CarouselGallery
