@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import './content.scss';
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+import { Placeholder } from 'react-bootstrap';
 
 export interface ContentProps {
   content: string;
@@ -10,7 +10,6 @@ export interface ContentProps {
 
 const modules = {
   toolbar: [
-    [{ header: [1, 2, 3, 4, false] }],
     ['bold', 'italic', 'underline'],
     [{ list: 'ordered' }, { list: 'bullet' }],
     ['clean'],
@@ -30,6 +29,21 @@ const formats = [
 ];
 
 const MAX_LENGTH = 5000;
+
+const PlaceHolder = () => {
+  return (
+    <div className="ql-placeholder">
+      <Placeholder xs={12} bg="secondary" />
+      <Placeholder xs={12} bg="secondary" />
+      <Placeholder xs={12} bg="secondary" />
+    </div>
+  );
+};
+
+const ReactQuill = dynamic(() => import('react-quill'), {
+  ssr: false,
+  loading: () => <PlaceHolder />,
+});
 
 export const ContentInput: React.FC<ContentProps> = ({
   content,
