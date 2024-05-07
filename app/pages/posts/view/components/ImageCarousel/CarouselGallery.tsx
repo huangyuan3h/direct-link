@@ -5,7 +5,6 @@ import { useWindowWidth } from './useWindowWidth';
 import { breakpoints, goldenDivider } from './config';
 import styles from './imageCarousel.module.scss';
 import clsx from 'clsx';
-import { CloseButton } from 'react-bootstrap';
 
 interface CarouselGalleryProps {
   images: string[];
