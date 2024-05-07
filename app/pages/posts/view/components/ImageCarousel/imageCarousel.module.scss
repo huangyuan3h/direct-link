@@ -60,3 +60,15 @@
 .lastBottomImage {
   border-bottom-right-radius: 20px;
 }
+
+.galleryAreaDesktop {
+  display: flex;
+  flex-direction: row;
+  row-gap: 4px;
+  column-gap: 4px;
+  flex-wrap: wrap;
+  img {
+    width: calc(50% - 2px);
+    height: 33vw;
+  }
+}

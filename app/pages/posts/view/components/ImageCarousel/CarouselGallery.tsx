@@ -29,7 +29,7 @@ export const CarouselGallery: React.FC<CarouselGalleryProps> = ({
                 src={imageUrl}
                 key={`image-gallery-${i}`}
                 alt={`Slide ${i}`}
-                width={800}
+                width={600}
                 height={600}
                 style={{ height: windowWidth * goldenDivider }}
                 className={clsx(styles.galleryImage)}
@@ -37,7 +37,18 @@ export const CarouselGallery: React.FC<CarouselGalleryProps> = ({
             ))}
           </div>
         ) : (
-          <div>desktop</div>
+          <div className={clsx(styles.galleryAreaDesktop)}>
+            {images.map((imageUrl, i) => (
+              <Image
+                src={imageUrl}
+                key={`image-gallery-${i}`}
+                alt={`Slide ${i}`}
+                width={600}
+                height={600}
+                className={clsx(styles.galleryImage)}
+              />
+            ))}
+          </div>
         )}
       </Modal.Body>
     </Modal>
