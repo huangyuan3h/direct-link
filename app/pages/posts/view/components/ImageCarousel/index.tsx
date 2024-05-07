@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import Carousel from 'react-bootstrap/Carousel';
+
 import { CarouselGallery } from './CarouselGallery';
 
-import Image from 'next/image';
-import { breakpoints, goldenDivider } from './config';
+import { breakpoints } from './config';
 import { useWindowWidth } from './useWindowWidth';
 import { DesktopCarousel } from './DesktopCarousel';
 import { LoadingCarousel } from './LoadingCarousel';
+import { MobileCarousel } from './MobileCarousel';
 
 interface ImageCarouselProps {
   images: string[];
@@ -51,29 +51,12 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
   return (
     <>
       {windowWidth < breakpoints.sm ? (
-        <Carousel
-          activeIndex={index}
+        <MobileCarousel
+          index={index}
+          images={images}
           onSelect={handleSelect}
-          fade
-          indicators={false}
-        >
-          {images.map((imageUrl, i) => (
-            <Carousel.Item
-              key={i}
-              onClick={() => handleImageClick(i)}
-              style={{ cursor: 'pointer' }}
-            >
-              <Image
-                className="d-block w-100"
-                src={imageUrl}
-                alt={`Slide ${i}`}
-                width={800}
-                height={600}
-                style={{ height: windowWidth * goldenDivider }}
-              />
-            </Carousel.Item>
-          ))}
-        </Carousel>
+          onImageClick={handleImageClick}
+        />
       ) : (
         <div className="container">
           <DesktopCarousel images={images} />

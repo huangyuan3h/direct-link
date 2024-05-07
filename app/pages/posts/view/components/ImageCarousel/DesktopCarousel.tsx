@@ -3,12 +3,16 @@ import { useWindowWidth } from './useWindowWidth';
 import { breakpoints } from './config';
 import styles from './imageCarousel.module.scss';
 import clsx from 'clsx';
+import { MobileCarousel, MobileCarouselProps } from './MobileCarousel';
 
-export interface DesktopCarouselProps {
-  images: string[];
-}
+export interface DesktopCarouselProps extends MobileCarouselProps {}
 
-export const DesktopCarousel = ({ images }: DesktopCarouselProps) => {
+export const DesktopCarousel = ({
+  index,
+  images,
+  onSelect,
+  onImageClick,
+}: DesktopCarouselProps) => {
   const windowWidth = useWindowWidth();
 
   if (images.length === 0) {
@@ -17,15 +21,12 @@ export const DesktopCarousel = ({ images }: DesktopCarouselProps) => {
 
   if (windowWidth < breakpoints.md || images.length < 3) {
     return (
-      <div>
-        <Image
-          src={images[0]}
-          alt={`Slide ${1}`}
-          width={100}
-          height={100}
-          className={styles.carouselImage}
-        />
-      </div>
+      <MobileCarousel
+        index={index}
+        images={images}
+        onSelect={onSelect}
+        onImageClick={onImageClick}
+      />
     );
   }
 
@@ -36,8 +37,8 @@ export const DesktopCarousel = ({ images }: DesktopCarouselProps) => {
           <Image
             src={images[0]}
             alt={`Slide ${1}`}
-            width={100}
-            height={100}
+            width={600}
+            height={600}
             className={clsx(styles.carouselImage, styles.firstImage)}
           />
         </div>
@@ -48,15 +49,15 @@ export const DesktopCarousel = ({ images }: DesktopCarouselProps) => {
           <Image
             src={images[1]}
             alt={`Slide ${2}`}
-            width={100}
-            height={100}
+            width={600}
+            height={600}
             className={clsx(styles.carouselImage, styles.lastTopImage)}
           />
           <Image
             src={images[2]}
             alt={`Slide ${3}`}
-            width={100}
-            height={100}
+            width={600}
+            height={600}
             className={clsx(styles.carouselImage, styles.lastBottomImage)}
           />
         </div>
@@ -70,8 +71,8 @@ export const DesktopCarousel = ({ images }: DesktopCarouselProps) => {
         <Image
           src={images[0]}
           alt={`Slide ${1}`}
-          width={100}
-          height={100}
+          width={600}
+          height={600}
           className={clsx(styles.carouselImage, styles.firstImage)}
         />
       </div>
@@ -80,15 +81,15 @@ export const DesktopCarousel = ({ images }: DesktopCarouselProps) => {
         <Image
           src={images[1]}
           alt={`Slide ${2}`}
-          width={100}
-          height={100}
+          width={600}
+          height={600}
           className={clsx(styles.carouselImage)}
         />
         <Image
           src={images[2]}
           alt={`Slide ${3}`}
-          width={100}
-          height={100}
+          width={600}
+          height={600}
           className={clsx(styles.carouselImage)}
         />
       </div>
@@ -97,15 +98,15 @@ export const DesktopCarousel = ({ images }: DesktopCarouselProps) => {
         <Image
           src={images[3]}
           alt={`Slide ${4}`}
-          width={100}
-          height={100}
+          width={600}
+          height={600}
           className={clsx(styles.carouselImage, styles.lastTopImage)}
         />
         <Image
           src={images[4]}
           alt={`Slide ${5}`}
-          width={100}
-          height={100}
+          width={600}
+          height={600}
           className={clsx(styles.carouselImage, styles.lastBottomImage)}
         />
       </div>
