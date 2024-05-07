@@ -40,6 +40,7 @@ export const DesktopCarousel = ({
             width={600}
             height={600}
             className={clsx(styles.carouselImage, styles.firstImage)}
+            onClick={() => onImageClick(1)}
           />
         </div>
 
@@ -52,6 +53,7 @@ export const DesktopCarousel = ({
             width={600}
             height={600}
             className={clsx(styles.carouselImage, styles.lastTopImage)}
+            onClick={() => onImageClick(1)}
           />
           <Image
             src={images[2]}
@@ -59,6 +61,7 @@ export const DesktopCarousel = ({
             width={600}
             height={600}
             className={clsx(styles.carouselImage, styles.lastBottomImage)}
+            onClick={() => onImageClick(1)}
           />
         </div>
       </div>
@@ -74,6 +77,7 @@ export const DesktopCarousel = ({
           width={600}
           height={600}
           className={clsx(styles.carouselImage, styles.firstImage)}
+          onClick={() => onImageClick(1)}
         />
       </div>
 
@@ -84,6 +88,7 @@ export const DesktopCarousel = ({
           width={600}
           height={600}
           className={clsx(styles.carouselImage)}
+          onClick={() => onImageClick(1)}
         />
         <Image
           src={images[2]}
@@ -91,6 +96,7 @@ export const DesktopCarousel = ({
           width={600}
           height={600}
           className={clsx(styles.carouselImage)}
+          onClick={() => onImageClick(1)}
         />
       </div>
 
@@ -101,6 +107,7 @@ export const DesktopCarousel = ({
           width={600}
           height={600}
           className={clsx(styles.carouselImage, styles.lastTopImage)}
+          onClick={() => onImageClick(1)}
         />
         <Image
           src={images[4]}
@@ -108,6 +115,7 @@ export const DesktopCarousel = ({
           width={600}
           height={600}
           className={clsx(styles.carouselImage, styles.lastBottomImage)}
+          onClick={() => onImageClick(1)}
         />
       </div>
     </div>

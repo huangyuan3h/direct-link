@@ -59,7 +59,12 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
         />
       ) : (
         <div className="container">
-          <DesktopCarousel images={images} />
+          <DesktopCarousel
+            index={index}
+            images={images}
+            onSelect={handleSelect}
+            onImageClick={handleImageClick}
+          />
         </div>
       )}
 
