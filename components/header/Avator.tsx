@@ -41,12 +41,7 @@ export const Avator: React.FC<AvatorProps> = ({ className }) => {
       />
       <div>{user?.userName ?? '用户'}</div>
       {!user && (
-        <Button
-          className="hidden md:block"
-          variant="outline-primary"
-          size="sm"
-          onClick={handleClickLogin}
-        >
+        <Button variant="outline-primary" size="sm" onClick={handleClickLogin}>
           登陆
         </Button>
       )}

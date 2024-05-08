@@ -7,8 +7,6 @@ import { randomUUID } from 'crypto';
 const MAX_NUMBER = 9;
 
 const generateSignedURL = async (): Promise<string> => {
-  const uuid = randomUUID();
-
   const command = new PutObjectCommand({
     ACL: 'public-read',
     Key: randomUUID(),
