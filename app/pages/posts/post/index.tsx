@@ -22,11 +22,7 @@ import { useRouter } from 'next/navigation';
 import { routes } from '@/config/routes';
 import { PostResponseType } from '../types';
 
-interface PostProps {
-  signedURLs: string[];
-}
-
-export const Post: React.FC<PostProps> = ({ signedURLs }: PostProps) => {
+export const Post: React.FC = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [loading, setLoading] = useState(false);
   const { subject, content, categories, images } = state;
@@ -61,7 +57,7 @@ export const Post: React.FC<PostProps> = ({ signedURLs }: PostProps) => {
 
     const postProcess = async () => {
       // step 2: upload images
-      const images = await uploadFiles(state.images, signedURLs);
+      const images = await uploadFiles(state.images);
 
       // step 3 post success and do redirect
 

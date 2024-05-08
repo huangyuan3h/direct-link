@@ -15,10 +15,20 @@ export async function uploadFileToS3(url: string, file: File) {
   }
 }
 
-export async function uploadFiles(files: File[], signedURLs: string[]) {
+type ImageResponse = {
+  urls: string[];
+};
+
+export async function uploadFiles(files: File[]) {
+  const response = await (
+    await fetch(`/api/getUploadUrl/${files.length}`)
+  ).json();
+
+  const { urls } = response as unknown as ImageResponse;
+  debugger;
   try {
     const uploadPromises = files.map(
-      async (file, idx) => await uploadFileToS3(signedURLs[idx], file)
+      async (file, idx) => await uploadFileToS3(urls[idx], file)
     );
 
     return Promise.all(uploadPromises);
