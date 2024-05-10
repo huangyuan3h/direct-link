@@ -9,7 +9,7 @@ export type PostFormType = {
 };
 
 export type PostResponseType = {
-  id: string;
+  postId: string;
   subject: string;
   content: string;
   categories: string[];

@@ -70,7 +70,7 @@ export const Post: React.FC = () => {
       })) as PostResponseType;
 
       setTimeout(() => {
-        router.push(routes.viewPost(post.id));
+        router.push(routes.viewPost(post.postId));
       }, 3000);
     };
 
