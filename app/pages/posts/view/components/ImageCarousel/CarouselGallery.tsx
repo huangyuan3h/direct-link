@@ -2,10 +2,11 @@ import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Image from 'next/image';
 
-import { breakpoints, goldenDivider } from './config';
+import { goldenDivider } from './config';
 import styles from './imageCarousel.module.scss';
 import clsx from 'clsx';
 import { useWindowWidth } from '@/utils/hooks/useWindowWidth';
+import { breakpoints } from '@/utils/breakpoint';
 
 interface CarouselGalleryProps {
   images: string[];
