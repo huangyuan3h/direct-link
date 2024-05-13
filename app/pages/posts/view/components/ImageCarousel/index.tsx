@@ -3,10 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { CarouselGallery } from './CarouselGallery';
 
 import { breakpoints } from './config';
-import { useWindowWidth } from './useWindowWidth';
+
 import { DesktopCarousel } from './DesktopCarousel';
 import { LoadingCarousel } from './LoadingCarousel';
 import { MobileCarousel } from './MobileCarousel';
+import { useWindowWidth } from '@/utils/hooks/useWindowWidth';
 
 interface ImageCarouselProps {
   images: string[];

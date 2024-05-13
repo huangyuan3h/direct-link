@@ -1,9 +1,10 @@
 import Image from 'next/image';
-import { useWindowWidth } from './useWindowWidth';
+
 import { breakpoints } from './config';
 import styles from './imageCarousel.module.scss';
 import clsx from 'clsx';
 import { MobileCarousel, MobileCarouselProps } from './MobileCarousel';
+import { useWindowWidth } from '@/utils/hooks/useWindowWidth';
 
 export interface DesktopCarouselProps extends MobileCarouselProps {}
 
