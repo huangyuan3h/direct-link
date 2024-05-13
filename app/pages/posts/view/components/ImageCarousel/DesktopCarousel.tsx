@@ -31,7 +31,7 @@ export const DesktopCarousel = ({
     );
   }
 
-  if (windowWidth < breakpoints.large || images.length < 5) {
+  if (windowWidth < breakpoints.lg || images.length < 5) {
     return (
       <div className={clsx(styles.desktopLayoutRow)}>
         <div className={styles.imageLargeSize}>
