@@ -15,8 +15,6 @@ export const useColumnNumber = (): number => {
   if (windowWidth < breakpoints.lg) {
     return 4;
   }
-  if (windowWidth < breakpoints.xl) {
-    return 5;
-  }
-  return 6;
+
+  return 5;
 };

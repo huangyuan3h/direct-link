@@ -9,6 +9,7 @@ import styles from './index.module.scss';
 import useSWR from 'swr';
 
 const gap = 16;
+const refreshedTime = 50;
 
 const getPosts = async (): Promise<PostsResponse> => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}posts`, {
@@ -44,31 +45,33 @@ export const PostList: React.FC = () => {
   }, [isLoading, data]);
 
   useEffect(() => {
-    if (!ref.current || columnNum === 0) {
-      return;
-    }
-    const elements = ref.current.children;
+    setTimeout(() => {
+      if (!ref.current || columnNum === 0) {
+        return;
+      }
+      const elements = ref.current.children;
 
-    const newTopPostions: number[] = [];
+      const newTopPostions: number[] = [];
 
-    for (let i = 0; i < elements.length; i++) {
-      const rowNumber = Number.parseInt(`${i / columnNum}`, 10);
+      for (let i = 0; i < elements.length; i++) {
+        const rowNumber = Number.parseInt(`${i / columnNum}`, 10);
 
-      if (rowNumber === 0) {
-        newTopPostions.push(gap);
-        continue;
+        if (rowNumber === 0) {
+          newTopPostions.push(gap);
+          continue;
+        }
+
+        const previousTop = newTopPostions[i - columnNum];
+
+        const previousElement = elements[i - columnNum];
+
+        const currentTop = previousTop + previousElement.clientHeight;
+
+        newTopPostions.push(currentTop);
       }
 
-      const previousTop = newTopPostions[i - columnNum];
-
-      const previousElement = elements[i - columnNum];
-
-      const currentTop = previousTop + previousElement.clientHeight;
-
-      newTopPostions.push(currentTop);
-    }
-
-    setTopPostions(newTopPostions);
+      setTopPostions(newTopPostions);
+    }, refreshedTime);
   }, [posts.length, columnNum, windowWidth]);
 
   const itemWidth = (windowWidth - (columnNum + 1) * gap) / columnNum;
