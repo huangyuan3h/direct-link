@@ -9,7 +9,7 @@ import styles from './index.module.scss';
 import useSWR from 'swr';
 
 const gap = 16;
-const refreshedTime = 50;
+const AnimationGap = 200; // second refresh to avoid shake
 
 const getPosts = async (): Promise<PostsResponse> => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}posts`, {
@@ -33,6 +33,7 @@ export const PostList: React.FC = () => {
 
   const [nextToken, setNextToken] = useState<string>('');
   const [postTopPostions, setTopPostions] = useState<number[]>([]);
+  const [postLeftPositions, setPostLeftPositions] = useState<number[]>([]);
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -41,40 +42,50 @@ export const PostList: React.FC = () => {
       setPosts(data?.results);
       setNextToken(data?.next_token);
       setTopPostions(Array(data?.results.length).fill(0));
+      setPostLeftPositions(Array(data?.results.length).fill(0));
     }
   }, [isLoading, data]);
 
+  const itemWidth = (windowWidth - (columnNum + 1) * gap) / columnNum;
+
   useEffect(() => {
-    setTimeout(() => {
+    const updateLayoutFn = () => {
       if (!ref.current || columnNum === 0) {
         return;
       }
+
       const elements = ref.current.children;
 
-      const newTopPostions: number[] = [];
+      const newTopPosition: number[] = [];
+      const newLeftPosition: number[] = [];
 
       for (let i = 0; i < elements.length; i++) {
         const rowNumber = Number.parseInt(`${i / columnNum}`, 10);
+        const columnPosition = i % columnNum;
 
-        if (rowNumber === 0) {
-          newTopPostions.push(gap);
-          continue;
+        let actualTop = 0;
+        let actualLeft = columnPosition * (gap + itemWidth);
+
+        if (rowNumber !== 0) {
+          const previousTop = newTopPosition[i - columnNum];
+
+          const previousElement = elements[i - columnNum];
+
+          actualTop = previousTop + previousElement.clientHeight;
         }
 
-        const previousTop = newTopPostions[i - columnNum];
-
-        const previousElement = elements[i - columnNum];
-
-        const currentTop = previousTop + previousElement.clientHeight;
-
-        newTopPostions.push(currentTop);
+        newTopPosition.push(actualTop);
+        newLeftPosition.push(actualLeft);
       }
 
-      setTopPostions(newTopPostions);
-    }, refreshedTime);
-  }, [posts.length, columnNum, windowWidth]);
-
-  const itemWidth = (windowWidth - (columnNum + 1) * gap) / columnNum;
+      setTopPostions(newTopPosition);
+      setPostLeftPositions(newLeftPosition);
+    };
+    updateLayoutFn();
+    setTimeout(() => {
+      updateLayoutFn();
+    }, AnimationGap);
+  }, [posts.length, columnNum, windowWidth, itemWidth]);
 
   if (isLoading) {
     return <div>loading...</div>;
@@ -83,8 +94,6 @@ export const PostList: React.FC = () => {
   return (
     <div className={styles.scrollArea} ref={ref}>
       {posts.map((p, idx) => {
-        const columnPosition = idx % columnNum;
-
         return (
           <PostTile
             key={`post-tile-${idx}`}
@@ -93,8 +102,7 @@ export const PostList: React.FC = () => {
             postId={p.postId}
             style={{
               width: itemWidth,
-              left: gap + columnPosition * (gap + itemWidth),
-              top: postTopPostions[idx],
+              transform: `translate(${postLeftPositions[idx]}px, ${postTopPostions[idx]}px)`,
             }}
           />
         );
