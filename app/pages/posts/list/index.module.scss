@@ -1,4 +1,10 @@
 .scrollArea {
   position: relative;
   padding: 16px;
+  overflow-y: scroll;
+  height: calc(100vh - 60px);
+  &::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+  }
 }
