@@ -2,7 +2,7 @@
 
 import { useColumnNumber } from './utils/layout';
 import { PostType, PostsResponse } from '../types';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { PostTile } from './components/PostTile';
 import { useWindowWidth } from '@/utils/hooks/useWindowWidth';
 import styles from './index.module.scss';
@@ -31,13 +31,45 @@ export const PostList: React.FC = () => {
   const [posts, setPosts] = useState<PostType[]>([]);
 
   const [nextToken, setNextToken] = useState<string>('');
+  const [postTopPostions, setTopPostions] = useState<number[]>([]);
+
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!isLoading && data?.results) {
       setPosts(data?.results);
       setNextToken(data?.next_token);
+      setTopPostions(Array(data?.results.length).fill(0));
     }
   }, [isLoading, data]);
+
+  useEffect(() => {
+    if (!ref.current || columnNum === 0) {
+      return;
+    }
+    const elements = ref.current.children;
+
+    const newTopPostions: number[] = [];
+
+    for (let i = 0; i < elements.length; i++) {
+      const rowNumber = Number.parseInt(`${i / columnNum}`, 10);
+
+      if (rowNumber === 0) {
+        newTopPostions.push(gap);
+        continue;
+      }
+
+      const previousTop = newTopPostions[i - columnNum];
+
+      const previousElement = elements[i - columnNum];
+
+      const currentTop = previousTop + previousElement.clientHeight;
+
+      newTopPostions.push(currentTop);
+    }
+
+    setTopPostions(newTopPostions);
+  }, [posts.length, columnNum, windowWidth]);
 
   const itemWidth = (windowWidth - (columnNum + 1) * gap) / columnNum;
 
@@ -46,7 +78,7 @@ export const PostList: React.FC = () => {
   }
 
   return (
-    <div className={styles.scrollArea}>
+    <div className={styles.scrollArea} ref={ref}>
       {posts.map((p, idx) => {
         const columnPosition = idx % columnNum;
 
@@ -59,6 +91,7 @@ export const PostList: React.FC = () => {
             style={{
               width: itemWidth,
               left: gap + columnPosition * (gap + itemWidth),
+              top: postTopPostions[idx],
             }}
           />
         );
