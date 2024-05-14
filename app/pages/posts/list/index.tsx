@@ -1,44 +1,68 @@
 'use client';
 
-import { useComponentInitialized } from '@/utils/hooks/useComponentInitialized';
 import { useColumnNumber } from './utils/layout';
 import { PostType, PostsResponse } from '../types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PostTile } from './components/PostTile';
 import { useWindowWidth } from '@/utils/hooks/useWindowWidth';
 import styles from './index.module.scss';
+import useSWR from 'swr';
 
-export const PostList: React.FC<PostsResponse> = ({
-  results: ps,
-  next_token,
-}: PostsResponse) => {
+const gap = 16;
+
+const getPosts = async (): Promise<PostsResponse> => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}posts`, {
+    method: 'POST',
+    body: JSON.stringify({
+      limit: 50,
+      next_token: '',
+      category: '',
+    }),
+  });
+  return response.json();
+};
+
+export const PostList: React.FC = () => {
   const windowWidth = useWindowWidth();
   const columnNum = useColumnNumber();
-  const initialized = useComponentInitialized();
 
-  const [posts, setPosts] = useState<PostType[]>(ps);
+  const { data, isLoading } = useSWR('api/posts', getPosts);
 
-  const [nextToken, setNextToken] = useState<string>(next_token);
+  const [posts, setPosts] = useState<PostType[]>([]);
 
-  const itemWidth = windowWidth / columnNum;
+  const [nextToken, setNextToken] = useState<string>('');
 
-  console.log(posts, nextToken);
+  useEffect(() => {
+    if (!isLoading && data?.results) {
+      setPosts(data?.results);
+      setNextToken(data?.next_token);
+    }
+  }, [isLoading, data]);
 
-  console.log(itemWidth);
-  if (columnNum === 0 || !initialized) {
-    return <div>loading..</div>;
+  const itemWidth = (windowWidth - (columnNum + 1) * gap) / columnNum;
+
+  if (isLoading) {
+    return <div>loading...</div>;
   }
-
-  const firstItem = posts[0];
 
   return (
     <div className={styles.scrollArea}>
-      <PostTile
-        subject={firstItem.subject}
-        images={firstItem.images}
-        postId={firstItem.postId}
-        style={{ width: itemWidth }}
-      />
+      {posts.map((p, idx) => {
+        const columnPosition = idx % columnNum;
+
+        return (
+          <PostTile
+            key={`post-tile-${idx}`}
+            subject={p.subject}
+            images={p.images}
+            postId={p.postId}
+            style={{
+              width: itemWidth,
+              left: gap + columnPosition * (gap + itemWidth),
+            }}
+          />
+        );
+      })}
     </div>
   );
 };
