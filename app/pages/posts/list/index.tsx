@@ -44,6 +44,7 @@ export const PostList: React.FC = () => {
   const [postLeftPositions, setPostLeftPositions] = useState<number[]>([]);
   const [loadMoreData, setLoadMoreData] = useState(false);
   const [isImageLoaded, setImageLoaded] = useState(false);
+  const [imagesLoadedCount, setImagesLoadedCount] = useState(0);
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -63,35 +64,21 @@ export const PostList: React.FC = () => {
     if (!isLoading && data?.results) {
       appendDataToPosts(data?.results);
       setNextToken(data?.next_token);
-      setImageLoaded(false);
     }
   }, [isLoading, data, appendDataToPosts]);
+
+  useEffect(() => {
+    setImageLoaded(false);
+  }, [posts.length]);
 
   const itemWidth = (windowWidth - (columnNum + 1) * gap) / columnNum;
 
   useEffect(() => {
-    if (isLoading || !data?.results || data.results.length === 0) return;
-    const imagePromises = data?.results.map(
-      (posts) =>
-        new Promise((resolve, reject) => {
-          if (!posts.images || posts.images.length === 0) {
-            return;
-          }
-          const img = new Image();
-          img.onload = resolve;
-          img.onerror = reject;
-          img.src = posts.images[0];
-        })
-    );
-
-    Promise.all(imagePromises)
-      .then(() => {
-        setImageLoaded(true);
-      })
-      .catch((error) => {
-        console.error('An error occurred while loading images:', error);
-      });
-  }, [isLoading, data]);
+    if (imagesLoadedCount === data?.results.length) {
+      setImageLoaded(true);
+      setImagesLoadedCount(0);
+    }
+  }, [imagesLoadedCount, data?.results.length]);
 
   useEffect(() => {
     const updateLayoutFn = () => {
@@ -124,9 +111,8 @@ export const PostList: React.FC = () => {
       setTopPostions(newTopPosition);
       setPostLeftPositions(newLeftPosition);
     };
-    setTimeout(() => {
-      updateLayoutFn();
-    }, 100);
+
+    updateLayoutFn();
   }, [columnNum, itemWidth, isImageLoaded]);
 
   // loading more data
@@ -177,6 +163,9 @@ export const PostList: React.FC = () => {
             style={{
               width: itemWidth,
               transform: `translate(${postLeftPositions[idx]}px, ${postTopPostions[idx]}px)`,
+            }}
+            onImageloaded={() => {
+              setImagesLoadedCount((prevCount) => prevCount + 1);
             }}
           />
         );

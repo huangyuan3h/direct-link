@@ -7,6 +7,7 @@ import { CSSProperties } from 'react';
 export interface PostTileProps
   extends Pick<PostType, 'postId' | 'subject' | 'images'> {
   style?: CSSProperties;
+  onImageloaded: () => void;
 }
 
 const noImageURL = '/images/no-image.png';
@@ -22,6 +23,7 @@ export const PostTile: React.FC<PostTileProps> = ({
   subject,
   images,
   style,
+  onImageloaded,
 }: PostTileProps) => {
   const coverImage = getCovderImage(images);
 
@@ -30,7 +32,13 @@ export const PostTile: React.FC<PostTileProps> = ({
       <Link href={`post/${postId}`} className={styles.link}>
         <div className="relative">
           <div className={styles.ImageArea}>
-            <Image src={coverImage} alt={subject} width={600} height={600} />
+            <Image
+              src={coverImage}
+              alt={subject}
+              width={600}
+              height={600}
+              onLoad={onImageloaded}
+            />
           </div>
         </div>
 
