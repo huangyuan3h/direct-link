@@ -1,5 +1,6 @@
 import { Header } from '../components/header';
 import { PostList } from './pages/posts/list';
+import { PostsResponse } from './pages/posts/types';
 
 export default function Home() {
   return (

@@ -9,13 +9,11 @@ import { Title } from './components/Title';
 interface ViewProps extends PostResponseType {}
 
 export const View: React.FC<ViewProps> = ({
-  id,
   subject,
   content,
   categories,
   images,
 }: ViewProps) => {
-  console.log(id, subject, content, categories, images);
   return (
     <div>
       <div className="container">

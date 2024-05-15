@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { MAX_HEIGHT, breakpoints, goldenDivider } from './config';
-import { useWindowWidth } from './useWindowWidth';
+import { MAX_HEIGHT, goldenDivider } from './config';
+import { useWindowWidth } from '@/utils/hooks/useWindowWidth';
+import { breakpoints } from '@/utils/breakpoint';
 
 export const LoadingCarousel: React.FC = () => {
   const windowWidth = useWindowWidth();

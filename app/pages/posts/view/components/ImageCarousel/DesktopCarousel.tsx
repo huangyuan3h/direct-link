@@ -1,9 +1,10 @@
 import Image from 'next/image';
-import { useWindowWidth } from './useWindowWidth';
-import { breakpoints } from './config';
+
 import styles from './imageCarousel.module.scss';
 import clsx from 'clsx';
 import { MobileCarousel, MobileCarouselProps } from './MobileCarousel';
+import { useWindowWidth } from '@/utils/hooks/useWindowWidth';
+import { breakpoints } from '@/utils/breakpoint';
 
 export interface DesktopCarouselProps extends MobileCarouselProps {}
 
@@ -30,7 +31,7 @@ export const DesktopCarousel = ({
     );
   }
 
-  if (windowWidth < breakpoints.large || images.length < 5) {
+  if (windowWidth < breakpoints.lg || images.length < 5) {
     return (
       <div className={clsx(styles.desktopLayoutRow)}>
         <div className={styles.imageLargeSize}>

@@ -25,7 +25,6 @@ export async function uploadFiles(files: File[]) {
   ).json();
 
   const { urls } = response as unknown as ImageResponse;
-  debugger;
   try {
     const uploadPromises = files.map(
       async (file, idx) => await uploadFileToS3(urls[idx], file)

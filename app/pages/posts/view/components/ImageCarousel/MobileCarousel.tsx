@@ -1,10 +1,11 @@
 import Carousel from 'react-bootstrap/Carousel';
 
 import Image from 'next/image';
-import { useWindowWidth } from './useWindowWidth';
+
 import { goldenDivider } from './config';
 import clsx from 'clsx';
 import styles from './imageCarousel.module.scss';
+import { useWindowWidth } from '@/utils/hooks/useWindowWidth';
 
 export interface MobileCarouselProps {
   index: number;
