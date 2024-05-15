@@ -12,7 +12,7 @@ export interface PostTileProps
 
 const noImageURL = '/images/no-image.png';
 
-const getCovderImage = (images?: string[]): string => {
+const getCoverImage = (images?: string[]): string => {
   if (!images || images.length === 0) return noImageURL;
 
   return images[0];
@@ -25,7 +25,7 @@ export const PostTile: React.FC<PostTileProps> = ({
   style,
   onImageloaded,
 }: PostTileProps) => {
-  const coverImage = getCovderImage(images);
+  const coverImage = getCoverImage(images);
 
   return (
     <div className={styles.postTileArea} style={style}>

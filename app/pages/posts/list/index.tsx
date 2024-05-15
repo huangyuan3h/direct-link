@@ -18,15 +18,19 @@ const getPosts = async (
   nextToken: string,
   category: string
 ): Promise<PostsResponse> => {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}posts`, {
-    method: 'POST',
-    body: JSON.stringify({
-      limit,
-      next_token: nextToken,
-      category,
-    }),
-  });
-  return response.json();
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_API}posts`,
+      {
+        method: 'POST',
+        body: JSON.stringify({ limit, next_token: nextToken, category }),
+      }
+    );
+    return response.json();
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+    return { results: [], next_token: '' };
+  }
 };
 
 export const PostList: React.FC = () => {
@@ -153,13 +157,13 @@ export const PostList: React.FC = () => {
 
   return (
     <div className={styles.scrollArea} ref={ref}>
-      {posts.map((p, idx) => {
+      {posts.map((post, idx) => {
         return (
           <PostTile
             key={`post-tile-${idx}`}
-            subject={p.subject}
-            images={p.images}
-            postId={p.postId}
+            subject={post.subject}
+            images={post.images}
+            postId={post.postId}
             style={{
               width: itemWidth,
               transform: `translate(${postLeftPositions[idx]}px, ${postTopPostions[idx]}px)`,
