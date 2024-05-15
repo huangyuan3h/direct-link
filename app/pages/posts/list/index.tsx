@@ -2,22 +2,28 @@
 
 import { useColumnNumber } from './utils/layout';
 import { PostType, PostsResponse } from '../types';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { PostTile } from './components/PostTile';
 import { useWindowWidth } from '@/utils/hooks/useWindowWidth';
 import styles from './index.module.scss';
 import useSWR from 'swr';
 
 const gap = 16;
-const AnimationGap = 200; // second refresh to avoid shake
 
-const getPosts = async (): Promise<PostsResponse> => {
+const limit = 20; // each time fetch posts number
+
+const reachBottomPercentage = 60; // when reach 60% load next page
+
+const getPosts = async (
+  nextToken: string,
+  category: string
+): Promise<PostsResponse> => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}posts`, {
     method: 'POST',
     body: JSON.stringify({
-      limit: 50,
-      next_token: '',
-      category: '',
+      limit,
+      next_token: nextToken,
+      category,
     }),
   });
   return response.json();
@@ -26,66 +32,134 @@ const getPosts = async (): Promise<PostsResponse> => {
 export const PostList: React.FC = () => {
   const windowWidth = useWindowWidth();
   const columnNum = useColumnNumber();
+  const [nextToken, setNextToken] = useState<string>('');
 
-  const { data, isLoading } = useSWR('api/posts', getPosts);
+  const { data, isLoading, mutate } = useSWR(`api/posts`, () =>
+    getPosts(nextToken, '')
+  );
 
   const [posts, setPosts] = useState<PostType[]>([]);
 
-  const [nextToken, setNextToken] = useState<string>('');
   const [postTopPostions, setTopPostions] = useState<number[]>([]);
   const [postLeftPositions, setPostLeftPositions] = useState<number[]>([]);
+  const [loadMoreData, setLoadMoreData] = useState(false);
+  const [isImageLoaded, setImageLoaded] = useState(false);
 
   const ref = useRef<HTMLDivElement>(null);
 
+  const appendDataToPosts = useCallback((newData: PostType[]) => {
+    setPosts((prevPosts) => {
+      const existingIds = new Set(prevPosts.map((post) => post.postId));
+
+      const uniqueNewData = newData.filter(
+        (post) => !existingIds.has(post.postId)
+      );
+
+      return [...prevPosts, ...uniqueNewData];
+    });
+  }, []);
+
   useEffect(() => {
     if (!isLoading && data?.results) {
-      setPosts(data?.results);
+      appendDataToPosts(data?.results);
       setNextToken(data?.next_token);
-      setTopPostions(Array(data?.results.length).fill(0));
-      setPostLeftPositions(Array(data?.results.length).fill(0));
+      setImageLoaded(false);
     }
-  }, [isLoading, data]);
+  }, [isLoading, data, appendDataToPosts]);
 
   const itemWidth = (windowWidth - (columnNum + 1) * gap) / columnNum;
 
   useEffect(() => {
+    if (isLoading || !data?.results || data.results.length === 0) return;
+    const imagePromises = data?.results.map(
+      (posts) =>
+        new Promise((resolve, reject) => {
+          if (!posts.images || posts.images.length === 0) {
+            return;
+          }
+          const img = new Image();
+          img.onload = resolve;
+          img.onerror = reject;
+          img.src = posts.images[0];
+        })
+    );
+
+    Promise.all(imagePromises)
+      .then(() => {
+        setImageLoaded(true);
+      })
+      .catch((error) => {
+        console.error('An error occurred while loading images:', error);
+      });
+  }, [isLoading, data]);
+
+  useEffect(() => {
     const updateLayoutFn = () => {
-      if (!ref.current || columnNum === 0) {
+      if (!ref.current || columnNum === 0 || !isImageLoaded) {
         return;
       }
 
       const elements = ref.current.children;
+      const elementsHeight = Array.from(elements).map(
+        (ele) => ele.clientHeight
+      );
 
       const newTopPosition: number[] = [];
       const newLeftPosition: number[] = [];
 
       for (let i = 0; i < elements.length; i++) {
-        const rowNumber = Number.parseInt(`${i / columnNum}`, 10);
         const columnPosition = i % columnNum;
-
-        let actualTop = 0;
         let actualLeft = columnPosition * (gap + itemWidth);
 
-        if (rowNumber !== 0) {
-          const previousTop = newTopPosition[i - columnNum];
+        const previousItemsHeight = elementsHeight
+          .filter((_, idx) => {
+            return idx < i && idx % columnNum === columnPosition;
+          })
+          .reduce((prev, currentVal) => prev + currentVal, 0);
 
-          const previousElement = elements[i - columnNum];
-
-          actualTop = previousTop + previousElement.clientHeight;
-        }
-
-        newTopPosition.push(actualTop);
+        newTopPosition.push(previousItemsHeight);
         newLeftPosition.push(actualLeft);
       }
 
       setTopPostions(newTopPosition);
       setPostLeftPositions(newLeftPosition);
     };
-    updateLayoutFn();
     setTimeout(() => {
       updateLayoutFn();
-    }, AnimationGap);
-  }, [posts.length, columnNum, windowWidth, itemWidth]);
+    }, 100);
+  }, [columnNum, itemWidth, isImageLoaded]);
+
+  // loading more data
+
+  useEffect(() => {
+    const container = ref.current;
+
+    const handleScroll = () => {
+      const { scrollHeight, clientHeight, scrollTop } = ref.current!;
+
+      const scrollPercentage =
+        (scrollTop / (scrollHeight - clientHeight)) * 100;
+
+      setLoadMoreData(scrollPercentage >= reachBottomPercentage && !isLoading);
+    };
+
+    if (container) {
+      container.addEventListener('scroll', handleScroll);
+    }
+
+    return () => {
+      if (container) {
+        container.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }, [isLoading]);
+
+  useEffect(() => {
+    if (!loadMoreData || nextToken === '') return;
+    mutate().then(() => {
+      setLoadMoreData(false);
+    });
+  }, [loadMoreData, mutate, nextToken]);
 
   if (isLoading) {
     return <div>loading...</div>;
