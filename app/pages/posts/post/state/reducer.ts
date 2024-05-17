@@ -11,15 +11,20 @@ export const reducer = (
         ...state,
         subject: action.subject,
       };
+    case Action.SET_CATEGORY:
+      return {
+        ...state,
+        category: action.category,
+      };
     case Action.SET_CONTENT:
       return {
         ...state,
         content: action.content,
       };
-    case Action.SET_CATEGORIES:
+    case Action.SET_TOPICS:
       return {
         ...state,
-        categories: action.categories,
+        topics: action.topics,
       };
     case Action.SET_IMAGES:
       return {

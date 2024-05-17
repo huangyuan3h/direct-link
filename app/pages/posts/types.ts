@@ -2,7 +2,9 @@ export type PostFormType = {
   postId?: string;
   subject: string;
   content: string;
-  categories: string[];
+  topics: string[];
+  category: string;
+  location: string;
   images: File[];
   updatedDate?: string;
   createdDate?: string;
@@ -12,7 +14,9 @@ export type PostType = {
   postId?: string;
   subject: string;
   content: string;
-  categories: string[];
+  category: string;
+  location: string;
+  topics: string[];
   images: string[];
   updatedDate?: string;
   createdDate?: string;
@@ -22,7 +26,9 @@ export type PostResponseType = {
   postId: string;
   subject: string;
   content: string;
-  categories: string[];
+  category: string;
+  location: string;
+  topics: string[];
   images: string[];
 };
 

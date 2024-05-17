@@ -16,32 +16,32 @@ export const menuConfig: MenuInterface[] = [
       {
         key: 'all',
         title: '全部',
-        url: '/in-developing',
+        url: '/',
       },
       {
         key: 'studying-abroad',
         title: '留学',
-        url: '/in-developing',
+        url: '/posts/studying-abroad',
       },
       {
         key: 'immigration',
         title: '移民',
-        url: '/in-developing',
+        url: '/posts/immigration',
       },
       {
         key: 'house',
         title: '买房&租房',
-        url: '/in-developing',
+        url: '/posts/house',
       },
       {
         key: 'car',
         title: '买车&租车',
-        url: '/in-developing',
+        url: '/posts/car',
       },
       {
         key: 'jobs',
         title: '工作',
-        url: '/in-developing',
+        url: '/posts/jobs',
       },
     ],
   },

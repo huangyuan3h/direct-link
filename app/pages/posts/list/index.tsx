@@ -33,16 +33,26 @@ const getPosts = async (
   }
 };
 
-export const PostList: React.FC = () => {
+export interface PostListProps {
+  posts: PostType[];
+  token: string;
+  category: string;
+}
+
+export const PostList: React.FC<PostListProps> = ({
+  posts: p,
+  token,
+  category,
+}: PostListProps) => {
   const windowWidth = useWindowWidth();
   const columnNum = useColumnNumber();
-  const [nextToken, setNextToken] = useState<string>('');
+  const [nextToken, setNextToken] = useState<string>(token);
 
   const { data, isLoading, mutate } = useSWR(`api/posts`, () =>
-    getPosts(nextToken, '')
+    getPosts(nextToken, category)
   );
 
-  const [posts, setPosts] = useState<PostType[]>([]);
+  const [posts, setPosts] = useState<PostType[]>(p);
 
   const [postTopPostions, setTopPostions] = useState<number[]>([]);
   const [postLeftPositions, setPostLeftPositions] = useState<number[]>([]);

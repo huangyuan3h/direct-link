@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <main className="">
       <Header />
-      <PostList />
+      <PostList posts={[]} token="" category="" />
     </main>
   );
 }
