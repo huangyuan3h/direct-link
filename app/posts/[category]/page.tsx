@@ -1,19 +1,19 @@
 import { PostList } from '@/app/pages/posts/list';
 import { Header } from '@/components/header';
-import APIClient from '@/utils/apiClient';
+// import APIClient from '@/utils/apiClient';
 
 interface ViewPostParamsProps {
   params: { category: string };
 }
 
-const getPostsByCategory = async (category: string) => {
-  const client = new APIClient();
-  return await client.post('/posts', {
-    limit: 50,
-    next_token: '',
-    category,
-  });
-};
+// const getPostsByCategory = async (category: string) => {
+//   const client = new APIClient();
+//   return await client.post('/posts', {
+//     limit: 50,
+//     next_token: '',
+//     category,
+//   });
+// };
 
 type URLConfig = {
   [key: string]: string;
@@ -29,16 +29,11 @@ const config: URLConfig = {
 
 export default async function Home({ params }: ViewPostParamsProps) {
   const category = config[params.category as keyof URLConfig];
-  const data = await getPostsByCategory(category);
 
   return (
     <main className="">
       <Header />
-      <PostList
-        posts={data.results}
-        token={data.next_token}
-        category={category}
-      />
+      <PostList category={category} />
     </main>
   );
 }

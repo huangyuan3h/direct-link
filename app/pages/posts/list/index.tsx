@@ -34,25 +34,21 @@ const getPosts = async (
 };
 
 export interface PostListProps {
-  posts: PostType[];
-  token: string;
   category: string;
 }
 
 export const PostList: React.FC<PostListProps> = ({
-  posts: p,
-  token,
   category,
 }: PostListProps) => {
   const windowWidth = useWindowWidth();
   const columnNum = useColumnNumber();
-  const [nextToken, setNextToken] = useState<string>(token);
+  const [nextToken, setNextToken] = useState<string>('');
 
   const { data, isLoading, mutate } = useSWR(`api/posts`, () =>
     getPosts(nextToken, category)
   );
 
-  const [posts, setPosts] = useState<PostType[]>(p);
+  const [posts, setPosts] = useState<PostType[]>([]);
 
   const [postTopPostions, setTopPostions] = useState<number[]>([]);
   const [postLeftPositions, setPostLeftPositions] = useState<number[]>([]);
@@ -160,10 +156,6 @@ export const PostList: React.FC<PostListProps> = ({
       setLoadMoreData(false);
     });
   }, [loadMoreData, mutate, nextToken]);
-
-  if (isLoading) {
-    return <div>loading...</div>;
-  }
 
   return (
     <div className={styles.scrollArea} ref={ref}>
