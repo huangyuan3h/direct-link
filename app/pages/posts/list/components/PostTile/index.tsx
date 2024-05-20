@@ -29,7 +29,7 @@ export const PostTile: React.FC<PostTileProps> = ({
 
   return (
     <div className={styles.postTileArea} style={style}>
-      <Link href={`post/${postId}`} className={styles.link}>
+      <Link href={`/post/${postId}`} className={styles.link} prefetch={false}>
         <div className="relative">
           <div className={styles.ImageArea}>
             <Image
@@ -37,7 +37,11 @@ export const PostTile: React.FC<PostTileProps> = ({
               alt={subject}
               width={600}
               height={600}
-              onLoad={onImageloaded}
+              placeholder="blur"
+              blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+              onLoad={() => {
+                onImageloaded();
+              }}
             />
           </div>
         </div>

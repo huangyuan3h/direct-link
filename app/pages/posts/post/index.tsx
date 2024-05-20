@@ -5,13 +5,14 @@ import { reducer } from './state/reducer';
 import { initialState } from './state/state';
 import {
   setCategories,
+  setCategory,
   setContent,
   setImages,
   setSubject,
 } from './state/action';
 import { ContentInput } from './components/content';
 import 'react-quill/dist/quill.snow.css';
-import { Categories } from './components/categories';
+import { Topics } from './components/topics';
 import ImageUploadView from './components/upload-image';
 import { Button } from 'react-bootstrap';
 import { uploadFiles } from './components/upload-image/uploadImageProcess';
@@ -21,11 +22,12 @@ import APIClient from '@/utils/apiClient';
 import { useRouter } from 'next/navigation';
 import { routes } from '@/config/routes';
 import { PostResponseType } from '../types';
+import { Category } from './components/category';
 
 export const Post: React.FC = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [loading, setLoading] = useState(false);
-  const { subject, content, categories, images } = state;
+  const { subject, category, location, content, topics, images } = state;
 
   const router = useRouter();
 
@@ -42,6 +44,9 @@ export const Post: React.FC = () => {
   };
   const handleImagesChange = (imgs: File[]) => {
     dispatch(setImages(imgs));
+  };
+  const handleCategoryChange = (category: string) => {
+    dispatch(setCategory(category));
   };
 
   const handleClickPost = async () => {
@@ -65,7 +70,9 @@ export const Post: React.FC = () => {
       const post = (await client.post('post/create', {
         subject,
         content,
-        categories,
+        category,
+        location,
+        topics,
         images,
       })) as PostResponseType;
 
@@ -89,7 +96,8 @@ export const Post: React.FC = () => {
       <h5>发布帖子：</h5>
       <SubjectInput subject={subject} onChange={handleSubjectChange} />
       <ContentInput content={content} onChange={handleContentChange} />
-      <Categories categories={categories} onChange={handleCategoriesChange} />
+      <Category category={category} onChange={handleCategoryChange} />
+      <Topics topics={topics} onChange={handleCategoriesChange} />
       <ImageUploadView images={images} onImageChange={handleImagesChange} />
 
       <div className="my-3 flex flex-row-reverse">

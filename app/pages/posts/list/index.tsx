@@ -7,10 +7,11 @@ import { PostTile } from './components/PostTile';
 import { useWindowWidth } from '@/utils/hooks/useWindowWidth';
 import styles from './index.module.scss';
 import useSWR from 'swr';
+import APIClient from '@/utils/apiClient';
 
 const gap = 16;
 
-const limit = 20; // each time fetch posts number
+const limit = 50; // each time fetch posts number
 
 const reachBottomPercentage = 60; // when reach 60% load next page
 
@@ -19,36 +20,54 @@ const getPosts = async (
   category: string
 ): Promise<PostsResponse> => {
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_API}posts`,
-      {
-        method: 'POST',
-        body: JSON.stringify({ limit, next_token: nextToken, category }),
-      }
-    );
-    return response.json();
+    const client = new APIClient();
+    return await client.post('/posts', {
+      limit: 50,
+      next_token: nextToken,
+      category,
+    });
   } catch (error) {
     console.error('Error fetching posts:', error);
     return { results: [], next_token: '' };
   }
 };
 
-export const PostList: React.FC = () => {
+export interface PostListProps {
+  category: string;
+  initialPosts: PostType[];
+  nextToken: string;
+}
+
+export const PostList: React.FC<PostListProps> = ({
+  initialPosts,
+  nextToken: initialNextToken,
+  category,
+}: PostListProps) => {
   const windowWidth = useWindowWidth();
   const columnNum = useColumnNumber();
-  const [nextToken, setNextToken] = useState<string>('');
+  const [nextToken, setNextToken] = useState<string>(initialNextToken);
+  const [posts, setPosts] = useState<PostType[]>(initialPosts);
+  const [ssrLoading, setSSRLoading] = useState(true);
+  const [isImageLoaded, setImageLoaded] = useState(false);
+  const [loadMoreData, setLoadMoreData] = useState(false);
 
-  const { data, isLoading, mutate } = useSWR(`api/posts`, () =>
-    getPosts(nextToken, '')
+  const { data, isLoading, mutate } = useSWR(
+    !loadMoreData ? null : `api/posts`,
+    () => getPosts(nextToken, category)
   );
-
-  const [posts, setPosts] = useState<PostType[]>([]);
 
   const [postTopPostions, setTopPostions] = useState<number[]>([]);
   const [postLeftPositions, setPostLeftPositions] = useState<number[]>([]);
-  const [loadMoreData, setLoadMoreData] = useState(false);
-  const [isImageLoaded, setImageLoaded] = useState(false);
+
   const [imagesLoadedCount, setImagesLoadedCount] = useState(0);
+
+  const [itemWidth, setItemWidth] = useState(200);
+  console.log((windowWidth - (columnNum + 1) * gap) / columnNum);
+
+  useEffect(() => {
+    setItemWidth((windowWidth - (columnNum + 1) * gap) / columnNum);
+    console.log((windowWidth - (columnNum + 1) * gap) / columnNum);
+  }, [windowWidth, columnNum]);
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -75,8 +94,6 @@ export const PostList: React.FC = () => {
     setImageLoaded(false);
   }, [posts.length]);
 
-  const itemWidth = (windowWidth - (columnNum + 1) * gap) / columnNum;
-
   useEffect(() => {
     if (imagesLoadedCount === data?.results.length) {
       setImageLoaded(true);
@@ -85,6 +102,18 @@ export const PostList: React.FC = () => {
   }, [imagesLoadedCount, data?.results.length]);
 
   useEffect(() => {
+    if (ssrLoading && imagesLoadedCount === initialPosts.length) {
+      setImageLoaded(true);
+      setImagesLoadedCount(0);
+      setSSRLoading(false);
+    }
+  }, [imagesLoadedCount, ssrLoading, initialPosts.length]);
+
+  useEffect(() => {
+    if (!isImageLoaded) {
+      return;
+    }
+
     const updateLayoutFn = () => {
       if (!ref.current || columnNum === 0 || !isImageLoaded) {
         return;
@@ -97,7 +126,6 @@ export const PostList: React.FC = () => {
 
       const newTopPosition: number[] = [];
       const newLeftPosition: number[] = [];
-
       for (let i = 0; i < elements.length; i++) {
         const columnPosition = i % columnNum;
         let actualLeft = columnPosition * (gap + itemWidth);
@@ -117,7 +145,7 @@ export const PostList: React.FC = () => {
     };
 
     updateLayoutFn();
-  }, [columnNum, itemWidth, isImageLoaded]);
+  }, [columnNum, isImageLoaded, itemWidth]);
 
   // loading more data
 
@@ -150,10 +178,6 @@ export const PostList: React.FC = () => {
       setLoadMoreData(false);
     });
   }, [loadMoreData, mutate, nextToken]);
-
-  if (isLoading) {
-    return <div>loading...</div>;
-  }
 
   return (
     <div className={styles.scrollArea} ref={ref}>

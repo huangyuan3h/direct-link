@@ -1,7 +1,8 @@
 export enum Action {
   SET_SUBJECT = 'SET_SUBJECT',
+  SET_CATEGORY = 'SET_CATEGORY',
   SET_CONTENT = 'SET_CONTENT',
-  SET_CATEGORIES = 'SET_CATEGORIES',
+  SET_TOPICS = 'SET_TOPICS',
   SET_IMAGES = 'SET_IMAGES',
 }
 
@@ -17,6 +18,18 @@ export const setSubject = (subject: string): SetSubject => {
   };
 };
 
+export interface SetCategory {
+  type: Action.SET_CATEGORY;
+  category: string;
+}
+
+export const setCategory = (category: string): SetCategory => {
+  return {
+    type: Action.SET_CATEGORY,
+    category,
+  };
+};
+
 export interface SetContent {
   type: Action.SET_CONTENT;
   content: string;
@@ -29,15 +42,15 @@ export const setContent = (content: string): SetContent => {
   };
 };
 
-export interface SetCategories {
-  type: Action.SET_CATEGORIES;
-  categories: string[];
+export interface SetTopics {
+  type: Action.SET_TOPICS;
+  topics: string[];
 }
 
-export const setCategories = (categories: string[]): SetCategories => {
+export const setCategories = (topics: string[]): SetTopics => {
   return {
-    type: Action.SET_CATEGORIES,
-    categories,
+    type: Action.SET_TOPICS,
+    topics,
   };
 };
 
@@ -53,4 +66,9 @@ export const setImages = (images: File[]): SetImages => {
   };
 };
 
-export type ActionType = SetSubject | SetContent | SetCategories | SetImages;
+export type ActionType =
+  | SetSubject
+  | SetCategory
+  | SetContent
+  | SetTopics
+  | SetImages;

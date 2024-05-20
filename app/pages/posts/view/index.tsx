@@ -11,7 +11,7 @@ interface ViewProps extends PostResponseType {}
 export const View: React.FC<ViewProps> = ({
   subject,
   content,
-  categories,
+  topics,
   images,
 }: ViewProps) => {
   return (
@@ -22,7 +22,7 @@ export const View: React.FC<ViewProps> = ({
       <ImageCarousel images={images} />
       <div className="container">
         <Content content={content} />
-        <Categories categories={categories} />
+        <Categories categories={topics} />
       </div>
     </div>
   );

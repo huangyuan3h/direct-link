@@ -7,6 +7,7 @@ interface ViewPostParamsProps {
 }
 
 const getPostsById = async (id: string) => {
+  'use server';
   const client = new APIClient();
   return await client.get('/post/' + id);
 };

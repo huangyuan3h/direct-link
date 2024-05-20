@@ -1,47 +1,46 @@
 import React, { useState } from 'react';
 import { InputGroup, FormControl, Button, Badge } from 'react-bootstrap';
 
-export interface CategoriesProps {
-  categories: string[];
+export interface TopicsProps {
+  topics: string[];
   onChange: (c: string[]) => void;
 }
 
-const MAX_CATEOGRY = 5;
+const MAX_TOPICS = 5;
+const INPUT_MAX_LENGTH = 50;
 
-export const Categories: React.FC<CategoriesProps> = ({
-  categories,
+export const Topics: React.FC<TopicsProps> = ({
+  topics,
   onChange,
-}: CategoriesProps) => {
+}: TopicsProps) => {
   const [inputValue, setInputValue] = useState<string>('');
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
+    setInputValue(event.target.value.trim());
   };
 
   const handleKeyDownPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter' && inputValue.trim() !== '') {
+    if (event.key === 'Enter' && inputValue !== '') {
       event.preventDefault();
       handleAddButtonClick();
     }
   };
 
   const handleAddButtonClick = () => {
-    const toAddVal = inputValue.trim();
-
-    setInputValue('');
     if (
-      categories.includes(toAddVal) ||
-      categories.length === MAX_CATEOGRY ||
-      toAddVal.length === 0
+      topics.includes(inputValue) ||
+      topics.length === MAX_TOPICS ||
+      inputValue.length === 0
     ) {
       return;
     }
 
-    onChange([...categories, inputValue.trim()]);
+    onChange([...topics, inputValue]);
+    setInputValue('');
   };
 
   const handleRemoveTag = (tagToRemove: string) => {
-    const updatedTags = categories.filter((tag) => tag !== tagToRemove);
+    const updatedTags = topics.filter((tag) => tag !== tagToRemove);
     onChange(updatedTags);
   };
 
@@ -54,7 +53,7 @@ export const Categories: React.FC<CategoriesProps> = ({
           value={inputValue}
           onChange={handleInputChange}
           onKeyDown={handleKeyDownPress}
-          maxLength={50}
+          maxLength={INPUT_MAX_LENGTH}
         />
         <Button variant="outline-secondary" onClick={handleAddButtonClick}>
           添加
@@ -64,7 +63,7 @@ export const Categories: React.FC<CategoriesProps> = ({
         <small>添加话题来提高曝光度，话题不能重复，最多添加5个话题</small>
       </div>
       <div className="flex gap-x-2 gap-y-1 flex-wrap mt-2">
-        {categories.map((c) => (
+        {topics.map((c) => (
           <Badge
             pill
             bg="secondary"
@@ -76,7 +75,7 @@ export const Categories: React.FC<CategoriesProps> = ({
           </Badge>
         ))}
       </div>
-      {categories.length !== 0 && (
+      {topics.length !== 0 && (
         <div className="text-muted mt-1">
           <small>点击话题标签移除</small>
         </div>
