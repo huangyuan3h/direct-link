@@ -1,6 +1,6 @@
 import APIClient from '@/utils/apiClient';
 import { useEffect, useState } from 'react';
-import { Form } from 'react-bootstrap';
+import { CloseButton, Form, InputGroup } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { toastMessages } from '../../utils/toastMessage';
@@ -8,6 +8,11 @@ import { setCookie } from 'nookies';
 import { toast } from 'react-toastify';
 import { useUser } from '../user-context';
 import { decodeJWT } from '@/utils/auth';
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
+
+import { Fingerprint, Envelope, CheckAll } from 'react-bootstrap-icons';
+
+import styles from './index.module.scss';
 
 export interface LoginModalProps {
   show: boolean;
@@ -159,13 +164,50 @@ export const LoginModal: React.FC<LoginModalProps> = ({
     }
   };
 
+  const handleGoogleLoginSuccess = async (credentialResponse: any) => {
+    const client = new APIClient();
+    const response = await toast.promise(
+      client.post('auth/login/google', {
+        credential: credentialResponse.credential,
+      }),
+      {
+        success: toastMessages.LOGIN_SUCCESS,
+        pending: toastMessages.LOADING,
+        error: toastMessages.REQUEST_ERROR,
+      },
+      {
+        position: 'top-center',
+      }
+    );
+    debugger;
+    if (response.Authorization) {
+      setCookie(null, 'Authorization', response.Authorization);
+      updateUser(decodeJWT(response.Authorization));
+      onHide();
+    }
+  };
+
   return (
     <Modal show={show} centered>
-      <Modal.Header closeButton onHide={onHide}></Modal.Header>
       <Modal.Body>
-        <Form>
-          <Form.Group className="mb-3">
-            <Form.Label>邮箱:</Form.Label>
+        <div className="mb-3 flex flex-row-reverse">
+          <CloseButton onClick={onHide} />
+        </div>
+        <div className="flex justify-center mb-2">
+          <GoogleOAuthProvider clientId="370355018861-c6ukhtuk0c9tstbi7k3ir5buhnk9lmvr.apps.googleusercontent.com">
+            <GoogleLogin
+              onSuccess={handleGoogleLoginSuccess}
+              onError={() => toast.error(toastMessages.REQUEST_ERROR)}
+              useOneTap
+            />
+          </GoogleOAuthProvider>
+        </div>
+        <div className={styles.divider}> OR </div>
+        <Form className="mt-3">
+          <InputGroup>
+            <InputGroup.Text>
+              <Envelope />
+            </InputGroup.Text>
             <Form.Control
               type="email"
               autoFocus
@@ -174,13 +216,16 @@ export const LoginModal: React.FC<LoginModalProps> = ({
               isInvalid={email.length > 0 && blurState.email && !isEmailValid()}
               isValid={email.length > 0 && blurState.email && isEmailValid()}
               onBlur={handleEmailBlur}
+              placeholder="Email address"
             />
-            {email.length > 0 && blurState.email && !isEmailValid() && (
-              <small className="text-danger mt-1">邮箱格式存在问题</small>
-            )}
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>密码：</Form.Label>
+          </InputGroup>
+          {email.length > 0 && blurState.email && !isEmailValid() && (
+            <small className="text-danger ml-4">邮箱格式存在问题</small>
+          )}
+          <InputGroup className="mt-3">
+            <InputGroup.Text>
+              <Fingerprint />
+            </InputGroup.Text>
             <Form.Control
               type="password"
               value={password}
@@ -192,53 +237,56 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                 password.length > 0 && blurState.password && isPasswordValid()
               }
               onBlur={handlePasswordBlur}
+              placeholder="Password"
             />
-            {password.length > 0 &&
-              blurState.password &&
-              !isPasswordValid() && (
-                <small className="text-danger mt-1">
-                  <ul>
-                    {!has1LowCase.test(password) && (
-                      <li>密码需包含一个小写字母</li>
-                    )}
-                    {!has1UpCase.test(password) && (
-                      <li>密码需包含一个大写字母</li>
-                    )}
-                    {!has1Number.test(password) && <li>密码需包含一个数字</li>}
-                  </ul>
-                </small>
-              )}
-          </Form.Group>
+          </InputGroup>
+          {password.length > 0 && blurState.password && !isPasswordValid() && (
+            <small className="text-danger mt-1">
+              <ul>
+                {!has1LowCase.test(password) && <li>密码需包含一个小写字母</li>}
+                {!has1UpCase.test(password) && <li>密码需包含一个大写字母</li>}
+                {!has1Number.test(password) && <li>密码需包含一个数字</li>}
+              </ul>
+            </small>
+          )}
           {!isLogin && (
-            <Form.Group className="mb-3">
-              <Form.Label>验证密码：</Form.Label>
-              <Form.Control
-                type="password"
-                value={confirmPassword}
-                onChange={handleConfirmPasswordChange}
-                isInvalid={
-                  confirmPassword.length > 0 &&
-                  blurState.confirmPassword &&
-                  !isConfirmPasswordValid()
-                }
-                isValid={
-                  confirmPassword.length > 0 &&
-                  blurState.confirmPassword &&
-                  isConfirmPasswordValid()
-                }
-                onBlur={handleConfirmPasswordBlur}
-              />
+            <>
+              <InputGroup className="mt-3">
+                <InputGroup.Text>
+                  <CheckAll />
+                </InputGroup.Text>
+                <Form.Control
+                  type="password"
+                  value={confirmPassword}
+                  onChange={handleConfirmPasswordChange}
+                  isInvalid={
+                    confirmPassword.length > 0 &&
+                    blurState.confirmPassword &&
+                    !isConfirmPasswordValid()
+                  }
+                  isValid={
+                    confirmPassword.length > 0 &&
+                    blurState.confirmPassword &&
+                    isConfirmPasswordValid()
+                  }
+                  onBlur={handleConfirmPasswordBlur}
+                  placeholder="Confirm Password"
+                />
+              </InputGroup>
+
               {confirmPassword.length > 0 &&
                 blurState.confirmPassword &&
                 !isConfirmPasswordValid() && (
-                  <small className="text-danger mt-1">两次密码不一致</small>
+                  <small className="text-danger ml-4 mt-1">
+                    两次密码不一致
+                  </small>
                 )}
-            </Form.Group>
+            </>
           )}
 
-          <div className="flex gap-x-2 justify-between">
-            <Button variant="secondary" onClick={handleClickSwitch}>
-              {isLogin ? '注册一个账号' : '登陆到系统'}
+          <div className="flex gap-x-2 justify-between mt-3">
+            <Button variant="link" onClick={handleClickSwitch}>
+              {isLogin ? '注册一个账号' : '输入账号密码'}
             </Button>
             <Button
               variant="primary"
