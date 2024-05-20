@@ -7,6 +7,7 @@ import { PostTile } from './components/PostTile';
 import { useWindowWidth } from '@/utils/hooks/useWindowWidth';
 import styles from './index.module.scss';
 import useSWR from 'swr';
+import APIClient from '@/utils/apiClient';
 
 const gap = 16;
 
@@ -19,14 +20,12 @@ const getPosts = async (
   category: string
 ): Promise<PostsResponse> => {
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_API}posts`,
-      {
-        method: 'POST',
-        body: JSON.stringify({ limit, next_token: nextToken, category }),
-      }
-    );
-    return response.json();
+    const client = new APIClient();
+    return await client.post('/posts', {
+      limit: 50,
+      next_token: nextToken,
+      category,
+    });
   } catch (error) {
     console.error('Error fetching posts:', error);
     return { results: [], next_token: '' };
@@ -105,6 +104,10 @@ export const PostList: React.FC<PostListProps> = ({
   }, [imagesLoadedCount, ssrLoading, initialPosts.length]);
 
   useEffect(() => {
+    if (!isImageLoaded) {
+      return;
+    }
+
     const updateLayoutFn = () => {
       if (!ref.current || columnNum === 0 || !isImageLoaded) {
         return;
