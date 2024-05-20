@@ -1,16 +1,23 @@
 import { Header } from '../components/header';
 import { PostList } from './pages/posts/list';
 import { PostsResponse } from './pages/posts/types';
-import APIClient from '@/utils/apiClient';
 
 const getAllPosts = async (): Promise<PostsResponse> => {
   'use server';
-  const client = new APIClient();
-  return await client.post('/posts', {
-    limit: 50,
-    next_token: '',
-    category: '',
+  const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_API + '/posts', {
+    method: 'POST',
+    body: JSON.stringify({
+      limit: 50,
+      next_token: '',
+      category: '',
+    }),
+    credentials: 'include',
   });
+  if (!response.ok) {
+    throw new Error(`API call failed with status ${response.status}`);
+  }
+  const data = await response.json();
+  return data;
 };
 
 export default async function Home() {
@@ -26,3 +33,5 @@ export default async function Home() {
     </main>
   );
 }
+
+export const revalidate = 60;
