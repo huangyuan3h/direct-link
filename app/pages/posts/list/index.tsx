@@ -10,7 +10,7 @@ import useSWR from 'swr';
 
 const gap = 16;
 
-const limit = 20; // each time fetch posts number
+const limit = 50; // each time fetch posts number
 
 const reachBottomPercentage = 60; // when reach 60% load next page
 
@@ -35,26 +35,34 @@ const getPosts = async (
 
 export interface PostListProps {
   category: string;
+  initialPosts: PostType[];
+  nextToken: string;
 }
 
 export const PostList: React.FC<PostListProps> = ({
+  initialPosts,
+  nextToken: initialNextToken,
   category,
 }: PostListProps) => {
   const windowWidth = useWindowWidth();
   const columnNum = useColumnNumber();
-  const [nextToken, setNextToken] = useState<string>('');
+  const [nextToken, setNextToken] = useState<string>(initialNextToken);
+  const [posts, setPosts] = useState<PostType[]>(initialPosts);
+  const [ssrLoading, setSSRLoading] = useState(true);
+  const [isImageLoaded, setImageLoaded] = useState(false);
+  const [loadMoreData, setLoadMoreData] = useState(false);
 
-  const { data, isLoading, mutate } = useSWR(`api/posts`, () =>
-    getPosts(nextToken, category)
+  const { data, isLoading, mutate } = useSWR(
+    !loadMoreData ? null : `api/posts`,
+    () => getPosts(nextToken, category)
   );
-
-  const [posts, setPosts] = useState<PostType[]>([]);
 
   const [postTopPostions, setTopPostions] = useState<number[]>([]);
   const [postLeftPositions, setPostLeftPositions] = useState<number[]>([]);
-  const [loadMoreData, setLoadMoreData] = useState(false);
-  const [isImageLoaded, setImageLoaded] = useState(false);
+
   const [imagesLoadedCount, setImagesLoadedCount] = useState(0);
+
+  const [itemWidth, setItemWidth] = useState(250);
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -81,8 +89,6 @@ export const PostList: React.FC<PostListProps> = ({
     setImageLoaded(false);
   }, [posts.length]);
 
-  const itemWidth = (windowWidth - (columnNum + 1) * gap) / columnNum;
-
   useEffect(() => {
     if (imagesLoadedCount === data?.results.length) {
       setImageLoaded(true);
@@ -91,10 +97,22 @@ export const PostList: React.FC<PostListProps> = ({
   }, [imagesLoadedCount, data?.results.length]);
 
   useEffect(() => {
+    if (ssrLoading && imagesLoadedCount === initialPosts.length) {
+      setImageLoaded(true);
+      setImagesLoadedCount(0);
+      setSSRLoading(false);
+    }
+  }, [imagesLoadedCount, ssrLoading, initialPosts.length]);
+
+  useEffect(() => {
     const updateLayoutFn = () => {
       if (!ref.current || columnNum === 0 || !isImageLoaded) {
         return;
       }
+
+      const itemWidth = (windowWidth - (columnNum + 1) * gap) / columnNum;
+
+      setItemWidth(itemWidth);
 
       const elements = ref.current.children;
       const elementsHeight = Array.from(elements).map(
@@ -103,7 +121,6 @@ export const PostList: React.FC<PostListProps> = ({
 
       const newTopPosition: number[] = [];
       const newLeftPosition: number[] = [];
-
       for (let i = 0; i < elements.length; i++) {
         const columnPosition = i % columnNum;
         let actualLeft = columnPosition * (gap + itemWidth);
@@ -123,7 +140,7 @@ export const PostList: React.FC<PostListProps> = ({
     };
 
     updateLayoutFn();
-  }, [columnNum, itemWidth, isImageLoaded]);
+  }, [columnNum, isImageLoaded, windowWidth]);
 
   // loading more data
 
