@@ -61,7 +61,13 @@ export const PostList: React.FC<PostListProps> = ({
 
   const [imagesLoadedCount, setImagesLoadedCount] = useState(0);
 
-  const [itemWidth, setItemWidth] = useState(250);
+  const [itemWidth, setItemWidth] = useState(200);
+  console.log((windowWidth - (columnNum + 1) * gap) / columnNum);
+
+  useEffect(() => {
+    setItemWidth((windowWidth - (columnNum + 1) * gap) / columnNum);
+    console.log((windowWidth - (columnNum + 1) * gap) / columnNum);
+  }, [windowWidth, columnNum]);
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -113,10 +119,6 @@ export const PostList: React.FC<PostListProps> = ({
         return;
       }
 
-      const itemWidth = (windowWidth - (columnNum + 1) * gap) / columnNum;
-
-      setItemWidth(itemWidth);
-
       const elements = ref.current.children;
       const elementsHeight = Array.from(elements).map(
         (ele) => ele.clientHeight
@@ -143,7 +145,7 @@ export const PostList: React.FC<PostListProps> = ({
     };
 
     updateLayoutFn();
-  }, [columnNum, isImageLoaded, windowWidth]);
+  }, [columnNum, isImageLoaded, itemWidth]);
 
   // loading more data
 
