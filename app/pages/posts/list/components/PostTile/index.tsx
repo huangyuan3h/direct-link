@@ -29,7 +29,7 @@ export const PostTile: React.FC<PostTileProps> = ({
 
   return (
     <div className={styles.postTileArea} style={style}>
-      <Link href={`/post/${postId}`} className={styles.link}>
+      <Link href={`/post/${postId}`} className={styles.link} prefetch={false}>
         <div className="relative">
           <div className={styles.ImageArea}>
             <Image

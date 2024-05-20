@@ -1,6 +1,7 @@
 import { PostList } from '@/app/pages/posts/list';
 import { PostsResponse } from '@/app/pages/posts/types';
 import { Header } from '@/components/header';
+import APIClient from '@/utils/apiClient';
 
 interface ViewPostParamsProps {
   params: { category: string };
@@ -8,20 +9,12 @@ interface ViewPostParamsProps {
 
 const getPostsByCategory = async (category: string): Promise<PostsResponse> => {
   'use server';
-  const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_API + '/posts', {
-    method: 'POST',
-    body: JSON.stringify({
-      limit: 50,
-      next_token: '',
-      category: category,
-    }),
-    credentials: 'include',
+  const client = new APIClient();
+  return await client.post('/posts', {
+    limit: 50,
+    next_token: '',
+    category,
   });
-  if (!response.ok) {
-    throw new Error(`API call failed with status ${response.status}`);
-  }
-  const data = await response.json();
-  return data;
 };
 
 type URLConfig = {
