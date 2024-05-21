@@ -8,7 +8,11 @@ import { setCookie } from 'nookies';
 import { toast } from 'react-toastify';
 import { useUser } from '../user-context';
 import { decodeJWT } from '@/utils/auth';
-import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
+import {
+  GoogleOAuthProvider,
+  GoogleLogin,
+  CredentialResponse,
+} from '@react-oauth/google';
 
 import { Fingerprint, Envelope, CheckAll } from 'react-bootstrap-icons';
 
@@ -164,7 +168,9 @@ export const LoginModal: React.FC<LoginModalProps> = ({
     }
   };
 
-  const handleGoogleLoginSuccess = async (credentialResponse: any) => {
+  const handleGoogleLoginSuccess = async (
+    credentialResponse: CredentialResponse
+  ) => {
     const client = new APIClient();
     const response = await toast.promise(
       client.post('auth/login/google', {
@@ -179,7 +185,6 @@ export const LoginModal: React.FC<LoginModalProps> = ({
         position: 'top-center',
       }
     );
-    debugger;
     if (response.Authorization) {
       setCookie(null, 'Authorization', response.Authorization);
       updateUser(decodeJWT(response.Authorization));
