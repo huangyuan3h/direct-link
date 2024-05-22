@@ -38,37 +38,4 @@ export const HeaderRightArea: React.FC<HeaderRightAreaProps> = ({}) => {
       <MenuPanel showPanel={showMenuPanel} onMenuClose={handleMenuClose} />
     </>
   );
-
-  // if (!user) {
-  //   return (
-  //     <div className="flex gap-x-2">
-  //       {/* <Button
-  //         className="hidden md:block"
-  //         variant="outline-primary"
-  //         size="sm"
-  //         onClick={handleClickLogin}
-  //       >
-  //         登陆
-  //       </Button> */}
-
-  //       <LoginModal show={showLoginModal} onHide={handleHideModal} />
-  //     </div>
-  //   );
-  // }
-
-  // return (
-  //   <div className="flex gap-x-2">
-  //     <IconList onMenuClick={onMenuClick} />
-  //     <Avator className="hidden md:block" />
-  //     <Offcanvas show={showMenuPanel} onHide={handleClose}>
-  //       <Offcanvas.Header closeButton>
-  //         <Offcanvas.Title>Offcanvas</Offcanvas.Title>
-  //       </Offcanvas.Header>
-  //       <Offcanvas.Body>
-  //         Some text as placeholder. In real life you can have the elements you
-  //         have chosen. Like, text, images, lists, etc.
-  //       </Offcanvas.Body>
-  //     </Offcanvas>
-  //   </div>
-  // );
 };

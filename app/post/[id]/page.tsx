@@ -21,3 +21,5 @@ export default async function Home({ params }: ViewPostParamsProps) {
     </main>
   );
 }
+
+export const revalidate = 60;
