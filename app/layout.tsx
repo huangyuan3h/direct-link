@@ -3,6 +3,7 @@ import { Open_Sans } from 'next/font/google';
 import './globals.scss';
 import { ToastContainer } from 'react-toastify';
 import { UserProvider } from '@/components/user-context';
+import GoogleAnalytics from '@/components/google-analytics';
 
 const san = Open_Sans({ subsets: ['latin'] });
 
@@ -41,6 +42,9 @@ export default function RootLayout({
       <body className={san.className}>
         <UserProvider>{children}</UserProvider>
         <ToastContainer />
+        <GoogleAnalytics
+          trackingId={`${process.env.NEXT_PUBLIC_GA_TRACKING_ID}`}
+        />
       </body>
     </html>
   );
