@@ -23,7 +23,13 @@ export const MobileCarousel: React.FC<MobileCarouselProps> = ({
   const windowWidth = useWindowWidth();
 
   return (
-    <Carousel activeIndex={index} onSelect={onSelect} fade indicators={false}>
+    <Carousel
+      activeIndex={index}
+      onSelect={onSelect}
+      fade
+      indicators={false}
+      controls={images.length > 1}
+    >
       {images.map((imageUrl, i) => (
         <Carousel.Item
           key={i}

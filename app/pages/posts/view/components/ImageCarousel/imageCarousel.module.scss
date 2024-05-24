@@ -43,6 +43,10 @@
   max-height: 460px;
 }
 
+.showOneImage {
+  object-fit: contain;
+}
+
 .firstImage {
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;

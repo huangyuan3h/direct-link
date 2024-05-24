@@ -20,6 +20,21 @@ export const DesktopCarousel = ({
     return <></>;
   }
 
+  if (windowWidth >= breakpoints.sm && images.length < 3) {
+    return (
+      <div className={styles.imageLargeSize}>
+        <Image
+          src={images[0]}
+          alt={`Slide ${1}`}
+          width={600}
+          height={600}
+          className={clsx(styles.carouselImage, styles.showOneImage)}
+          onClick={() => onImageClick(1)}
+        />
+      </div>
+    );
+  }
+
   if (windowWidth < breakpoints.md || images.length < 3) {
     return (
       <MobileCarousel
