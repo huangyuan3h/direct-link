@@ -62,11 +62,9 @@ export const PostList: React.FC<PostListProps> = ({
   const [imagesLoadedCount, setImagesLoadedCount] = useState(0);
 
   const [itemWidth, setItemWidth] = useState(200);
-  console.log((windowWidth - (columnNum + 1) * gap) / columnNum);
 
   useEffect(() => {
     setItemWidth((windowWidth - (columnNum + 1) * gap) / columnNum);
-    console.log((windowWidth - (columnNum + 1) * gap) / columnNum);
   }, [windowWidth, columnNum]);
 
   const ref = useRef<HTMLDivElement>(null);

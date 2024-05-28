@@ -5,4 +5,5 @@ export const routes = {
   createPost: '/post',
   myPost: '/my/post',
   viewPost: (id: string) => `post/${id}`,
+  myProfile: '/my/profile',
 };
