@@ -9,6 +9,7 @@ import { Button } from 'react-bootstrap';
 import { LoginModal } from '../login-modal';
 import { useRouter } from 'next/navigation';
 import { routes } from '@/config/routes';
+import { defaultAvatarImage } from '@/config/avatar';
 
 interface AvatorProps {
   className?: string | string[];
@@ -35,15 +36,13 @@ export const Avator: React.FC<AvatorProps> = ({ className }) => {
     router.push(routes.myProfile);
   };
 
-  const defaultUserImage = '/images/anonymous.svg';
-
   return (
     <div className={clsx(styles.AvatorArea, className)}>
       <Image
         src={
           user?.avatar && user?.avatar.length > 0
             ? user?.avatar
-            : defaultUserImage
+            : defaultAvatarImage
         }
         width={32}
         height={32}
