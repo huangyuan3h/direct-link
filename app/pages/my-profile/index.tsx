@@ -6,6 +6,9 @@ import { uploadFileToS3 } from '@/utils/s3Upload';
 import APIClient from '@/utils/apiClient';
 import { toast } from 'react-toastify';
 import { toastMessages } from '@/utils/toastMessage';
+import { decodeJWT } from '@/utils/auth';
+import { setCookie } from 'nookies';
+import { useUser } from '@/components/user-context';
 
 export interface MyProfileProps {
   user: User;
@@ -14,23 +17,31 @@ export interface MyProfileProps {
 export const MyProfile: React.FC<MyProfileProps> = ({
   user,
 }: MyProfileProps) => {
+  const { updateUser } = useUser();
   const [currentUser, setUser] = useState(user);
   const handleUserChange = async (u: User, avatar: File | null) => {
-    let avatarUrl;
+    const submitProfile = async () => {
+      let avatarUrl;
 
-    if (avatar) {
-      const response = await (await fetch(`/api/getAvatarUrl`)).json();
-      avatarUrl = await uploadFileToS3(response.url, avatar);
-    }
+      if (avatar) {
+        const response = await (await fetch(`/api/getAvatarUrl`)).json();
+        avatarUrl = await uploadFileToS3(response.url, avatar);
+      }
 
-    // send to server
+      // send to server
+      const client = new APIClient();
 
-    const client = new APIClient();
+      const updatedUser = { ...u, avatar: avatarUrl ?? u.avatar };
 
-    const updatedUser = { ...user, avatar: avatarUrl ?? u.avatar };
+      const res = await client.post('my/profile', updatedUser);
+
+      setUser(updatedUser);
+
+      return res;
+    };
 
     const res = await toast.promise(
-      client.post('my/profle', updatedUser),
+      submitProfile(),
       {
         success: toastMessages.UPDATE_SUCCESS,
         pending: toastMessages.UPDATE_LOADING,
@@ -39,9 +50,10 @@ export const MyProfile: React.FC<MyProfileProps> = ({
       { position: 'top-center' }
     );
 
-    console.log(res);
-
-    setUser(updatedUser);
+    if (res.Authorization) {
+      setCookie(null, 'Authorization', res.Authorization);
+      updateUser(decodeJWT(res.Authorization));
+    }
   };
   return (
     <div>

@@ -31,7 +31,9 @@ export const DisplayBasicInfo: React.FC<DisplayBasicInfoProps> = ({
       </div>
 
       <h6 className={styles.userName}>{displayUsername}</h6>
-      <p>{bio}</p>
+      <div className={clsx(styles.displayBio, styles.widthOfInput)}>
+        <p>{bio}</p>
+      </div>
 
       <PencilSquare onClick={onEditClick} className={styles.editIcon} />
     </Card>
