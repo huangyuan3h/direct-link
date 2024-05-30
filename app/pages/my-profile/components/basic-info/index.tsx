@@ -1,18 +1,11 @@
 import { User } from '@/types/user';
 import React, { useState } from 'react';
-import Image from 'next/image';
-import Card from 'react-bootstrap/Card';
-import styles from './index.module.scss';
-import { CameraFill } from 'react-bootstrap-icons';
-import clsx from 'clsx';
-import { Button, Form } from 'react-bootstrap';
 import { DisplayBasicInfo } from './DisplayBasicInfo';
 import { EditBasicInfo } from './EditBasicInfo';
 
-const anonymousUrl = '';
 export interface BasicInfoProps {
   user: User;
-  onChange: (u: User) => void;
+  onChange: (user: User, avatar: File | null) => void;
 }
 export const BasicInfo: React.FC<BasicInfoProps> = ({
   user,
@@ -24,10 +17,9 @@ export const BasicInfo: React.FC<BasicInfoProps> = ({
     setIsEditing(true);
   };
 
-  const handleSaveClick = (user: User) => {
-    console.log(user);
+  const handleSaveClick = (user: User, avatar: File | null) => {
     setIsEditing(false);
-    onChange(user);
+    onChange(user, avatar);
   };
 
   return (
