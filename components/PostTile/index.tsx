@@ -1,4 +1,4 @@
-import { PostType } from '../../../types';
+import { PostType } from '../../app/pages/posts/types';
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from './postTile.module.scss';

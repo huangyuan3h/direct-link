@@ -9,6 +9,7 @@ import { toastMessages } from '@/utils/toastMessage';
 import { decodeJWT } from '@/utils/auth';
 import { setCookie } from 'nookies';
 import { useUser } from '@/components/user-context';
+import MyPosts from './components/myPosts';
 
 export interface MyProfileProps {
   user: User;
@@ -58,6 +59,7 @@ export const MyProfile: React.FC<MyProfileProps> = ({
   return (
     <div>
       <BasicInfo user={currentUser} onChange={handleUserChange} />
+      <MyPosts posts={[]} />
     </div>
   );
 };

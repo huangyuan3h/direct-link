@@ -3,7 +3,7 @@
 import { useColumnNumber } from './utils/layout';
 import { PostType, PostsResponse } from '../types';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { PostTile } from './components/PostTile';
+import { PostTile } from '../../../../components/PostTile';
 import { useWindowWidth } from '@/utils/hooks/useWindowWidth';
 import styles from './index.module.scss';
 import useSWR from 'swr';
