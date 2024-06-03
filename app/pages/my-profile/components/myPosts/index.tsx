@@ -1,6 +1,6 @@
 import { PostType } from '@/app/pages/posts/types';
 import { PostTile } from './PostTileV2';
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styles from './index.module.scss';
 import clsx from 'clsx';
 
@@ -11,24 +11,73 @@ import APIClient from '@/utils/apiClient';
 import { toastMessages } from '@/utils/toastMessage';
 import { toast } from 'react-toastify';
 import { Button } from 'react-bootstrap';
+import useSWR from 'swr';
 
 interface MyPostsProps {
   posts: PostType[];
   nextToken: string;
 }
 
+type PostsResponse = {
+  results: PostType[];
+  next_token: string;
+};
+
+const limit = 50;
+
+const getMyPosts = async (nextToken: string): Promise<PostsResponse> => {
+  try {
+    const client = new APIClient();
+    return await client.post('/my/posts', {
+      limit: limit,
+      next_token: nextToken,
+    });
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+    return { results: [], next_token: '' };
+  }
+};
+
 const MyPosts: React.FC<MyPostsProps> = ({
   posts: ps,
-  nextToken,
+  nextToken: token,
 }: MyPostsProps) => {
-  console.log(ps, nextToken);
+  console.log(ps, token);
 
   const [posts, setPosts] = useState<PostType[]>(ps);
 
   const ref = useRef<HTMLDivElement>(null);
 
+  const [nextToken, setNextToken] = useState(token);
+
+  const [loadMoreData, setLoadMoreData] = useState(false);
+
+  const { data, isLoading, mutate } = useSWR(
+    !loadMoreData ? null : '/my/posts',
+    () => getMyPosts(nextToken)
+  );
+
   const [deleteModal, setShowDeleteModal] = useState<boolean>(false);
   const [selectedPosts, setSelectedPosts] = useState<string[]>([]);
+
+  const appendDataToPosts = useCallback((newData: PostType[]) => {
+    setPosts((prevPosts) => {
+      const existingIds = new Set(prevPosts.map((post) => post.postId));
+
+      const uniqueNewData = newData.filter(
+        (post) => !existingIds.has(post.postId)
+      );
+
+      return [...prevPosts, ...uniqueNewData];
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!isLoading && data?.results) {
+      appendDataToPosts(data?.results);
+      setNextToken(data?.next_token);
+    }
+  }, [isLoading, data, appendDataToPosts]);
 
   const handleCheckClick = (id: string) => {
     if (selectedPosts.includes(id)) {
@@ -80,7 +129,7 @@ const MyPosts: React.FC<MyPostsProps> = ({
           onClick={handleDeleteClick}
           disabled={selectedPosts.length === 0}
         >
-          删除帖子
+          批量删除
         </Button>
       </div>
       <ResponsiveMasonry
