@@ -11,7 +11,7 @@ export type PostFormType = {
 };
 
 export type PostType = {
-  postId?: string;
+  postId: string;
   subject: string;
   content: string;
   category: string;

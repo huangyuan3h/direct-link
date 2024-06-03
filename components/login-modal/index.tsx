@@ -1,19 +1,11 @@
-import APIClient from '@/utils/apiClient';
-import { useEffect, useState } from 'react';
-import { CloseButton, Form, InputGroup } from 'react-bootstrap';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import { toastMessages } from '../../utils/toastMessage';
-import { setCookie } from 'nookies';
-import { toast } from 'react-toastify';
-import { useUser } from '../user-context';
-import { decodeJWT } from '@/utils/auth';
+import { useState } from 'react';
+import { CloseButton } from 'react-bootstrap';
 
-import { Fingerprint, Envelope, CheckAll } from 'react-bootstrap-icons';
+import Modal from 'react-bootstrap/Modal';
 
 import styles from './index.module.scss';
 import { SocialLogin } from './SocialLogin';
-import { isConfirmPasswordValid, isEmailValid, isPasswordValid } from './utils';
+
 import { LoginForm } from './LoginForm';
 import { RegisterForm } from './RegisterForm';
 
@@ -21,12 +13,6 @@ export interface LoginModalProps {
   show: boolean;
   onHide: () => void;
 }
-
-type BlurStateType = {
-  email: boolean;
-  password: boolean;
-  confirmPassword: boolean;
-};
 
 export const LoginModal: React.FC<LoginModalProps> = ({
   show,

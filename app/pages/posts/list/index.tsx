@@ -3,7 +3,7 @@
 import { useColumnNumber } from './utils/layout';
 import { PostType, PostsResponse } from '../types';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { PostTile } from './components/PostTile';
+import { PostTile } from '../../../../components/PostTile';
 import { useWindowWidth } from '@/utils/hooks/useWindowWidth';
 import styles from './index.module.scss';
 import useSWR from 'swr';
@@ -22,7 +22,7 @@ const getPosts = async (
   try {
     const client = new APIClient();
     return await client.post('/posts', {
-      limit: 50,
+      limit,
       next_token: nextToken,
       category,
     });
@@ -44,7 +44,7 @@ export const PostList: React.FC<PostListProps> = ({
   category,
 }: PostListProps) => {
   const windowWidth = useWindowWidth();
-  const columnNum = useColumnNumber();
+  const columnNum = useColumnNumber(windowWidth);
   const [nextToken, setNextToken] = useState<string>(initialNextToken);
   const [posts, setPosts] = useState<PostType[]>(initialPosts);
   const [ssrLoading, setSSRLoading] = useState(true);
@@ -62,11 +62,9 @@ export const PostList: React.FC<PostListProps> = ({
   const [imagesLoadedCount, setImagesLoadedCount] = useState(0);
 
   const [itemWidth, setItemWidth] = useState(200);
-  console.log((windowWidth - (columnNum + 1) * gap) / columnNum);
 
   useEffect(() => {
     setItemWidth((windowWidth - (columnNum + 1) * gap) / columnNum);
-    console.log((windowWidth - (columnNum + 1) * gap) / columnNum);
   }, [windowWidth, columnNum]);
 
   const ref = useRef<HTMLDivElement>(null);

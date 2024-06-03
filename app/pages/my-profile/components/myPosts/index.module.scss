@@ -1,0 +1,66 @@
+.scrollArea {
+  position: relative;
+  padding: 16px;
+  &::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+  }
+}
+
+.ImageArea {
+  outline: 1px solid rgba(0, 0, 0, 0.08);
+  outline-offset: -1;
+  border-radius: 16px;
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: all 0.4s;
+    background: transparent;
+    border-radius: 16px;
+  }
+  &:hover {
+    &:before {
+      background: rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
+  }
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+  }
+}
+
+.link {
+  text-decoration: none;
+}
+
+.subject {
+  color: #333;
+  padding: 12px;
+}
+
+.postTileArea {
+  width: 100%;
+  opacity: 0.01;
+  transition: opacity 400ms ease-in-out;
+  position: relative;
+}
+
+.imageLoaded {
+  opacity: 1;
+}
+
+.checkbox {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 3;
+}

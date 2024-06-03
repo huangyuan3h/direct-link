@@ -30,6 +30,8 @@ export default {
         environment: {
           NEXT_PUBLIC_BACKEND_API: process.env.NEXT_PUBLIC_BACKEND_API ?? '',
           NEXT_PUBLIC_BUCKET_NAME: bucket.bucketName,
+          NEXT_PUBLIC_AVATAR_BUCKET_NAME:
+            process.env.NEXT_PUBLIC_AVATAR_BUCKET_NAME ?? '',
         },
       });
 

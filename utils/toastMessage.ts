@@ -21,4 +21,14 @@ export const toastMessages = {
   CREATE_POST_SUCCESS: '创建成功',
   CREATE_POST_LOADING: '创建中...',
   CREATE_POST_ERROR: '创建失败',
+
+  // update common
+  UPDATE_SUCCESS: '更新成功',
+  UPDATE_LOADING: '更新中...',
+  UPDATE_ERROR: '更新失败',
+
+  // update delete
+  DELETE_SUCCESS: '删除成功',
+  DELETE_LOADING: '删除中...',
+  DELETE_ERROR: '删除失败',
 };

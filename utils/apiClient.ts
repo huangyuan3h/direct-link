@@ -1,22 +1,33 @@
 import { parseCookies } from 'nookies';
 
-const getAuthToken = (): string => {
-  const cookies = parseCookies();
-  return cookies['Authorization'];
-};
+export const isBrowser = () => typeof window !== 'undefined';
 
 class APIClient {
   private static readonly baseUrl: string =
     process.env.NEXT_PUBLIC_BACKEND_API ?? '';
 
+  private static authCookie: string = '';
+
+  constructor(authCookie?: string) {
+    APIClient.authCookie = authCookie ?? '';
+  }
+
+  static getAuthToken(): string {
+    if (!isBrowser()) {
+      return APIClient.authCookie;
+    }
+    const cookies = parseCookies();
+    return cookies['Authorization'];
+  }
+
   async post(url: string, body: object): Promise<any> {
-    const authStr = getAuthToken();
+    const authStr = APIClient.getAuthToken();
     const response = await fetch(APIClient.baseUrl + url, {
       method: 'POST',
       body: JSON.stringify(body),
       credentials: 'include',
       headers: {
-        Authorization: authStr,
+        Authorization: authStr ?? '',
       },
     });
     if (!response.ok) {
@@ -28,12 +39,12 @@ class APIClient {
   }
 
   async get(url: string): Promise<any> {
-    const authStr = getAuthToken();
+    const authStr = APIClient.getAuthToken();
     const response = await fetch(APIClient.baseUrl + url, {
       method: 'GET',
       credentials: 'include',
       headers: {
-        Authorization: authStr,
+        Authorization: authStr ?? '',
       },
     });
 
