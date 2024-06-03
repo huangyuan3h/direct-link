@@ -4,11 +4,13 @@ import styles from './index.module.scss';
 import { CSSProperties, useState } from 'react';
 import { PostType } from '@/app/pages/posts/types';
 import clsx from 'clsx';
+import CloseButton from 'react-bootstrap/CloseButton';
 
 export interface PostTileProps
   extends Pick<PostType, 'postId' | 'subject' | 'images'> {
   style?: CSSProperties;
   onImageloaded?: () => void;
+  onDelete?: (id: string) => void;
 }
 
 const noImageURL = '/images/no-image.png';
@@ -25,6 +27,7 @@ export const PostTile: React.FC<PostTileProps> = ({
   images,
   style,
   onImageloaded,
+  onDelete,
 }: PostTileProps) => {
   const coverImage = getCoverImage(images);
   const [imageLoaded, setImageloaded] = useState(false);
@@ -41,6 +44,12 @@ export const PostTile: React.FC<PostTileProps> = ({
       className={clsx(styles.postTileArea, imageLoaded && styles.imageLoaded)}
       style={style}
     >
+      {onDelete && (
+        <CloseButton
+          className={styles.closeBtn}
+          onClick={() => onDelete(postId)}
+        />
+      )}
       <Link href={`/post/${postId}`} className={styles.link} prefetch={false}>
         <div className="relative">
           <div className={styles.ImageArea}>

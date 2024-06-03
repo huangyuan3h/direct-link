@@ -26,4 +26,9 @@ export const toastMessages = {
   UPDATE_SUCCESS: '更新成功',
   UPDATE_LOADING: '更新中...',
   UPDATE_ERROR: '更新失败',
+
+  // update delete
+  DELETE_SUCCESS: '删除成功',
+  DELETE_LOADING: '删除中...',
+  DELETE_ERROR: '删除失败',
 };

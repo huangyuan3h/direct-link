@@ -51,8 +51,18 @@
   width: 100%;
   opacity: 0.01;
   transition: opacity 400ms ease-in-out;
+  position: relative;
 }
 
 .imageLoaded {
   opacity: 1;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 12px;
+  cursor: pointer;
+  z-index: 3;
 }
