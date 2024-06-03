@@ -22,7 +22,7 @@ const getPosts = async (
   try {
     const client = new APIClient();
     return await client.post('/posts', {
-      limit: 50,
+      limit,
       next_token: nextToken,
       category,
     });

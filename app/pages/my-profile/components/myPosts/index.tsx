@@ -25,9 +25,12 @@ type PostsResponse = {
 
 const limit = 50;
 
+const reachBottomPercentage = 80; // when reach 60% load next page
+
 const getMyPosts = async (nextToken: string): Promise<PostsResponse> => {
   try {
     const client = new APIClient();
+
     return await client.post('/my/posts', {
       limit: limit,
       next_token: nextToken,
@@ -42,19 +45,20 @@ const MyPosts: React.FC<MyPostsProps> = ({
   posts: ps,
   nextToken: token,
 }: MyPostsProps) => {
-  console.log(ps, token);
-
   const [posts, setPosts] = useState<PostType[]>(ps);
 
   const ref = useRef<HTMLDivElement>(null);
 
   const [nextToken, setNextToken] = useState(token);
 
-  const [loadMoreData, setLoadMoreData] = useState(false);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   const { data, isLoading, mutate } = useSWR(
-    !loadMoreData ? null : '/my/posts',
-    () => getMyPosts(nextToken)
+    nextToken !== '' ? '/my/posts' : null,
+    () => getMyPosts(nextToken),
+    {
+      revalidateOnFocus: false,
+    }
   );
 
   const [deleteModal, setShowDeleteModal] = useState<boolean>(false);
@@ -78,6 +82,32 @@ const MyPosts: React.FC<MyPostsProps> = ({
       setNextToken(data?.next_token);
     }
   }, [isLoading, data, appendDataToPosts]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const { scrollHeight, clientHeight, scrollTop } =
+        document.documentElement;
+
+      const scrollPercentage =
+        (scrollTop / (scrollHeight - clientHeight)) * 100;
+
+      if (
+        scrollPercentage >= reachBottomPercentage &&
+        !isLoading &&
+        nextToken !== '' &&
+        !isLoadingMore
+      ) {
+        setIsLoadingMore(true);
+        mutate();
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [isLoading, nextToken, isLoadingMore, mutate]);
 
   const handleCheckClick = (id: string) => {
     if (selectedPosts.includes(id)) {
