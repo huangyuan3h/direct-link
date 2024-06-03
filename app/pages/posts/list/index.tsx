@@ -44,7 +44,7 @@ export const PostList: React.FC<PostListProps> = ({
   category,
 }: PostListProps) => {
   const windowWidth = useWindowWidth();
-  const columnNum = useColumnNumber();
+  const columnNum = useColumnNumber(windowWidth);
   const [nextToken, setNextToken] = useState<string>(initialNextToken);
   const [posts, setPosts] = useState<PostType[]>(initialPosts);
   const [ssrLoading, setSSRLoading] = useState(true);

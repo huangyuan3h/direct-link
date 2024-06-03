@@ -10,13 +10,18 @@ import { decodeJWT } from '@/utils/auth';
 import { setCookie } from 'nookies';
 import { useUser } from '@/components/user-context';
 import MyPosts from './components/myPosts';
+import { PostType } from '../posts/types';
 
 export interface MyProfileProps {
   user: User;
+  posts: PostType[];
+  nextToken: string;
 }
 
 export const MyProfile: React.FC<MyProfileProps> = ({
   user,
+  posts,
+  nextToken,
 }: MyProfileProps) => {
   const { updateUser } = useUser();
   const [currentUser, setUser] = useState(user);
@@ -59,7 +64,7 @@ export const MyProfile: React.FC<MyProfileProps> = ({
   return (
     <div>
       <BasicInfo user={currentUser} onChange={handleUserChange} />
-      <MyPosts posts={[]} />
+      <MyPosts posts={posts} nextToken={nextToken} />
     </div>
   );
 };
