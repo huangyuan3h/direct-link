@@ -10,7 +10,8 @@ export interface PostTileProps
   extends Pick<PostType, 'postId' | 'subject' | 'images'> {
   style?: CSSProperties;
   onImageloaded?: () => void;
-  onDelete?: (id: string) => void;
+  onChecked?: (id: string) => void;
+  checked?: boolean;
 }
 
 const noImageURL = '/images/no-image.png';
@@ -27,7 +28,8 @@ export const PostTile: React.FC<PostTileProps> = ({
   images,
   style,
   onImageloaded,
-  onDelete,
+  onChecked,
+  checked,
 }: PostTileProps) => {
   const coverImage = getCoverImage(images);
   const [imageLoaded, setImageloaded] = useState(false);
@@ -44,11 +46,15 @@ export const PostTile: React.FC<PostTileProps> = ({
       className={clsx(styles.postTileArea, imageLoaded && styles.imageLoaded)}
       style={style}
     >
-      {onDelete && (
-        <CloseButton
-          className={styles.closeBtn}
-          onClick={() => onDelete(postId)}
-        />
+      {onChecked && (
+        <div className={styles.checkbox}>
+          <input
+            className="form-check-input"
+            type="checkbox"
+            checked={checked}
+            onClick={() => onChecked(postId)}
+          />
+        </div>
       )}
       <Link href={`/post/${postId}`} className={styles.link} prefetch={false}>
         <div className="relative">

@@ -10,6 +10,7 @@ import { DeleteModal } from './ConfirmDelete';
 import APIClient from '@/utils/apiClient';
 import { toastMessages } from '@/utils/toastMessage';
 import { toast } from 'react-toastify';
+import { Button } from 'react-bootstrap';
 
 interface MyPostsProps {
   posts: PostType[];
@@ -17,33 +18,39 @@ interface MyPostsProps {
 }
 
 const MyPosts: React.FC<MyPostsProps> = ({
-  posts,
+  posts: ps,
   nextToken,
 }: MyPostsProps) => {
-  console.log(posts, nextToken);
+  console.log(ps, nextToken);
+
+  const [posts, setPosts] = useState<PostType[]>(ps);
 
   const ref = useRef<HTMLDivElement>(null);
 
   const [deleteModal, setShowDeleteModal] = useState<boolean>(false);
-  const [currentPost, setCurrentPost] = useState<PostType>();
+  const [selectedPosts, setSelectedPosts] = useState<string[]>([]);
 
-  const handleClickDelete = (id: string) => {
-    const current = posts.find((p) => p.postId === id);
-    setCurrentPost(current);
-    setShowDeleteModal(true);
+  const handleCheckClick = (id: string) => {
+    if (selectedPosts.includes(id)) {
+      setSelectedPosts(selectedPosts.filter((p) => p !== id));
+    } else {
+      setSelectedPosts([...selectedPosts, id]);
+    }
   };
 
   const handleCloseModal = () => {
     setShowDeleteModal(false);
   };
 
+  const handleDeleteClick = () => {
+    setShowDeleteModal(true);
+  };
+
   const handleConfirmDelete = async () => {
     const client = new APIClient();
 
-    client.post('/my/post/delete', { post_id: currentPost?.postId });
-
     const res = await toast.promise(
-      client.post('/my/post/delete', { post_id: currentPost?.postId }),
+      client.post('/my/post/delete', { post_ids: selectedPosts }),
       {
         success: toastMessages.DELETE_SUCCESS,
         pending: toastMessages.DELETE_LOADING,
@@ -54,17 +61,28 @@ const MyPosts: React.FC<MyPostsProps> = ({
 
     if (res.message === 'success') {
       setShowDeleteModal(false);
+      setPosts(posts.filter((post) => !selectedPosts.includes(post.postId)));
+      setSelectedPosts([]);
     }
   };
 
   return (
     <div className={clsx(styles.scrollArea, 'container')} ref={ref}>
       <DeleteModal
-        title={currentPost?.subject ?? ''}
         onClose={handleCloseModal}
         onConfirm={handleConfirmDelete}
         show={deleteModal}
       />
+      <div className="m-2 flex flex-row-reverse">
+        <Button
+          variant="primary"
+          size="sm"
+          onClick={handleDeleteClick}
+          disabled={selectedPosts.length === 0}
+        >
+          删除帖子
+        </Button>
+      </div>
       <ResponsiveMasonry
         columnsCountBreakPoints={{
           [breakpoints.sm]: 2,
@@ -80,7 +98,7 @@ const MyPosts: React.FC<MyPostsProps> = ({
               postId={post.postId}
               subject={post.subject}
               images={post.images}
-              onDelete={handleClickDelete}
+              onChecked={handleCheckClick}
             />
           ))}
         </Masonry>
