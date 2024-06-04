@@ -55,6 +55,17 @@ const descriptionConfig: DescriptionConfig = {
   jobs: '💼  北美热门行业招聘信息，求职技巧、简历优化、面试指南，助你找到心仪工作！',
 };
 
+const keywordConfig: DescriptionConfig = {
+  'studying-abroad':
+    '北美留学, 留学申请, 美国留学, 加拿大留学, 留学指南, 院校排名, 留学生活, 语言考试, 奖学金',
+  immigration:
+    '北美移民, 移民政策, 移民项目, 移民申请, 移民条件, 技术移民, 投资移民, 加拿大移民, 美国移民',
+  house:
+    '北美房产, 买房, 租房, 房价, 房源, 地产, 美国房产, 加拿大房产, 租房信息, 买房指南',
+  car: '北美汽车, 买车, 租车, 汽车保险, 汽车贷款, 二手车, 新车, 美国汽车, 加拿大汽车, 汽车租赁',
+  jobs: '北美工作, 求职, 招聘, 简历, 面试, LinkedIn, Indeed, Glassdoor, 美国工作, 加拿大工作',
+};
+
 type Props = {
   params: { category: string };
   searchParams: { [key: string]: string | string[] | undefined };
@@ -68,10 +79,12 @@ export async function generateMetadata(
 
   const title = titleConfig[category as keyof URLConfig];
   const description = descriptionConfig[category as keyof URLConfig];
+  const keywords = keywordConfig[category as keyof URLConfig];
 
   return {
     title: `${title} - 北径信息`,
     description,
+    keywords: keywords,
     alternates: {
       canonical: `${DOMAIN_URL}posts/${category}`,
     },
