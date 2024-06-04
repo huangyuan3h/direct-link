@@ -1,3 +1,4 @@
+import { DOMAIN_URL } from '@/config/domain';
 import { MetadataRoute } from 'next';
 
 export default function robots(): MetadataRoute.Robots {
@@ -7,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/my/', '/in-developing'],
     },
-    sitemap: 'https://www.north-path.site/sitemap.xml',
+    sitemap: `${DOMAIN_URL}sitemap.xml`,
   };
 }

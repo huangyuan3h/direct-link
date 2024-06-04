@@ -1,20 +1,19 @@
+import { DOMAIN_URL } from '@/config/domain';
 import { PostsResponse } from '@/types/posts';
 import APIClient from '@/utils/apiClient';
 import { MetadataRoute } from 'next';
-
-const domainUrl = 'https://www.north-path.site/';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // fixed
   let sitemaps: MetadataRoute.Sitemap = [
     {
-      url: `${domainUrl}`,
+      url: `${DOMAIN_URL}`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 1,
     },
     {
-      url: `${domainUrl}rcic`,
+      url: `${DOMAIN_URL}rcic`,
       lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 1,
@@ -25,31 +24,31 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const listpages: MetadataRoute.Sitemap = [
     {
-      url: `${domainUrl}posts/studying-abroad`,
+      url: `${DOMAIN_URL}posts/studying-abroad`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
-      url: `${domainUrl}posts/immigration`,
+      url: `${DOMAIN_URL}posts/immigration`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
-      url: `${domainUrl}posts/house`,
+      url: `${DOMAIN_URL}posts/house`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
-      url: `${domainUrl}posts/car`,
+      url: `${DOMAIN_URL}posts/car`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
-      url: `${domainUrl}posts/jobs`,
+      url: `${DOMAIN_URL}posts/jobs`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
@@ -74,7 +73,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const vips: MetadataRoute.Sitemap = res.results.map((p) => {
     return {
-      url: `${domainUrl}post/${p.postId}`,
+      url: `${DOMAIN_URL}post/${p.postId}`,
       lastModified: p.updatedDate ? new Date(p.updatedDate) : new Date(),
       changeFrequency: 'yearly',
       priority: 0.6,

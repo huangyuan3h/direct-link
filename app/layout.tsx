@@ -8,11 +8,11 @@ import GoogleAnalytics from '@/components/google-analytics';
 const san = Open_Sans({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: '北径信息 - 北美直连项目',
-  description: '帮你选择加拿大移民项目和机构',
-  applicationName: '北美直连',
+  title: '北径信息 - 加拿大华人社区',
+  description: '加拿大华人信息平台',
+  applicationName: '北径信息',
   authors: { name: 'Yuan Huang', url: 'https://github.com/huangyuan3h' },
-  keywords: ['加拿大', '移民'],
+  keywords: ['加拿大', '加拿大华人', '移民加拿大'],
   icons: [
     { url: '/favicon.ico' },
     { url: '/apple-touch-icon.png', rel: 'apple-touch-icon', sizes: '180x180' },
