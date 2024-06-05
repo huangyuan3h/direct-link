@@ -96,8 +96,52 @@ export default async function Home({ params }: ViewPostParamsProps) {
 
   const data = await getPostsByCategory(category);
 
+  const articles = data.results.map((r, idx) => {
+    const email = r.email;
+    const name = r.email.slice(0, r.email.indexOf('@'));
+    return {
+      '@type': 'ListItem',
+      position: idx + 1,
+      item: {
+        '@type': 'Article',
+        mainEntityOfPage: {
+          '@type': 'WebPage',
+          '@id': `${DOMAIN_URL}post/${r.postId}`,
+        },
+        headline: r.subject,
+        image: r.images,
+        datePublished: r.updatedDate,
+        author: {
+          '@type': 'Person',
+          name: name,
+          email: email,
+        },
+        publisher: {
+          '@type': 'Organization',
+          name: '北径信息',
+          logo: {
+            '@type': 'ImageObject',
+            url: `${DOMAIN_URL}android-chrome-512x512.png`,
+          },
+        },
+        articleBody: r.content,
+      },
+    };
+  });
+
+  const listArticles = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    numberOfItems: data.results.length,
+    itemListElement: articles,
+  };
+
   return (
     <main className="">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(listArticles) }}
+      />
       <Header />
       <PostList
         category={category}

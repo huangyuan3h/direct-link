@@ -59,13 +59,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // add vip
 
-  const client = new APIClient();
-
-  const res: PostsResponse = await client.post('posts', {
-    limit: 5000,
-    next_token: '',
-    category: '',
+  const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_API + 'posts', {
+    method: 'POST',
+    body: JSON.stringify({ limit: 5000, next_token: '', category: '' }),
   });
+
+  const res: PostsResponse = await response.json();
 
   if (!res.results || res.results.length === 0) {
     return sitemaps;
