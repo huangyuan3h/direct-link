@@ -36,7 +36,7 @@ export default async function Home({ params }: ViewPostParamsProps) {
 
   return (
     <main className="">
-      <Header />
+      <Header v2Header />
       <PostList
         category={category}
         initialPosts={data.results}

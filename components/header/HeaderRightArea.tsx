@@ -5,7 +5,7 @@ import { List } from 'react-bootstrap-icons';
 
 import styles from './header.module.scss';
 import clsx from 'clsx';
-import { MenuPanel } from './MenuPanel';
+import { MenuPanel } from '../navigation/MenuPanel';
 
 export interface IconListProps {
   onMenuClick: () => void;

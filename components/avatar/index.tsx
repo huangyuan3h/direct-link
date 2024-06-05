@@ -4,18 +4,18 @@ import React, { useState } from 'react';
 import { useUser } from '../user-context';
 import clsx from 'clsx';
 import Image from 'next/image';
-import styles from './header.module.scss';
+import styles from './avatar.module.scss';
 import { Button } from 'react-bootstrap';
 import { LoginModal } from '../login-modal';
 import { useRouter } from 'next/navigation';
 import { routes } from '@/config/routes';
 import { defaultAvatarImage } from '@/config/avatar';
 
-interface AvatorProps {
+interface AvatarProps {
   className?: string | string[];
 }
 
-export const Avator: React.FC<AvatorProps> = ({ className }) => {
+export const Avatar: React.FC<AvatarProps> = ({ className }) => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const { user } = useUser();
   const router = useRouter();
@@ -37,7 +37,7 @@ export const Avator: React.FC<AvatorProps> = ({ className }) => {
   };
 
   return (
-    <div className={clsx(styles.AvatorArea, className)}>
+    <div className={clsx(styles.AvatarArea, className)}>
       <Image
         src={
           user?.avatar && user?.avatar.length > 0

@@ -1,6 +1,6 @@
 import { useUser } from '../user-context';
 import { Accordion, Button, ListGroup, Offcanvas } from 'react-bootstrap';
-import { Avator } from './Avator';
+import { Avatar } from '../avatar';
 import { menuConfig } from './menuConfig';
 
 export interface MenuPanelProps {
@@ -17,7 +17,7 @@ export const MenuPanel: React.FC<MenuPanelProps> = ({
     <Offcanvas show={showPanel} onHide={onMenuClose}>
       <Offcanvas.Header closeButton>
         <Offcanvas.Title>
-          <Avator />
+          <Avatar />
         </Offcanvas.Title>
       </Offcanvas.Header>
       <Offcanvas.Body>
@@ -26,8 +26,9 @@ export const MenuPanel: React.FC<MenuPanelProps> = ({
             <Button href="/post">发帖</Button>
           </div>
         )}
-        <Accordion defaultActiveKey="0" flush>
-          {menuConfig.map((menu, idx) => {
+
+        {menuConfig.map((menu, idx) => {
+          if (menu.children && menu.children.length) {
             return (
               <Accordion.Item key={`menu-${menu.key}`} eventKey={`${idx}`}>
                 <Accordion.Header>{menu.title}</Accordion.Header>
@@ -46,8 +47,18 @@ export const MenuPanel: React.FC<MenuPanelProps> = ({
                 </Accordion.Body>
               </Accordion.Item>
             );
-          })}
-        </Accordion>
+          } else {
+            return (
+              <Button
+                variant="outline-secondary"
+                key={`menu-${menu.key}`}
+                size="lg"
+              >
+                {menu.title}
+              </Button>
+            );
+          }
+        })}
       </Offcanvas.Body>
     </Offcanvas>
   );

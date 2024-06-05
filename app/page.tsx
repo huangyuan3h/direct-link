@@ -17,7 +17,7 @@ export default async function Home() {
   const data = await getAllPosts();
   return (
     <main className="">
-      <Header />
+      <Header v2Header />
       <PostList
         category=""
         initialPosts={data.results}
