@@ -35,14 +35,27 @@ export default async function Home() {
       position: idx + 1,
       item: {
         '@type': 'Article',
+        mainEntityOfPage: {
+          '@type': 'WebPage',
+          '@id': `${DOMAIN_URL}post/${r.postId}`,
+        },
         headline: r.subject,
+        image: r.images,
         datePublished: r.updatedDate,
         author: {
           '@type': 'Person',
-          name,
-          email,
+          name: name,
+          email: email,
         },
-        url: `${DOMAIN_URL}`,
+        publisher: {
+          '@type': 'Organization',
+          name: '北径信息',
+          logo: {
+            '@type': 'ImageObject',
+            url: `${DOMAIN_URL}android-chrome-512x512.png`,
+          },
+        },
+        articleBody: r.content,
       },
     };
   });
