@@ -19,7 +19,7 @@ export type PostType = {
   topics: string[];
   images: string[];
   updatedDate?: string;
-  createdDate?: string;
+  email: string;
 };
 
 export type PostResponseType = {
@@ -30,6 +30,7 @@ export type PostResponseType = {
   location: string;
   topics: string[];
   images: string[];
+  email: string;
   updatedDate?: string;
 };
 

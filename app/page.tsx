@@ -27,11 +27,42 @@ export default async function Home() {
     description: '为北美新移民提供生活信息、经验分享和互助平台。',
   };
 
+  const articles = data.results.map((r, idx) => {
+    const email = r.email;
+    const name = r.email.slice(0, r.email.indexOf('@'));
+    return {
+      '@type': 'ListItem',
+      position: idx + 1,
+      item: {
+        '@type': 'Article',
+        headline: r.subject,
+        datePublished: r.updatedDate,
+        author: {
+          '@type': 'Person',
+          name,
+          email,
+        },
+        url: `${DOMAIN_URL}`,
+      },
+    };
+  });
+
+  const listArticles = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    numberOfItems: data.results.length,
+    itemListElement: articles,
+  };
+
   return (
     <main className="">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(website) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(listArticles) }}
       />
       <Header />
       <PostList

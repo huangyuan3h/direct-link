@@ -52,6 +52,9 @@ export default async function Home({ params }: ViewPostParamsProps) {
 
   // json ld
 
+  const email = posts.email;
+  const name = posts.email.slice(0, posts.email.indexOf('@'));
+
   const article = {
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -62,6 +65,11 @@ export default async function Home({ params }: ViewPostParamsProps) {
     headline: posts.subject,
     image: posts.images,
     datePublished: posts.updatedDate,
+    author: {
+      '@type': 'Person',
+      name: name,
+      email: email,
+    },
     publisher: {
       '@type': 'Organization',
       name: '北径信息',
