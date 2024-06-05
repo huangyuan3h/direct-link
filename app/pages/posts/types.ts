@@ -30,6 +30,7 @@ export type PostResponseType = {
   location: string;
   topics: string[];
   images: string[];
+  updatedDate?: string;
 };
 
 export type PostsResponse = {
