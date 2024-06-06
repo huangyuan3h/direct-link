@@ -2,6 +2,7 @@ import { useUser } from '../user-context';
 import { Accordion, Button, ListGroup, Offcanvas } from 'react-bootstrap';
 import { Avatar } from '../avatar';
 import { menuConfig } from './menuConfig';
+import { NavButton } from './NavButton';
 
 export interface MenuPanelProps {
   showPanel: boolean;
@@ -28,7 +29,7 @@ export const MenuPanel: React.FC<MenuPanelProps> = ({
         )}
 
         {menuConfig.map((menu, idx) => {
-          if (menu.children && menu.children.length) {
+          if (!menu.url && menu.children && menu.children.length) {
             return (
               <Accordion.Item key={`menu-${menu.key}`} eventKey={`${idx}`}>
                 <Accordion.Header>{menu.title}</Accordion.Header>
@@ -49,13 +50,12 @@ export const MenuPanel: React.FC<MenuPanelProps> = ({
             );
           } else {
             return (
-              <Button
-                variant="outline-secondary"
+              <NavButton
+                Icon={menu.Icon}
+                url={menu.url ?? ''}
+                title={menu.title}
                 key={`menu-${menu.key}`}
-                size="lg"
-              >
-                {menu.title}
-              </Button>
+              />
             );
           }
         })}
