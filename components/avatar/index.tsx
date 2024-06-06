@@ -13,9 +13,13 @@ import { defaultAvatarImage } from '@/config/avatar';
 
 interface AvatarProps {
   className?: string | string[];
+  withName?: boolean;
 }
 
-export const Avatar: React.FC<AvatarProps> = ({ className }) => {
+export const Avatar: React.FC<AvatarProps> = ({
+  className,
+  withName,
+}: AvatarProps) => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const { user } = useUser();
   const router = useRouter();
@@ -50,11 +54,19 @@ export const Avatar: React.FC<AvatarProps> = ({ className }) => {
         alt={user?.userName ?? ''}
         onClick={handleClickImage}
       />
-      <div>{user?.userName ?? '用户'}</div>
-      {!user && (
-        <Button variant="outline-primary" size="sm" onClick={handleClickLogin}>
-          登陆
-        </Button>
+      {withName && (
+        <>
+          <div>{user?.userName ?? '用户'}</div>
+          {!user && (
+            <Button
+              variant="outline-primary"
+              size="sm"
+              onClick={handleClickLogin}
+            >
+              登陆
+            </Button>
+          )}
+        </>
       )}
 
       <LoginModal show={showLoginModal} onHide={handleHideModal} />

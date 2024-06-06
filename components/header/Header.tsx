@@ -17,7 +17,7 @@ export const Header: React.FC<HeaderProps> = ({ v2Header }: HeaderProps) => {
         )}
       >
         <Banner />
-        <HeaderRightArea />
+        <HeaderRightArea v2Header={v2Header} />
       </div>
     </header>
   );

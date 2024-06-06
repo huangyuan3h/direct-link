@@ -17,7 +17,7 @@ export const MenuPanel: React.FC<MenuPanelProps> = ({
     <Offcanvas show={showPanel} onHide={onMenuClose}>
       <Offcanvas.Header closeButton>
         <Offcanvas.Title>
-          <Avatar />
+          <Avatar withName />
         </Offcanvas.Title>
       </Offcanvas.Header>
       <Offcanvas.Body>

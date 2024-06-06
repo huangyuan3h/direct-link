@@ -28,7 +28,7 @@
   }
 }
 
-.MenuIconArea {
+.IconArea {
   outline: 1px solid rgba(#000, 0.4);
   border-radius: 50%;
   display: flex;
@@ -46,4 +46,29 @@
   width: 20px;
   height: 20px;
   cursor: pointer;
+}
+
+.rightTopButton {
+  display: flex;
+  flex-direction: row;
+  column-gap: 6px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: #333;
+  padding: 0 12px;
+  text-decoration: unset;
+  &:hover {
+    background-color: rgba(#000, 0.05);
+    border-radius: 6px;
+  }
+}
+
+.rightTopText {
+  font-size: 16px;
+}
+
+.rightTopIcon {
+  width: 16px;
+  height: 16px;
 }
