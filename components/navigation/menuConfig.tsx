@@ -39,7 +39,7 @@ export const menuConfig: MenuInterface[] = [
   },
   {
     key: 'rcic',
-    title: '持牌顾问验证',
+    title: '持牌验证',
     Icon: PersonCheck,
     url: '/rcic',
   },

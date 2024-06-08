@@ -1,6 +1,7 @@
 import { PostList } from '@/app/pages/posts/list';
 import { PostsResponse } from '@/app/pages/posts/types';
 import { Header } from '@/components/header';
+import { LeftMenuPanel } from '@/components/navigation/LeftMenuPanel';
 import APIClient from '@/utils/apiClient';
 
 interface ViewPostParamsProps {
@@ -37,11 +38,14 @@ export default async function Home({ params }: ViewPostParamsProps) {
   return (
     <main className="">
       <Header v2Header />
-      <PostList
-        category={category}
-        initialPosts={data.results}
-        nextToken={data.next_token}
-      />
+      <div className="flex">
+        <LeftMenuPanel />
+        {/* <PostList
+          category={category}
+          initialPosts={data.results}
+          nextToken={data.next_token}
+        /> */}
+      </div>
     </main>
   );
 }

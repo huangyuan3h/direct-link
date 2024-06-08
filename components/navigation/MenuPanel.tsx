@@ -1,8 +1,8 @@
 import { useUser } from '../user-context';
-import { Accordion, Button, ListGroup, Offcanvas } from 'react-bootstrap';
+import { Button, Offcanvas } from 'react-bootstrap';
 import { Avatar } from '../avatar';
-import { menuConfig } from './menuConfig';
-import { NavButton } from './NavButton';
+import { Menus } from './Menus';
+import styles from './navButton.module.scss';
 
 export interface MenuPanelProps {
   showPanel: boolean;
@@ -27,38 +27,9 @@ export const MenuPanel: React.FC<MenuPanelProps> = ({
             <Button href="/post">发帖</Button>
           </div>
         )}
-
-        {menuConfig.map((menu, idx) => {
-          if (!menu.url && menu.children && menu.children.length) {
-            return (
-              <Accordion.Item key={`menu-${menu.key}`} eventKey={`${idx}`}>
-                <Accordion.Header>{menu.title}</Accordion.Header>
-                <Accordion.Body>
-                  <ListGroup variant="flush">
-                    {menu.children.map((c) => {
-                      return (
-                        <ListGroup.Item key={`menu-child-${c.key}`}>
-                          <Button variant="link" href={c.url}>
-                            {c.title}
-                          </Button>
-                        </ListGroup.Item>
-                      );
-                    })}
-                  </ListGroup>
-                </Accordion.Body>
-              </Accordion.Item>
-            );
-          } else {
-            return (
-              <NavButton
-                Icon={menu.Icon}
-                url={menu.url ?? ''}
-                title={menu.title}
-                key={`menu-${menu.key}`}
-              />
-            );
-          }
-        })}
+        <div className={styles.menuContainer}>
+          <Menus isOverlayPanel />
+        </div>
       </Offcanvas.Body>
     </Offcanvas>
   );
