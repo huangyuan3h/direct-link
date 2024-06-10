@@ -21,7 +21,7 @@ export interface MenuInterface {
 export const menuConfig: MenuInterface[] = [
   {
     key: 'all',
-    title: '首页',
+    title: '推荐',
     Icon: House,
     url: '/',
   },

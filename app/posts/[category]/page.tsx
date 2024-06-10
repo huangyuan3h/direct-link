@@ -2,6 +2,7 @@ import { PostList } from '@/app/pages/posts/list';
 import { PostsResponse } from '@/app/pages/posts/types';
 import { Header } from '@/components/header';
 import { LeftMenuPanel } from '@/components/navigation/LeftMenuPanel';
+import TopNav from '@/components/top-nav';
 import APIClient from '@/utils/apiClient';
 
 interface ViewPostParamsProps {
@@ -40,6 +41,9 @@ export default async function Home({ params }: ViewPostParamsProps) {
       <Header v2Header />
       <div className="flex">
         <LeftMenuPanel />
+        <div>
+          <TopNav />
+        </div>
         {/* <PostList
           category={category}
           initialPosts={data.results}

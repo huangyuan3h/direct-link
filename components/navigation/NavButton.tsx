@@ -20,6 +20,7 @@ export const NavButton: React.FC<NavButtonProps> = ({
     <Link href={url} className={clsx(styles.menuButton, className)}>
       <Icon />
       <div>{title}</div>
+      <div>&nbsp;</div>
     </Link>
   );
 };

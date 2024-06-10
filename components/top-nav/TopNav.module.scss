@@ -1,0 +1,26 @@
+.topNav {
+  margin: 16px;
+  ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      margin-right: 16px;
+    }
+  }
+}
+
+.link {
+  &：hover {
+    background: rgba(black, 0.02);
+  }
+  text-decoration: none;
+  color: inherit;
+}
+
+.active {
+  font-weight: bold;
+  border-bottom: 2px solid #ff0000;
+}
