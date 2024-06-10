@@ -11,6 +11,7 @@ export interface MenuInterface {
   key: string;
   url: string;
   Icon: Icon;
+  showOnTopNav?: boolean;
   children?: {
     title: string;
     key: string;
@@ -23,6 +24,7 @@ export const menuConfig: MenuInterface[] = [
     key: 'all',
     title: '推荐',
     Icon: House,
+    showOnTopNav: true,
     url: '/',
   },
   {
@@ -30,12 +32,14 @@ export const menuConfig: MenuInterface[] = [
     title: '留学',
     Icon: AlphabetUppercase,
     url: '/posts/studying-abroad',
+    showOnTopNav: true,
   },
   {
     key: 'immigration',
     title: '移民',
     Icon: Airplane,
     url: '/posts/immigration',
+    showOnTopNav: true,
   },
   {
     key: 'rcic',

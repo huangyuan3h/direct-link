@@ -1,5 +1,5 @@
 .topNav {
-  margin: 16px;
+  margin: 24px;
   ul {
     display: flex;
     list-style: none;
@@ -13,14 +13,17 @@
 }
 
 .link {
-  &：hover {
-    background: rgba(black, 0.02);
+  &:hover {
+    background: rgb(123, 121, 121, 0.1);
   }
+  padding: 6px 12px;
   text-decoration: none;
   color: inherit;
+  border-radius: 18px;
+  background: white;
 }
 
 .active {
-  font-weight: bold;
-  border-bottom: 2px solid #ff0000;
+  font-weight: 550;
+  background: rgb(123, 121, 121, 0.1);
 }

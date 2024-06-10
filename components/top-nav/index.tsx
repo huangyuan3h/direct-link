@@ -16,10 +16,12 @@ const TopNav: React.FC = () => {
     return null;
   }
 
+  const topNavMenu = menuConfig.filter((item) => item.showOnTopNav);
+
   return (
     <nav className={styles.topNav}>
       <ul>
-        {menuConfig.map((item) => (
+        {topNavMenu.map((item) => (
           <li key={item.key}>
             <Link
               href={item.url}
