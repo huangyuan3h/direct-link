@@ -1,19 +1,17 @@
 'use client';
 
-import { useColumnNumber } from './utils/layout';
 import { PostType, PostsResponse } from '../types';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { PostTile } from '../../../../components/PostTile';
-import { useWindowWidth } from '@/utils/hooks/useWindowWidth';
 import styles from './index.module.scss';
 import useSWR from 'swr';
 import APIClient from '@/utils/apiClient';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 import { breakpoints } from '@/utils/breakpoint';
 
-const limit = 50; // each time fetch posts number
+const limit = 10; // each time fetch posts number
 
-const reachBottomPercentage = 60; // when reach 60% load next page
+const reachBottomPercentage = 80; // when reach 80% load next page
 
 const getPosts = async (
   nextToken: string,
@@ -49,8 +47,11 @@ export const PostList: React.FC<PostListProps> = ({
   const [loadMoreData, setLoadMoreData] = useState(false);
 
   const { data, isLoading, mutate } = useSWR(
-    !loadMoreData ? null : `api/posts`,
-    () => getPosts(nextToken, category)
+    loadMoreData ? `api/posts?nextToken=${nextToken}` : null,
+    () => getPosts(nextToken, category),
+    {
+      revalidateOnFocus: false,
+    }
   );
 
   const [imagesLoadedCount, setImagesLoadedCount] = useState(0);
@@ -59,13 +60,8 @@ export const PostList: React.FC<PostListProps> = ({
 
   const appendDataToPosts = useCallback((newData: PostType[]) => {
     setPosts((prevPosts) => {
-      const existingIds = new Set(prevPosts.map((post) => post.postId));
-
-      const uniqueNewData = newData.filter(
-        (post) => !existingIds.has(post.postId)
-      );
-
-      return [...prevPosts, ...uniqueNewData];
+      const set = new Set([...prevPosts, ...newData]);
+      return Array.from(set);
     });
   }, []);
 
@@ -81,12 +77,6 @@ export const PostList: React.FC<PostListProps> = ({
       setImagesLoadedCount(0);
     }
   }, [imagesLoadedCount, data?.results.length]);
-
-  useEffect(() => {
-    if (imagesLoadedCount === initialPosts.length) {
-      setImagesLoadedCount(0);
-    }
-  }, [imagesLoadedCount, initialPosts.length]);
 
   // loading more data
 

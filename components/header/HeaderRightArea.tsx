@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { List, PlusSquare } from 'react-bootstrap-icons';
 
 import styles from './header.module.scss';
@@ -33,6 +33,11 @@ export const HeaderRightArea: React.FC<HeaderRightAreaProps> = ({
 }) => {
   const [showMenuPanel, setMenuPanel] = useState(false);
   const windowWidth = useWindowWidth();
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    setLoaded(true);
+  }, []);
 
   const onMenuClick = () => {
     setMenuPanel(true);
@@ -42,7 +47,7 @@ export const HeaderRightArea: React.FC<HeaderRightAreaProps> = ({
     setMenuPanel(false);
   };
 
-  if (!v2Header || windowWidth < breakpoints.md) {
+  if (!v2Header || windowWidth < breakpoints.md || !loaded) {
     return (
       <>
         <IconList onMenuClick={onMenuClick} />

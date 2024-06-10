@@ -1,7 +1,7 @@
 .avatar {
   border-radius: 50%;
   background-color: #f1f1f1;
-  object-fit: scale-down;
+  object-fit: cover;
   cursor: pointer;
   outline: 1px solid rgba(#000, 0.2);
   &:hover {
