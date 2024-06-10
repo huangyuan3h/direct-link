@@ -41,14 +41,14 @@ export default async function Home({ params }: ViewPostParamsProps) {
       <Header v2Header />
       <div className="flex">
         <LeftMenuPanel />
-        <div>
+        <div className="w-full">
           <TopNav />
+          <PostList
+            category={category}
+            initialPosts={data.results}
+            nextToken={data.next_token}
+          />
         </div>
-        {/* <PostList
-          category={category}
-          initialPosts={data.results}
-          nextToken={data.next_token}
-        /> */}
       </div>
     </main>
   );

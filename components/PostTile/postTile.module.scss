@@ -1,6 +1,21 @@
 .postTileArea {
+  width: 100%;
+  opacity: 0.01;
+  transition: opacity 400ms ease-in-out;
+  position: relative;
+}
+
+.imageLoaded {
+  opacity: 1;
+}
+
+.checkbox {
   position: absolute;
-  transition: transform 0.2s ease-in-out;
+  top: 12px;
+  left: 12px;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 3;
 }
 
 .ImageArea {
@@ -24,7 +39,6 @@
       z-index: 1;
     }
   }
-
   img {
     width: 100%;
     height: 100%;

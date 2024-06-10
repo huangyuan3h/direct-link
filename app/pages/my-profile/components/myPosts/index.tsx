@@ -1,5 +1,4 @@
 import { PostType } from '@/app/pages/posts/types';
-import { PostTile } from './PostTileV2';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styles from './index.module.scss';
 import clsx from 'clsx';
@@ -12,6 +11,7 @@ import { toastMessages } from '@/utils/toastMessage';
 import { toast } from 'react-toastify';
 import { Button } from 'react-bootstrap';
 import useSWR from 'swr';
+import { PostTile } from '@/components/PostTile';
 
 interface MyPostsProps {
   posts: PostType[];
