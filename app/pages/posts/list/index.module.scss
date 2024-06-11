@@ -8,3 +8,7 @@
     background: transparent;
   }
 }
+
+.scrollArea_containTopNav {
+  height: calc(100vh - 60px - 52px);
+}

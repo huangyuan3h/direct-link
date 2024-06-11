@@ -1,0 +1,29 @@
+.menuButton {
+  text-decoration: unset;
+  display: flex;
+  border-radius: 6px;
+  padding: 8px 16px;
+  align-items: center;
+  color: #333;
+  column-gap: 16px;
+  &:hover {
+    background-color: rgba(black, 0.05);
+  }
+}
+
+.leftPannelStyle {
+  padding-left: 36.4%;
+}
+
+.leftMenuArea {
+  padding: 16px 24px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 2px;
+  justify-content: flex-start;
+  min-width: 200px;
+}
+
+.active {
+  background: rgb(123, 121, 121, 0.1);
+}

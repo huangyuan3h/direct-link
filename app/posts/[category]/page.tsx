@@ -1,7 +1,12 @@
 import { PostList } from '@/app/pages/posts/list';
 import { PostsResponse } from '@/app/pages/posts/types';
 import { Header } from '@/components/header';
+
+import { LeftMenuPanel } from '@/components/navigation/LeftMenuPanel';
+import TopNav from '@/components/top-nav';
+
 import { DOMAIN_URL } from '@/config/domain';
+
 import APIClient from '@/utils/apiClient';
 import { Metadata, ResolvingMetadata } from 'next';
 
@@ -142,12 +147,18 @@ export default async function Home({ params }: ViewPostParamsProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(listArticles) }}
       />
-      <Header />
-      <PostList
-        category={category}
-        initialPosts={data.results}
-        nextToken={data.next_token}
-      />
+      <Header v2Header />
+      <div className="flex">
+        <LeftMenuPanel />
+        <div className="w-full">
+          <TopNav />
+          <PostList
+            category={category}
+            initialPosts={data.results}
+            nextToken={data.next_token}
+          />
+        </div>
+      </div>
     </main>
   );
 }

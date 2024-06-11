@@ -1,13 +1,16 @@
-import { PostType } from '../../app/pages/posts/types';
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from './postTile.module.scss';
-import { CSSProperties } from 'react';
+import { CSSProperties, useState } from 'react';
+import { PostType } from '@/app/pages/posts/types';
+import clsx from 'clsx';
 
 export interface PostTileProps
   extends Pick<PostType, 'postId' | 'subject' | 'images'> {
   style?: CSSProperties;
-  onImageloaded: () => void;
+  onImageloaded?: () => void;
+  onChecked?: (id: string) => void;
+  checked?: boolean;
 }
 
 const noImageURL = '/images/no-image.png';
@@ -24,11 +27,34 @@ export const PostTile: React.FC<PostTileProps> = ({
   images,
   style,
   onImageloaded,
+  onChecked,
+  checked,
 }: PostTileProps) => {
   const coverImage = getCoverImage(images);
+  const [imageLoaded, setImageloaded] = useState(false);
+
+  const handleImageLoaded = () => {
+    setImageloaded(true);
+    if (onImageloaded) {
+      onImageloaded();
+    }
+  };
 
   return (
-    <div className={styles.postTileArea} style={style}>
+    <article
+      className={clsx(styles.postTileArea, imageLoaded && styles.imageLoaded)}
+      style={style}
+    >
+      {onChecked && (
+        <div className={styles.checkbox}>
+          <input
+            className="form-check-input"
+            type="checkbox"
+            checked={checked}
+            onClick={() => onChecked(postId)}
+          />
+        </div>
+      )}
       <Link href={`/post/${postId}`} className={styles.link} prefetch={false}>
         <div className="relative">
           <div className={styles.ImageArea}>
@@ -39,15 +65,13 @@ export const PostTile: React.FC<PostTileProps> = ({
               height={600}
               placeholder="blur"
               blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-              onLoad={() => {
-                onImageloaded();
-              }}
+              onLoad={handleImageLoaded}
             />
           </div>
         </div>
 
-        <div className={styles.subject}>{subject}</div>
+        <h2 className={styles.subject}>{subject}</h2>
       </Link>
-    </div>
+    </article>
   );
 };

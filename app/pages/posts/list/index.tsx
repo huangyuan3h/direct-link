@@ -1,19 +1,19 @@
 'use client';
 
-import { useColumnNumber } from './utils/layout';
 import { PostType, PostsResponse } from '../types';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { PostTile } from '../../../../components/PostTile';
-import { useWindowWidth } from '@/utils/hooks/useWindowWidth';
 import styles from './index.module.scss';
 import useSWR from 'swr';
 import APIClient from '@/utils/apiClient';
-
-const gap = 16;
+import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
+import { breakpoints } from '@/utils/breakpoint';
+import clsx from 'clsx';
+import { useWindowWidth } from '@/utils/hooks/useWindowWidth';
 
 const limit = 50; // each time fetch posts number
 
-const reachBottomPercentage = 60; // when reach 60% load next page
+const reachBottomPercentage = 80; // when reach 80% load next page
 
 const getPosts = async (
   nextToken: string,
@@ -44,40 +44,27 @@ export const PostList: React.FC<PostListProps> = ({
   category,
 }: PostListProps) => {
   const windowWidth = useWindowWidth();
-  const columnNum = useColumnNumber(windowWidth);
   const [nextToken, setNextToken] = useState<string>(initialNextToken);
   const [posts, setPosts] = useState<PostType[]>(initialPosts);
-  const [ssrLoading, setSSRLoading] = useState(true);
-  const [isImageLoaded, setImageLoaded] = useState(false);
+
   const [loadMoreData, setLoadMoreData] = useState(false);
 
   const { data, isLoading, mutate } = useSWR(
-    !loadMoreData ? null : `api/posts`,
-    () => getPosts(nextToken, category)
+    loadMoreData ? `api/posts?nextToken=${nextToken}` : null,
+    () => getPosts(nextToken, category),
+    {
+      revalidateOnFocus: false,
+    }
   );
 
-  const [postTopPostions, setTopPostions] = useState<number[]>([]);
-  const [postLeftPositions, setPostLeftPositions] = useState<number[]>([]);
-
   const [imagesLoadedCount, setImagesLoadedCount] = useState(0);
-
-  const [itemWidth, setItemWidth] = useState(200);
-
-  useEffect(() => {
-    setItemWidth((windowWidth - (columnNum + 1) * gap) / columnNum);
-  }, [windowWidth, columnNum]);
 
   const ref = useRef<HTMLDivElement>(null);
 
   const appendDataToPosts = useCallback((newData: PostType[]) => {
     setPosts((prevPosts) => {
-      const existingIds = new Set(prevPosts.map((post) => post.postId));
-
-      const uniqueNewData = newData.filter(
-        (post) => !existingIds.has(post.postId)
-      );
-
-      return [...prevPosts, ...uniqueNewData];
+      const set = new Set([...prevPosts, ...newData]);
+      return Array.from(set);
     });
   }, []);
 
@@ -89,61 +76,10 @@ export const PostList: React.FC<PostListProps> = ({
   }, [isLoading, data, appendDataToPosts]);
 
   useEffect(() => {
-    setImageLoaded(false);
-  }, [posts.length]);
-
-  useEffect(() => {
     if (imagesLoadedCount === data?.results.length) {
-      setImageLoaded(true);
       setImagesLoadedCount(0);
     }
   }, [imagesLoadedCount, data?.results.length]);
-
-  useEffect(() => {
-    if (ssrLoading && imagesLoadedCount === initialPosts.length) {
-      setImageLoaded(true);
-      setImagesLoadedCount(0);
-      setSSRLoading(false);
-    }
-  }, [imagesLoadedCount, ssrLoading, initialPosts.length]);
-
-  useEffect(() => {
-    if (!isImageLoaded) {
-      return;
-    }
-
-    const updateLayoutFn = () => {
-      if (!ref.current || columnNum === 0 || !isImageLoaded) {
-        return;
-      }
-
-      const elements = ref.current.children;
-      const elementsHeight = Array.from(elements).map(
-        (ele) => ele.clientHeight
-      );
-
-      const newTopPosition: number[] = [];
-      const newLeftPosition: number[] = [];
-      for (let i = 0; i < elements.length; i++) {
-        const columnPosition = i % columnNum;
-        let actualLeft = columnPosition * (gap + itemWidth);
-
-        const previousItemsHeight = elementsHeight
-          .filter((_, idx) => {
-            return idx < i && idx % columnNum === columnPosition;
-          })
-          .reduce((prev, currentVal) => prev + currentVal, 0);
-
-        newTopPosition.push(previousItemsHeight);
-        newLeftPosition.push(actualLeft);
-      }
-
-      setTopPostions(newTopPosition);
-      setPostLeftPositions(newLeftPosition);
-    };
-
-    updateLayoutFn();
-  }, [columnNum, isImageLoaded, itemWidth]);
 
   // loading more data
 
@@ -156,7 +92,13 @@ export const PostList: React.FC<PostListProps> = ({
       const scrollPercentage =
         (scrollTop / (scrollHeight - clientHeight)) * 100;
 
-      setLoadMoreData(scrollPercentage >= reachBottomPercentage && !isLoading);
+      if (
+        scrollPercentage >= reachBottomPercentage &&
+        !isLoading &&
+        nextToken !== ''
+      ) {
+        setLoadMoreData(true);
+      }
     };
 
     if (container) {
@@ -168,34 +110,44 @@ export const PostList: React.FC<PostListProps> = ({
         container.removeEventListener('scroll', handleScroll);
       }
     };
-  }, [isLoading]);
+  }, [isLoading, nextToken]);
 
   useEffect(() => {
-    if (!loadMoreData || nextToken === '') return;
-    mutate().then(() => {
-      setLoadMoreData(false);
-    });
-  }, [loadMoreData, mutate, nextToken]);
+    if (!loadMoreData || nextToken === '' || isLoading) return;
+    setLoadMoreData(false);
+    mutate();
+  }, [loadMoreData, mutate, nextToken, isLoading]);
 
   return (
-    <div className={styles.scrollArea} ref={ref}>
-      {posts.map((post, idx) => {
-        return (
-          <PostTile
-            key={`post-tile-${idx}`}
-            subject={post.subject}
-            images={post.images}
-            postId={post.postId}
-            style={{
-              width: itemWidth,
-              transform: `translate(${postLeftPositions[idx]}px, ${postTopPostions[idx]}px)`,
-            }}
-            onImageloaded={() => {
-              setImagesLoadedCount((prevCount) => prevCount + 1);
-            }}
-          />
-        );
-      })}
+    <div
+      className={clsx(
+        styles.scrollArea,
+        windowWidth < breakpoints.md && styles.scrollArea_containTopNav
+      )}
+      ref={ref}
+    >
+      <ResponsiveMasonry
+        columnsCountBreakPoints={{
+          [breakpoints.xs]: 2,
+          [breakpoints.sm]: 3,
+          [breakpoints.md]: 3,
+          [breakpoints.lg]: 4,
+          [breakpoints.xl]: 5,
+        }}
+      >
+        <Masonry gutter={'16px'}>
+          {posts.map((post, idx) => {
+            return (
+              <PostTile
+                key={`post-tile-${idx}`}
+                subject={post.subject}
+                images={post.images}
+                postId={post.postId}
+              />
+            );
+          })}
+        </Masonry>
+      </ResponsiveMasonry>
     </div>
   );
 };

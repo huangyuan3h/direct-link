@@ -1,0 +1,33 @@
+.topNav {
+  margin: 16px 16px 0;
+  ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      margin-right: 16px;
+    }
+  }
+}
+
+.link {
+  &:hover {
+    background: rgb(123, 121, 121, 0.1);
+  }
+  padding: 6px 12px;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 18px;
+  background: white;
+}
+
+.active {
+  font-weight: 550;
+  background: rgb(123, 121, 121, 0.1);
+}
+
+.liItem {
+  height: 36px;
+}
