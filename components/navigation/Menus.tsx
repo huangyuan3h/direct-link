@@ -3,12 +3,14 @@ import { NavButton } from './NavButton';
 import { menuConfig } from './menuConfig';
 import styles from './navButton.module.scss';
 import clsx from 'clsx';
+import { usePathname } from 'next/navigation';
 
 export interface MenusProps {
   isOverlayPanel?: boolean;
 }
 
 export const Menus: React.FC<MenusProps> = ({ isOverlayPanel }: MenusProps) => {
+  const pathname = usePathname();
   return (
     <>
       {menuConfig.map((menu, idx) => {
@@ -38,7 +40,10 @@ export const Menus: React.FC<MenusProps> = ({ isOverlayPanel }: MenusProps) => {
               url={menu.url ?? ''}
               title={menu.title}
               key={`menu-${menu.key}`}
-              className={clsx(isOverlayPanel && styles.leftPannelStyle)}
+              className={clsx(
+                isOverlayPanel && styles.leftPannelStyle,
+                pathname === menu.url && styles.active
+              )}
             />
           );
         }

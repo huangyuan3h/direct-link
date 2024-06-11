@@ -19,7 +19,11 @@
   padding: 16px 24px;
   display: flex;
   flex-direction: column;
-  column-gap: 2px;
+  row-gap: 2px;
   justify-content: flex-start;
   min-width: 200px;
+}
+
+.active {
+  background: rgb(123, 121, 121, 0.1);
 }
