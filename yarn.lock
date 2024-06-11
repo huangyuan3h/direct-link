@@ -6309,7 +6309,7 @@ __metadata:
     react-dom: "npm:^18"
     react-markdown: "npm:^9.0.1"
     react-quill: "npm:^2.0.0"
-    react-responsive-masonry: "npm:^2.2.0"
+    react-responsive-masonry: "npm:^2.1.4"
     react-toastify: "npm:^10.0.5"
     sanitize-html: "npm:^2.13.0"
     sass: "npm:^1.71.1"
@@ -10824,7 +10824,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-responsive-masonry@npm:^2.2.0":
+"react-responsive-masonry@npm:^2.1.4":
   version: 2.2.0
   resolution: "react-responsive-masonry@npm:2.2.0"
   checksum: 10c0/156285df87fbcc0b86cb3a18f2df36be5902a0b6ce3435006b96bc88bd1f8e44f9f0b7627f9bc319df49a5eab54d2c31d3c982a866950b24e807f1c1325de108

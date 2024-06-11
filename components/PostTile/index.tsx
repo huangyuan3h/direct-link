@@ -41,7 +41,7 @@ export const PostTile: React.FC<PostTileProps> = ({
   };
 
   return (
-    <div
+    <article
       className={clsx(styles.postTileArea, imageLoaded && styles.imageLoaded)}
       style={style}
     >
@@ -70,8 +70,8 @@ export const PostTile: React.FC<PostTileProps> = ({
           </div>
         </div>
 
-        <div className={styles.subject}>{subject}</div>
+        <h2 className={styles.subject}>{subject}</h2>
       </Link>
-    </div>
+    </article>
   );
 };
