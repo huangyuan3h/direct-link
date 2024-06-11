@@ -8,6 +8,8 @@ import useSWR from 'swr';
 import APIClient from '@/utils/apiClient';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 import { breakpoints } from '@/utils/breakpoint';
+import clsx from 'clsx';
+import { useWindowWidth } from '@/utils/hooks/useWindowWidth';
 
 const limit = 10; // each time fetch posts number
 
@@ -41,6 +43,7 @@ export const PostList: React.FC<PostListProps> = ({
   nextToken: initialNextToken,
   category,
 }: PostListProps) => {
+  const windowWidth = useWindowWidth();
   const [nextToken, setNextToken] = useState<string>(initialNextToken);
   const [posts, setPosts] = useState<PostType[]>(initialPosts);
 
@@ -89,7 +92,13 @@ export const PostList: React.FC<PostListProps> = ({
       const scrollPercentage =
         (scrollTop / (scrollHeight - clientHeight)) * 100;
 
-      setLoadMoreData(scrollPercentage >= reachBottomPercentage && !isLoading);
+      if (
+        scrollPercentage >= reachBottomPercentage &&
+        !isLoading &&
+        nextToken !== ''
+      ) {
+        setLoadMoreData(true);
+      }
     };
 
     if (container) {
@@ -101,17 +110,22 @@ export const PostList: React.FC<PostListProps> = ({
         container.removeEventListener('scroll', handleScroll);
       }
     };
-  }, [isLoading]);
+  }, [isLoading, nextToken]);
 
   useEffect(() => {
-    if (!loadMoreData || nextToken === '') return;
-    mutate().then(() => {
-      setLoadMoreData(false);
-    });
-  }, [loadMoreData, mutate, nextToken]);
+    if (!loadMoreData || nextToken === '' || isLoading) return;
+    setLoadMoreData(false);
+    mutate();
+  }, [loadMoreData, mutate, nextToken, isLoading]);
 
   return (
-    <div className={styles.scrollArea} ref={ref}>
+    <div
+      className={clsx(
+        styles.scrollArea,
+        windowWidth < breakpoints.md && styles.scrollArea_containTopNav
+      )}
+      ref={ref}
+    >
       <ResponsiveMasonry
         columnsCountBreakPoints={{
           [breakpoints.xs]: 2,

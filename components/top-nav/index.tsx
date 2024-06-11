@@ -22,7 +22,7 @@ const TopNav: React.FC = () => {
     <nav className={styles.topNav}>
       <ul>
         {topNavMenu.map((item) => (
-          <li key={item.key}>
+          <li key={item.key} className={styles.liItem}>
             <Link
               href={item.url}
               className={clsx(
