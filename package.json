@@ -27,7 +27,7 @@
     "react-dom": "^18",
     "react-markdown": "^9.0.1",
     "react-quill": "^2.0.0",
-    "react-responsive-masonry": "^2.1.4",
+    "react-responsive-masonry": "^2.2.0",
     "react-toastify": "^10.0.5",
     "sanitize-html": "^2.13.0",
     "sass": "^1.71.1",
