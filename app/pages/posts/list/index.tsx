@@ -11,7 +11,7 @@ import { breakpoints } from '@/utils/breakpoint';
 import clsx from 'clsx';
 import { useWindowWidth } from '@/utils/hooks/useWindowWidth';
 
-const limit = 10; // each time fetch posts number
+const limit = 50; // each time fetch posts number
 
 const reachBottomPercentage = 80; // when reach 80% load next page
 

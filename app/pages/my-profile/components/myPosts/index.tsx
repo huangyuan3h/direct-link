@@ -51,10 +51,10 @@ const MyPosts: React.FC<MyPostsProps> = ({
 
   const [nextToken, setNextToken] = useState(token);
 
-  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [loadMoreData, setLoadMoreData] = useState(false);
 
   const { data, isLoading, mutate } = useSWR(
-    nextToken !== '' ? '/my/posts' : null,
+    loadMoreData ? `/my/posts?nextToken=${nextToken}` : null,
     () => getMyPosts(nextToken),
     {
       revalidateOnFocus: false,
@@ -94,11 +94,9 @@ const MyPosts: React.FC<MyPostsProps> = ({
       if (
         scrollPercentage >= reachBottomPercentage &&
         !isLoading &&
-        nextToken !== '' &&
-        !isLoadingMore
+        nextToken !== ''
       ) {
-        setIsLoadingMore(true);
-        mutate();
+        setLoadMoreData(true);
       }
     };
 
@@ -107,7 +105,13 @@ const MyPosts: React.FC<MyPostsProps> = ({
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [isLoading, nextToken, isLoadingMore, mutate]);
+  }, [isLoading, nextToken, loadMoreData]);
+
+  useEffect(() => {
+    if (!loadMoreData || nextToken === '' || isLoading) return;
+    setLoadMoreData(false);
+    mutate();
+  }, [loadMoreData, mutate, nextToken, isLoading]);
 
   const handleCheckClick = (id: string) => {
     if (selectedPosts.includes(id)) {
