@@ -58,27 +58,40 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // add vip
 
-  const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_API + 'posts', {
-    method: 'POST',
-    body: JSON.stringify({ limit: 5000, next_token: '', category: '' }),
-  });
+  let nextToken = '';
 
-  const res: PostsResponse = await response.json();
+  do {
+    const response = await fetch(
+      process.env.NEXT_PUBLIC_BACKEND_API + 'posts',
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          limit: 50,
+          next_token: nextToken,
+          category: '',
+        }),
+      }
+    );
 
-  if (!res.results || res.results.length === 0) {
-    return sitemaps;
-  }
+    const res: PostsResponse = await response.json();
 
-  const vips: MetadataRoute.Sitemap = res.results.map((p) => {
-    return {
-      url: `${DOMAIN_URL}post/${p.postId}`,
-      lastModified: p.updatedDate ? new Date(p.updatedDate) : new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.6,
-    };
-  });
+    if (!res.results || res.results.length === 0) {
+      return sitemaps;
+    }
 
-  sitemaps.push(...vips);
+    const vips: MetadataRoute.Sitemap = res.results.map((p) => {
+      return {
+        url: `${DOMAIN_URL}post/${p.postId}`,
+        lastModified: p.updatedDate ? new Date(p.updatedDate) : new Date(),
+        changeFrequency: 'weekly',
+        priority: 0.6,
+      };
+    });
+
+    sitemaps.push(...vips);
+
+    nextToken = res.next_token;
+  } while (nextToken !== '');
 
   return sitemaps;
 }
