@@ -5,13 +5,13 @@ import { randomUUID } from 'crypto';
 import dotenv from 'dotenv';
 import { PostType } from '@/app/pages/posts/types';
 
-dotenv.config({ path: './.env.local' });
+dotenv.config({ path: './.env.prod' });
 
 const cookie =
   'acw_tc=6314685a1e1cc30c6865dec44d1c5d3ec55e930a83e5b54eaeafd766fc1149b9; abRequestId=07d1d153-5081-5ed5-afcf-5fbe3910662d; webBuild=4.20.1; a1=1900b1dfa7akdi7wow0tt38ykfwtxdct2nrf2c67030000208366; webId=3dd763c98068819c78635e06fead3bb4; websectiga=16f444b9ff5e3d7e258b5f7674489196303a0b160e16647c6c2b4dcb609f4134; sec_poison_id=366fa5f5-1b5a-43c2-815b-206882452a31; web_session=030037a15a6a8d093527b57811214a0951ff89; gid=yj88DyfiiJJiyj88Dyfi0ISKW0Tf3WElE899FW8qYvTiEiq89CfS9J888J8YqKK8dSdYi044; xsecappid=login';
 
 const auth =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdmF0YXIiOiJodHRwczovL2Rldi1ub3J0aC1wYXRoLWFwaS1zdGFjay1hdmF0YXJidWNrZXRkODBkYmRiNS1oY3RpaXdlZmVuY2ouczMudXMtZWFzdC0xLmFtYXpvbmF3cy5jb20vZDMxNWE0ZjQtM2EwNS00MTkyLWE0NGQtMWRiMjMxMmJiOWU1IiwiZW1haWwiOiJodWFuZ3l1YW4zaEBnbWFpbC5jb20iLCJleHAiOjE3MjA2MjI3OTEsImlzcyI6Imh0dHA6Ly9ub3J0aC1wYXRoLnNpdGUiLCJ1c2VyTmFtZSI6ImFzZGFzIGRhIGRhcyBzd2ZkIn0.IynS6Cw5mS5jzkoZ4B4cIkoMe-yvDyJaan6RqK-SuRw';
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdmF0YXIiOiJodHRwczovL3Byb2Qtbm9ydGgtcGF0aC1hcGktc3RhY2stYXZhdGFyYnVja2V0ZDgwZGJkYjUtNXBzdXhidWJqbmdjLnMzLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tLzVlOTcyYTFjLThlMzQtNGQyNS1iZDI0LTQ1MWE1YzZjNjNhYy0xNzE2NTMzODUyIiwiZW1haWwiOiJodWFuZ3l1YW4zaEBnbWFpbC5jb20iLCJleHAiOjE3MjA2ODI5OTgsImlzcyI6Imh0dHA6Ly9ub3J0aC1wYXRoLnNpdGUiLCJ1c2VyTmFtZSI6Ium7hOe8mO-8iFl1YW4gSHVhbmfvvIkifQ.ASnezNyenOmYvlfzytpg9TzYPCgj4q7rmzOPc7UgDmo';
 
 interface InputParams {
   url: string;
@@ -198,6 +198,11 @@ const handleData = async ({ url }: InputParams) => {
   const html = await getHTMLText(url);
   const text = extractTextFromHTML(html);
   const images = extractImagesFromHTML(html);
+
+  if (!text || text.length === 0 || !images || images.length === 0) {
+    console.log('cookie 过期....');
+    return;
+  }
 
   console.log(text, images);
 
