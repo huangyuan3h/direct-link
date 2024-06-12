@@ -11,7 +11,7 @@ const cookie =
   'acw_tc=6314685a1e1cc30c6865dec44d1c5d3ec55e930a83e5b54eaeafd766fc1149b9; abRequestId=07d1d153-5081-5ed5-afcf-5fbe3910662d; webBuild=4.20.1; a1=1900b1dfa7akdi7wow0tt38ykfwtxdct2nrf2c67030000208366; webId=3dd763c98068819c78635e06fead3bb4; websectiga=16f444b9ff5e3d7e258b5f7674489196303a0b160e16647c6c2b4dcb609f4134; sec_poison_id=366fa5f5-1b5a-43c2-815b-206882452a31; web_session=030037a15a6a8d093527b57811214a0951ff89; gid=yj88DyfiiJJiyj88Dyfi0ISKW0Tf3WElE899FW8qYvTiEiq89CfS9J888J8YqKK8dSdYi044; xsecappid=login';
 
 const auth =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdmF0YXIiOiJodHRwczovL3Byb2Qtbm9ydGgtcGF0aC1hcGktc3RhY2stYXZhdGFyYnVja2V0ZDgwZGJkYjUtNXBzdXhidWJqbmdjLnMzLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tLzVlOTcyYTFjLThlMzQtNGQyNS1iZDI0LTQ1MWE1YzZjNjNhYy0xNzE2NTMzODUyIiwiZW1haWwiOiJodWFuZ3l1YW4zaEBnbWFpbC5jb20iLCJleHAiOjE3MjA2ODI5OTgsImlzcyI6Imh0dHA6Ly9ub3J0aC1wYXRoLnNpdGUiLCJ1c2VyTmFtZSI6Ium7hOe8mO-8iFl1YW4gSHVhbmfvvIkifQ.ASnezNyenOmYvlfzytpg9TzYPCgj4q7rmzOPc7UgDmo';
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdmF0YXIiOiJodHRwczovL2Rldi1ub3J0aC1wYXRoLWFwaS1zdGFjay1hdmF0YXJidWNrZXRkODBkYmRiNS1oY3RpaXdlZmVuY2ouczMudXMtZWFzdC0xLmFtYXpvbmF3cy5jb20vZDMxNWE0ZjQtM2EwNS00MTkyLWE0NGQtMWRiMjMxMmJiOWU1IiwiZW1haWwiOiJodWFuZ3l1YW4zaEBnbWFpbC5jb20iLCJleHAiOjE3MjA2MjI3OTEsImlzcyI6Imh0dHA6Ly9ub3J0aC1wYXRoLnNpdGUiLCJ1c2VyTmFtZSI6ImFzZGFzIGRhIGRhcyBzd2ZkIn0.IynS6Cw5mS5jzkoZ4B4cIkoMe-yvDyJaan6RqK-SuRw';
 
 interface InputParams {
   url: string;
@@ -202,23 +202,37 @@ const handleData = async ({ url }: InputParams) => {
   console.log(text, images);
 
   // upload images
-  // let imageUrls: string[] = await uploadImagesToS3(images);
+  let imageUrls: string[] = await uploadImagesToS3(images);
 
-  // console.log(imageUrls);
-
-  const payload = generatePayload(text);
-  console.log(payload);
+  const payload = await generatePayload(text);
 
   // send to the server
+
+  const overallPayload = {
+    ...payload,
+    images: imageUrls,
+    location: 'N/A',
+  };
+  console.log(overallPayload);
+
+  const response = await fetch(
+    process.env.NEXT_PUBLIC_BACKEND_API + 'post/create',
+    {
+      method: 'POST',
+      body: JSON.stringify(overallPayload),
+      credentials: 'include',
+      headers: {
+        Cookie: `Authorization=${auth}`,
+      },
+    }
+  );
+
+  const result = await response.json();
+
+  console.log(result);
 };
 
 const args = process.argv.slice(2);
 const url = args[0];
 
-handleData({ url })
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((error) => {
-    console.error(error);
-  });
+handleData({ url });
