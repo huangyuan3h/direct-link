@@ -140,14 +140,15 @@ const getPrompt = (text: string) => `
 客观中立： 保持客观中立的立场，不偏不倚地呈现事实。
 实用建议： 提供切实可行的建议，帮助读者解决问题。
 其他建议：
-  文章的字数应控制在 1000 字左右。
+  文章的字数应不少于 1200 字。
   文章的语言应简洁明了，避免使用过于复杂的句式和词汇。
   文章的排版应清晰美观，易于阅读。
   结尾生成5个中文的hashtag
+  段落与段落之间额外多一个换行（html 的<br/> 或一个空的<p></p>）
   
 ############################
 
-我会首先给出一篇文章, 根据文章的内容返回一个JSON。
+我会首先给出一篇文章, 你需要首先按照文章上述要求进行改写，然后返回一个JSON。
 
 文章的内容是: ${text}
 
@@ -159,6 +160,7 @@ type PostType = {
   topics: string[]; // 文章末尾的hashtag 不超过5个
 };
 
+记住，文章一定要改写的更加吸引人，并且优化seo，绝对不要完全使用原始文章。
 记住作为系统的一部分，你的输出会被直接执行JSON.parse, 所以不需要任何解释内容。
 `;
 
@@ -171,7 +173,7 @@ const generatePayload = async (text: string): Promise<GeneratedPostType> => {
   };
 
   const response = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${process.env.GEMINI_KEY}`,
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=${process.env.GEMINI_KEY}`,
     {
       method: 'POST',
       body: JSON.stringify(prompts),
