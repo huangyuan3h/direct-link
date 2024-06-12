@@ -1,6 +1,5 @@
 import { DOMAIN_URL } from '@/config/domain';
 import { PostsResponse } from '@/types/posts';
-import APIClient from '@/utils/apiClient';
 import { MetadataRoute } from 'next';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -9,13 +8,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     {
       url: `${DOMAIN_URL}`,
       lastModified: new Date(),
-      changeFrequency: 'weekly',
+      changeFrequency: 'daily',
       priority: 1,
     },
     {
       url: `${DOMAIN_URL}rcic`,
       lastModified: new Date(),
-      changeFrequency: 'yearly',
+      changeFrequency: 'monthly',
       priority: 1,
     },
   ];
@@ -26,31 +25,31 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     {
       url: `${DOMAIN_URL}posts/studying-abroad`,
       lastModified: new Date(),
-      changeFrequency: 'weekly',
+      changeFrequency: 'daily',
       priority: 0.8,
     },
     {
       url: `${DOMAIN_URL}posts/immigration`,
       lastModified: new Date(),
-      changeFrequency: 'weekly',
+      changeFrequency: 'daily',
       priority: 0.8,
     },
     {
       url: `${DOMAIN_URL}posts/house`,
       lastModified: new Date(),
-      changeFrequency: 'weekly',
+      changeFrequency: 'daily',
       priority: 0.8,
     },
     {
       url: `${DOMAIN_URL}posts/car`,
       lastModified: new Date(),
-      changeFrequency: 'weekly',
+      changeFrequency: 'daily',
       priority: 0.8,
     },
     {
       url: `${DOMAIN_URL}posts/jobs`,
       lastModified: new Date(),
-      changeFrequency: 'weekly',
+      changeFrequency: 'daily',
       priority: 0.8,
     },
   ];
@@ -74,7 +73,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     return {
       url: `${DOMAIN_URL}post/${p.postId}`,
       lastModified: p.updatedDate ? new Date(p.updatedDate) : new Date(),
-      changeFrequency: 'yearly',
+      changeFrequency: 'weekly',
       priority: 0.6,
     };
   });
