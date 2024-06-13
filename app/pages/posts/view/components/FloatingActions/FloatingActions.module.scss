@@ -1,0 +1,36 @@
+.floatingActions {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+  &.desktop {
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+  }
+
+  &.mobile {
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    flex-direction: row; // 手机端改为横向排列
+  }
+}
+
+.actionButton {
+  background-color: transparent;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+
+  span {
+    margin-left: 5px;
+  }
+}

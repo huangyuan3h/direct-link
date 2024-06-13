@@ -1,5 +1,6 @@
 import { PostResponseType } from '@/app/pages/posts/types';
 import { View } from '@/app/pages/posts/view';
+import Footer from '@/components/footer';
 import { Header } from '@/components/header';
 import { DOMAIN_URL } from '@/config/domain';
 import APIClient from '@/utils/apiClient';
@@ -89,6 +90,9 @@ export default async function Home({ params }: ViewPostParamsProps) {
       />
       <Header />
       <View {...posts} />
+      <div className="container">
+        <Footer />
+      </div>
     </main>
   );
 }
