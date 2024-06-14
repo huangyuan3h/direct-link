@@ -24,6 +24,7 @@ export const ShowPartner: React.FC = () => {
                 src={thumbnailUrl}
                 width={200}
                 height={200}
+                loading="lazy"
                 alt="Picture of the author"
                 className="border border-4 rounded-circle"
               />

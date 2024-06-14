@@ -4,6 +4,7 @@ import Footer from '@/components/footer';
 import { Header } from '@/components/header';
 import { DOMAIN_URL } from '@/config/domain';
 import APIClient from '@/utils/apiClient';
+import { getImageUrl } from '@/utils/getImageUrl';
 import { Metadata, ResolvingMetadata } from 'next';
 
 interface ViewPostParamsProps {
@@ -55,6 +56,7 @@ export default async function Home({ params }: ViewPostParamsProps) {
 
   const email = posts.email;
   const name = posts.email.slice(0, posts.email.indexOf('@'));
+  const images = posts.images.map((url) => getImageUrl(url));
 
   const article = {
     '@context': 'https://schema.org',
@@ -64,7 +66,7 @@ export default async function Home({ params }: ViewPostParamsProps) {
       '@id': `${DOMAIN_URL}post/${posts.postId}`,
     },
     headline: posts.subject,
-    image: posts.images,
+    image: images,
     datePublished: posts.updatedDate,
     author: {
       '@type': 'Person',

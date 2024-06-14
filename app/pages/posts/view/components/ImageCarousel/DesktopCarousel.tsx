@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import { MobileCarousel, MobileCarouselProps } from './MobileCarousel';
 import { useWindowWidth } from '@/utils/hooks/useWindowWidth';
 import { breakpoints } from '@/utils/breakpoint';
+import { getImageUrl } from '@/utils/getImageUrl';
 
 export interface DesktopCarouselProps extends MobileCarouselProps {}
 
@@ -24,10 +25,11 @@ export const DesktopCarousel = ({
     return (
       <div className={styles.imageLargeSize}>
         <Image
-          src={images[0]}
+          src={getImageUrl(images[0])}
           alt={`Slide ${1}`}
           width={600}
           height={600}
+          loading="lazy"
           className={clsx(styles.carouselImage, styles.showOneImage)}
           onClick={() => onImageClick(1)}
         />
@@ -88,10 +90,11 @@ export const DesktopCarousel = ({
     <div className={clsx(styles.desktopLayoutRow)}>
       <div className={styles.imageLargeSize}>
         <Image
-          src={images[0]}
+          src={getImageUrl(images[0])}
           alt={`Slide ${1}`}
           width={600}
           height={600}
+          loading="lazy"
           className={clsx(styles.carouselImage, styles.firstImage)}
           onClick={() => onImageClick(1)}
         />
@@ -99,18 +102,20 @@ export const DesktopCarousel = ({
 
       <div className={clsx(styles.desktopLayoutColumn, styles.imageSmallSize)}>
         <Image
-          src={images[1]}
+          src={getImageUrl(images[1])}
           alt={`Slide ${2}`}
           width={600}
           height={600}
+          loading="lazy"
           className={clsx(styles.carouselImage)}
           onClick={() => onImageClick(1)}
         />
         <Image
-          src={images[2]}
+          src={getImageUrl(images[2])}
           alt={`Slide ${3}`}
           width={600}
           height={600}
+          loading="lazy"
           className={clsx(styles.carouselImage)}
           onClick={() => onImageClick(1)}
         />
@@ -118,18 +123,20 @@ export const DesktopCarousel = ({
 
       <div className={clsx(styles.desktopLayoutColumn, styles.imageSmallSize)}>
         <Image
-          src={images[3]}
+          src={getImageUrl(images[3])}
           alt={`Slide ${4}`}
           width={600}
           height={600}
+          loading="lazy"
           className={clsx(styles.carouselImage, styles.lastTopImage)}
           onClick={() => onImageClick(1)}
         />
         <Image
-          src={images[4]}
+          src={getImageUrl(images[4])}
           alt={`Slide ${5}`}
           width={600}
           height={600}
+          loading="lazy"
           className={clsx(styles.carouselImage, styles.lastBottomImage)}
           onClick={() => onImageClick(1)}
         />

@@ -40,6 +40,7 @@ export const ImageItem: React.FC<ImageItemProps> = ({
         width={100}
         height={100}
         className={styles.image}
+        loading="lazy"
       />
       <CloseButton onClick={handleDelete} className={styles.closeButton} />
     </div>

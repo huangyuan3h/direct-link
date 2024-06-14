@@ -25,7 +25,7 @@ export const View: React.FC<ViewProps> = ({
         <Content content={content} />
         <Categories categories={topics} />
       </div>
-      <FloatingActions />
+      {/* <FloatingActions /> */}
     </div>
   );
 };
