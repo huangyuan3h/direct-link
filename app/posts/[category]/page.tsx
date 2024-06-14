@@ -8,6 +8,7 @@ import TopNav from '@/components/top-nav';
 import { DOMAIN_URL } from '@/config/domain';
 
 import APIClient from '@/utils/apiClient';
+import { getImageUrl } from '@/utils/getImageUrl';
 import { Metadata, ResolvingMetadata } from 'next';
 
 interface ViewPostParamsProps {
@@ -104,6 +105,7 @@ export default async function Home({ params }: ViewPostParamsProps) {
   const articles = data.results.map((r, idx) => {
     const email = r.email;
     const name = r.email.slice(0, r.email.indexOf('@'));
+    const images = r.images.map((url) => getImageUrl(url));
     return {
       '@type': 'ListItem',
       position: idx + 1,
@@ -114,7 +116,7 @@ export default async function Home({ params }: ViewPostParamsProps) {
           '@id': `${DOMAIN_URL}post/${r.postId}`,
         },
         headline: r.subject,
-        image: r.images,
+        image: images,
         datePublished: r.updatedDate,
         author: {
           '@type': 'Person',

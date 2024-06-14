@@ -50,6 +50,7 @@ export const Avatar: React.FC<AvatarProps> = ({
         }
         width={32}
         height={32}
+        loading="lazy"
         className={styles.avatar}
         alt={user?.userName ?? ''}
         onClick={handleClickImage}

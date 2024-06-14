@@ -71,6 +71,7 @@ export const EditBasicInfo: React.FC<EditBasicInfoProps> = ({
           alt={user.userName || user.email}
           width={80}
           height={80}
+          loading="lazy"
         />
         <div className={styles.avatarCover}>
           <CameraFill />

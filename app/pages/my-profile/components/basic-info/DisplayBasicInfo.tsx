@@ -27,6 +27,7 @@ export const DisplayBasicInfo: React.FC<DisplayBasicInfoProps> = ({
           alt={displayUsername}
           width={80}
           height={80}
+          loading="lazy"
         />
       </div>
 

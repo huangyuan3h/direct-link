@@ -3,6 +3,7 @@
 import { PostResponseType } from '../types';
 import { Categories } from './components/Categories';
 import { Content } from './components/Content';
+import FloatingActions from './components/FloatingActions';
 import ImageCarousel from './components/ImageCarousel';
 import { Title } from './components/Title';
 
@@ -24,6 +25,7 @@ export const View: React.FC<ViewProps> = ({
         <Content content={content} />
         <Categories categories={topics} />
       </div>
+      {/* <FloatingActions /> */}
     </div>
   );
 };
