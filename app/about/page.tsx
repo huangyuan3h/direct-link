@@ -1,8 +1,10 @@
 import Footer from '@/components/footer';
 import { Header } from '@/components/header';
-import Banner from './components/banner';
+
 import AboutIntro from './components/AboutIntro';
-import OurStory from './components/ourStory';
+import OurStory from './components/OurStory';
+
+import OurMission from './components/OurMission';
 
 export default async function Home() {
   return (
@@ -11,6 +13,7 @@ export default async function Home() {
       <div className="container">
         <AboutIntro />
         <OurStory />
+        <OurMission />
       </div>
 
       <div className="container">
