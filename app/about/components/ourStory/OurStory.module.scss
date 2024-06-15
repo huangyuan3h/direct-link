@@ -1,0 +1,49 @@
+.ourStory {
+  background-color: #f2f2f2;
+
+  .contentOuter {
+    display: flex;
+    margin: 0 auto;
+    justify-content: space-between;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+    }
+  }
+
+  .imageWrapper {
+    width: 50%;
+    height: 400px;
+    position: relative;
+    @media (max-width: 768px) {
+      width: 100%;
+      height: 300px;
+    }
+  }
+
+  .contentWrapper {
+    padding: 4rem;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+
+    @media (max-width: 768px) {
+      width: 100%;
+    }
+  }
+
+  .storyTitle {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .storyText {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #555;
+  }
+}
