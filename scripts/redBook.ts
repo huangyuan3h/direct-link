@@ -6,8 +6,8 @@ import dotenv from 'dotenv';
 import { PostType } from '@/app/pages/posts/types';
 
 dotenv.config({ path: './.env.prod' });
-const webId = '1e20fe90331a78657111e18fbe0fb0bf';
-const cookie = `acw_tc=01735ef9121204f31e6a68300e1c3513b660ddc5e961af71dbda23130198709e; abRequestId=d774b2b4-72f7-5031-87d1-4e5244f60d2c; webBuild=4.20.1; a1=190121d7138ks2mjqj4myd1jssm8nssjkge0utnzt30000865778; webId=${webId}; websectiga=634d3ad75ffb42a2ade2c5e1705a73c845837578aeb31ba0e442d75c648da36a; sec_poison_id=458ded94-221d-4299-b381-4f985d6e3527; web_session=030037a159365b1c4e65632412214a1fc8594a; gid=yj88iYiY0YM8yj88iYiY2Y8Ci0yD0Y2kMiq1jEdk32kKx2q8ku70UJ888yYj4Yy8DSfJ22Jy; xsecappid=xhs-pc-web`;
+
+const cookie = `acw_tc=44bbafbf7521587f0aa3a1d50ef270ab261a6244dcd54277dd5779ef9cad9274; abRequestId=d6f4703c-116a-5448-a272-c1dbfc5b8e81; webBuild=4.21.0; a1=19016807a790rfjl3dqdmoxqc6epbc9hw1tmeglis30000546796; webId=b25bd8027902a88b10bc9dd4a1640db6; websectiga=a9bdcaed0af874f3a1431e94fbea410e8f738542fbb02df1e8e30c29ef3d91ac; sec_poison_id=8f5a50ce-0d31-47ba-b9da-57c139f37468; web_session=030037a15f7d6109ebb6596f14214adcb7f5c1; gid=yj8yKY8WiyE8yj8yKY8W0yk1Wj8FiV1qfAf693MlCASKd6q8UDSjxd88824KWjK84yS28yKS; xsecappid=xhs-pc-web`;
 
 const auth =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdmF0YXIiOiJodHRwczovL3Byb2Qtbm9ydGgtcGF0aC1hcGktc3RhY2stYXZhdGFyYnVja2V0ZDgwZGJkYjUtNXBzdXhidWJqbmdjLnMzLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tLzVlOTcyYTFjLThlMzQtNGQyNS1iZDI0LTQ1MWE1YzZjNjNhYy0xNzE2NTMzODUyIiwiZW1haWwiOiJodWFuZ3l1YW4zaEBnbWFpbC5jb20iLCJleHAiOjE3MjA2ODI5OTgsImlzcyI6Imh0dHA6Ly9ub3J0aC1wYXRoLnNpdGUiLCJ1c2VyTmFtZSI6Ium7hOe8mO-8iFl1YW4gSHVhbmfvvIkifQ.ASnezNyenOmYvlfzytpg9TzYPCgj4q7rmzOPc7UgDmo';
