@@ -5,6 +5,7 @@ import AboutIntro from './components/AboutIntro';
 import OurStory from './components/OurStory';
 
 import OurMission from './components/OurMission';
+import OurTeam from './components/Team';
 
 export default async function Home() {
   return (
@@ -14,6 +15,7 @@ export default async function Home() {
         <AboutIntro />
         <OurStory />
         <OurMission />
+        <OurTeam />
       </div>
 
       <div className="container">
