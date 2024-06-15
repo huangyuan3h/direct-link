@@ -8,13 +8,9 @@ const OurMission: React.FC = () => {
     <section className={styles.ourMission}>
       <div className={styles.contentOuter}>
         <div className={styles.contentWrapper}>
-          <h2 className={styles.missionTitle}>我们的遭遇</h2>
+          <h2 className={styles.missionTitle}>我们的使命</h2>
           <p className={styles.missionText}>
-            移民之路并非坦途，我们也曾落入过黑中介的陷阱。
-            一家知名移民公司想让我们去曼尼托巴读College，
-            毕业后工作移民。且不说方案耗时漫长，单就让我们两个硕士去读College就极其不合理。
-            第二个“移民顾问”建议我走BCEE，妻子去UBC读硕博。
-            但查询后发现，他的RCIC资格已被撤销，根本不是合法移民顾问！
+            我们深知移民路上的荆棘与陷阱，所以创办了“北径信息”，致力于利用科技的力量，打造一个透明、公正、可靠的移民信息平台。
           </p>
         </div>
         <div className={styles.imageWrapper}>
