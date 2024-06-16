@@ -17,6 +17,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly',
       priority: 1,
     },
+    {
+      url: `${DOMAIN_URL}about`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
   ];
 
   // add list page
