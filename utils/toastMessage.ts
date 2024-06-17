@@ -31,4 +31,9 @@ export const toastMessages = {
   DELETE_SUCCESS: '删除成功',
   DELETE_LOADING: '删除中...',
   DELETE_ERROR: '删除失败',
+
+  // send message
+  SEND_MESSAGE_SUCCESS: '信息发送成功！',
+  SEND_MESSAGE_LOADING: '正在发送信息...',
+  SEND_MESSAGE_ERROR: '信息发送失败，请重试',
 };
