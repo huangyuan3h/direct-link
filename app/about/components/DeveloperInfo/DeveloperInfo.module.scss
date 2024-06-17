@@ -1,0 +1,30 @@
+.developerInfoContainer {
+  background-color: #f8f9fa; //  浅灰色背景
+  border-radius: 8px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); // 添加阴影
+  transition: transform 0.2s ease; // 添加悬停效果
+
+  &:hover {
+    transform: translateY(-5px); //  悬停时向上移动
+  }
+}
+
+.developerInfoContent {
+  .developerInfoName {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #343a40;
+  }
+
+  .developerInfoRole {
+    font-size: 16px;
+    color: rgba(black, 0.6);
+    margin-bottom: 1rem;
+  }
+
+  .developerInfoBio {
+    line-height: 1.6;
+  }
+}

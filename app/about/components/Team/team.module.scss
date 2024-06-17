@@ -1,0 +1,18 @@
+.developers {
+  background-color: #fff; // 与页面其他部分一致的背景色
+  padding: 4rem;
+  text-align: center; // 标题居中
+
+  .developersTitle {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .developersGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+}
