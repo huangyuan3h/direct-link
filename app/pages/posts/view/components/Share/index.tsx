@@ -1,6 +1,6 @@
-'use client'; // 使用app directory 需要加这个
+'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   FacebookShareButton,
   FacebookIcon,
@@ -12,8 +12,6 @@ import {
   TelegramIcon,
   LineShareButton,
   LineIcon,
-  //   LinkedinIcon,
-  //   LinkedinShareButton,
   WeiboIcon,
   WeiboShareButton,
   RedditShareButton,
@@ -22,7 +20,7 @@ import {
 
 import { usePathname } from 'next/navigation';
 import styles from './Share.module.scss';
-import { Container, Navbar } from 'react-bootstrap';
+
 import { useWindowWidth } from '@/utils/hooks/useWindowWidth';
 import { breakpoints } from '@/utils/breakpoint';
 import { useComponentInitialized } from '@/utils/hooks/useComponentInitialized';
@@ -42,39 +40,43 @@ const Share: React.FC<ShareProps> = ({ isMobile }) => {
     return <></>;
   }
 
-  if (isMobile && windowWidth < breakpoints.md) {
+  const Render = () => {
     return (
-      <Navbar className={styles.shareContainer}>
-        <Container>
-          <div className={styles.shareIcons}>
-            <WhatsappShareButton url={currentUrl} className={styles.shareIcon}>
-              <WhatsappIcon size={32} round />
-            </WhatsappShareButton>
-            <FacebookShareButton url={currentUrl} className={styles.shareIcon}>
-              <FacebookIcon size={32} round />
-            </FacebookShareButton>
-            <TwitterShareButton url={currentUrl} className={styles.shareIcon}>
-              <XIcon size={32} round />
-            </TwitterShareButton>
-            <TelegramShareButton url={currentUrl} className={styles.shareIcon}>
-              <TelegramIcon size={32} round />
-            </TelegramShareButton>
-            <LineShareButton url={currentUrl} className={styles.shareIcon}>
-              <LineIcon size={32} round />
-            </LineShareButton>
-            {/* <LinkedinShareButton url={currentUrl} className={styles.shareIcon}>
-                <LinkedinIcon size={32} round />
-              </LinkedinShareButton> */}
-            <WeiboShareButton url={currentUrl} className={styles.shareIcon}>
-              <WeiboIcon size={32} round />
-            </WeiboShareButton>
-            <RedditShareButton url={currentUrl} className={styles.shareIcon}>
-              <RedditIcon size={32} round />
-            </RedditShareButton>
-          </div>
-        </Container>
-      </Navbar>
+      <div className={styles.shareForm}>
+        <p className={styles.shareTitle}>💡 分享出去，让更多人受益吧！</p>
+        <div className={styles.shareIcons}>
+          <WhatsappShareButton url={currentUrl} className={styles.shareIcon}>
+            <WhatsappIcon size={32} round />
+          </WhatsappShareButton>
+          <FacebookShareButton url={currentUrl} className={styles.shareIcon}>
+            <FacebookIcon size={32} round />
+          </FacebookShareButton>
+          <TwitterShareButton url={currentUrl} className={styles.shareIcon}>
+            <XIcon size={32} round />
+          </TwitterShareButton>
+          <TelegramShareButton url={currentUrl} className={styles.shareIcon}>
+            <TelegramIcon size={32} round />
+          </TelegramShareButton>
+          <LineShareButton url={currentUrl} className={styles.shareIcon}>
+            <LineIcon size={32} round />
+          </LineShareButton>
+          <WeiboShareButton url={currentUrl} className={styles.shareIcon}>
+            <WeiboIcon size={32} round />
+          </WeiboShareButton>
+          <RedditShareButton url={currentUrl} className={styles.shareIcon}>
+            <RedditIcon size={32} round />
+          </RedditShareButton>
+        </div>
+      </div>
     );
+  };
+
+  if (isMobile && windowWidth < breakpoints.md) {
+    return <Render />;
+  }
+
+  if (!isMobile && windowWidth >= breakpoints.md) {
+    return <Render />;
   }
 
   return <></>;
