@@ -1,6 +1,6 @@
 'use client'; // 使用app directory 需要加这个
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FacebookShareButton,
   FacebookIcon,
@@ -25,16 +25,22 @@ import styles from './Share.module.scss';
 import { Container, Navbar } from 'react-bootstrap';
 import { useWindowWidth } from '@/utils/hooks/useWindowWidth';
 import { breakpoints } from '@/utils/breakpoint';
+import { useComponentInitialized } from '@/utils/hooks/useComponentInitialized';
 
 interface ShareProps {
   isMobile: boolean;
-  //  根据需要添加传递给组件的属性，例如文章标题，链接等
 }
 
 const Share: React.FC<ShareProps> = ({ isMobile }) => {
   const pathname = usePathname();
   const currentUrl = `${typeof window !== 'undefined' ? window.location.origin : ''}${pathname}`;
   const windowWidth = useWindowWidth();
+
+  const initialized = useComponentInitialized();
+
+  if (!initialized) {
+    return <></>;
+  }
 
   if (isMobile && windowWidth < breakpoints.md) {
     return (

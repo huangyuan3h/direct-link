@@ -1,7 +1,16 @@
 .MessageArea {
   background: red;
-  width: calc(100% - 704px);
-  @media (max-width: 992px) {
-    width: 100%;
+  width: 100%;
+
+  @media (width> 992px) and (width<= 1200px) {
+    width: calc(100% - 604px);
+  }
+
+  @media (width > 1200px) and (width <=1400px) {
+    width: calc(100% - 704px);
+  }
+
+  @media (width >1400px) {
+    width: calc(100% - 804px);
   }
 }
