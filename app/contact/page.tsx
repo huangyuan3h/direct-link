@@ -1,12 +1,13 @@
 import { Header } from '@/components/header';
-import IRCCContent from '@/app/pages/immigation/ircc';
-import Footer from '@/components/footer';
 
-export default function RCIC() {
+import Footer from '@/components/footer';
+import Contact from '../pages/contact';
+
+export default function ContactPage() {
   return (
     <main className="">
       <Header />
-      <IRCCContent />
+      <Contact />
       <Footer />
     </main>
   );

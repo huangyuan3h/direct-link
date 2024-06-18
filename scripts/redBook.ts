@@ -7,7 +7,7 @@ import { PostType } from '@/app/pages/posts/types';
 
 dotenv.config({ path: './.env.prod' });
 
-const cookie = `acw_tc=5fec1e6c3fb700e46ac8f22922cc5ad1c6ac28ee2d952261c5530ad4e9d84d7b; abRequestId=c0b5b5af-af00-5a6b-8249-bd0b97492065; webBuild=4.21.0; a1=190214125c2udsktaqfn6csl4qat1mjzz7lca3ota30000295126; webId=3f27164b8edc324ad45716b215b73d22; websectiga=16f444b9ff5e3d7e258b5f7674489196303a0b160e16647c6c2b4dcb609f4134; sec_poison_id=b663f0f2-acb9-4b7c-b0a6-133c7c682929; web_session=030037a15dbdb00bc71588af16214a4a5eb630; gid=yj8Jy4yJ0quKyj8Jy4yJ2WqlSJ7fMT90AiIK190SM14A0Sq89y6Vu0888Jj2yJK8qjfyyKqK; xsecappid=xhs-pc-web`;
+const cookie = `acw_tc=3689be4a5e16c1464b782af42273bb60d3db86b571dc6955dd58d8b49d91553a; abRequestId=8e3a34de-1ccc-5ad1-aeda-e39b7609b25f; webBuild=4.21.0; a1=1902934fef8wf2j6rd0gdn26evb410trjohzrofek30000246188; webId=7b030f745ae82c5fb90a8fd1fbb5a701; websectiga=6169c1e84f393779a5f7de7303038f3b47a78e47be716e7bec57ccce17d45f99; sec_poison_id=d8c3517d-ef50-4ca5-99a2-113f251fece0; web_session=030037a143a6850be87fbdb408214af7e25c0d; gid=yj8Jjq28qjVfyj8Jjq4idlliiYEiJVKFf8kfxdTIJKdhDuq84y89FF888J4KyYY8jDqSW4f4; xsecappid=xhs-pc-web`;
 
 const auth =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdmF0YXIiOiJodHRwczovL3Byb2Qtbm9ydGgtcGF0aC1hcGktc3RhY2stYXZhdGFyYnVja2V0ZDgwZGJkYjUtNXBzdXhidWJqbmdjLnMzLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tLzVlOTcyYTFjLThlMzQtNGQyNS1iZDI0LTQ1MWE1YzZjNjNhYy0xNzE2NTMzODUyIiwiZW1haWwiOiJodWFuZ3l1YW4zaEBnbWFpbC5jb20iLCJleHAiOjE3MjA2ODI5OTgsImlzcyI6Imh0dHA6Ly9ub3J0aC1wYXRoLnNpdGUiLCJ1c2VyTmFtZSI6Ium7hOe8mO-8iFl1YW4gSHVhbmfvvIkifQ.ASnezNyenOmYvlfzytpg9TzYPCgj4q7rmzOPc7UgDmo';
@@ -145,7 +145,9 @@ const getPrompt = (text: string) => `
   结尾生成5个中文的hashtag
   段落与段落之间额外多一个换行（html 的<br/> 或一个空的<p></p>）
   文章中不要使用markdown的标记（如**，##），因为文章会直接放在网页里，并不支持markdown
-  文章内容不要出现引导联系我，我是移民顾问之类的话，给出的文章中包含的话忽略这个部分
+  文章内容不要出现引导联系我，我是移民顾问的内容
+  文章中不要出现的类似联系我的信息
+  不要出现类似“如果您对美国移民有任何疑问，欢迎咨询专业的移民顾问，获得个性化的移民方案规划。”这样的话术，来引导读者主动联系
   
 ############################
 
