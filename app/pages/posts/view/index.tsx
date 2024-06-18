@@ -3,9 +3,9 @@
 import { PostResponseType } from '../types';
 import { Categories } from './components/Categories';
 import { Content } from './components/Content';
-import FloatingActions from './components/FloatingActions';
 import ImageCarousel from './components/ImageCarousel';
 import { Title } from './components/Title';
+import styles from './index.module.scss';
 
 interface ViewProps extends PostResponseType {}
 
@@ -16,16 +16,15 @@ export const View: React.FC<ViewProps> = ({
   images,
 }: ViewProps) => {
   return (
-    <div>
-      <div className="container">
+    <div className="container">
+      <div className={styles.mainContentArea}>
         <Title title={subject} />
-      </div>
-      <ImageCarousel images={images} />
-      <div className="container">
+
+        <ImageCarousel images={images} />
+
         <Content content={content} />
         <Categories categories={topics} />
       </div>
-      {/* <FloatingActions /> */}
     </div>
   );
 };
