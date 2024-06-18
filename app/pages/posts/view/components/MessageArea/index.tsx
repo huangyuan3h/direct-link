@@ -2,7 +2,11 @@ import { useComponentInitialized } from '@/utils/hooks/useComponentInitialized';
 import styles from './messsageArea.module.scss';
 import MessageForm from './MessageForm';
 
-export const MessageArea: React.FC<{}> = () => {
+interface MessageAreaProps {
+  authEmail: string;
+}
+
+export const MessageArea: React.FC<MessageAreaProps> = ({ authEmail }) => {
   const initialized = useComponentInitialized();
 
   if (!initialized) {
@@ -12,7 +16,7 @@ export const MessageArea: React.FC<{}> = () => {
   return (
     <div className={styles.MessageArea}>
       <div className={styles.MessageContent}>
-        <MessageForm />
+        <MessageForm authEmail={authEmail} />
       </div>
     </div>
   );

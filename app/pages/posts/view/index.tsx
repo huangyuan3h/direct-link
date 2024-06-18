@@ -17,6 +17,7 @@ export const View: React.FC<ViewProps> = ({
   content,
   topics,
   images,
+  email,
 }: ViewProps) => {
   return (
     <div className={clsx('container', styles.layout)}>
@@ -27,7 +28,7 @@ export const View: React.FC<ViewProps> = ({
         <Content content={content} />
         <Categories categories={topics} />
       </div>
-      <MessageArea />
+      <MessageArea authEmail={email} />
     </div>
   );
 };

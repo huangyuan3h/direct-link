@@ -4,20 +4,14 @@ import styles from './messageForm.module.scss';
 import { toast } from 'react-toastify';
 import { toastMessages } from '@/utils/toastMessage';
 import APIClient from '@/utils/apiClient';
-import { routes } from '@/config/routes';
-import { useRouter } from 'next/navigation';
 
 interface MessageFormProps {
-  //   onSubmit: (formData: {
-  //     name: string;
-  //     email: string;
-  //     message: string;
-  //   }) => void;
+  authEmail: string;
 }
 
 type fieldNameType = 'name' | 'message' | 'email';
 
-const MessageForm: React.FC<MessageFormProps> = ({}) => {
+const MessageForm: React.FC<MessageFormProps> = ({ authEmail }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -30,7 +24,7 @@ const MessageForm: React.FC<MessageFormProps> = ({}) => {
     message: '',
   });
 
-  const router = useRouter();
+  const [messageSent, setMessageSent] = useState(false);
 
   const validateField = (fieldName: string, value: string) => {
     switch (fieldName) {
@@ -85,13 +79,14 @@ const MessageForm: React.FC<MessageFormProps> = ({}) => {
           const client = new APIClient();
 
           const response = await client.post('message/send', {
-            subject: '',
-            conten: message,
+            subject: `来自${name}的消息`,
+            content: message,
             fromEmail: email,
+            toEmail: authEmail,
           });
 
           if (response.message) {
-            router.push(routes.home);
+            setMessageSent(true);
             return '信息发送成功！';
           } else {
             console.error('发送失败');
@@ -172,7 +167,7 @@ const MessageForm: React.FC<MessageFormProps> = ({}) => {
         variant="primary"
         type="submit"
         className={styles.submitButton}
-        disabled={!!Object.values(errors).filter(Boolean).length}
+        disabled={!!Object.values(errors).filter(Boolean).length || messageSent}
       >
         提交
       </Button>
