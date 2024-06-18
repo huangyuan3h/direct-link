@@ -1,5 +1,19 @@
+import { useComponentInitialized } from '@/utils/hooks/useComponentInitialized';
 import styles from './messsageArea.module.scss';
+import MessageForm from './MessageForm';
 
 export const MessageArea: React.FC<{}> = () => {
-  return <div className={styles.MessageArea}>left area</div>;
+  const initialized = useComponentInitialized();
+
+  if (!initialized) {
+    return <></>;
+  }
+
+  return (
+    <div className={styles.MessageArea}>
+      <div className={styles.MessageContent}>
+        <MessageForm />
+      </div>
+    </div>
+  );
 };

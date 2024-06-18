@@ -1,5 +1,4 @@
 .MessageArea {
-  background: red;
   width: 100%;
 
   @media (width> 992px) and (width<= 1200px) {
@@ -12,5 +11,14 @@
 
   @media (width >1400px) {
     width: calc(100% - 804px);
+  }
+}
+
+.MessageContent {
+  width: 100%;
+  margin-top: 24px;
+  @media (width> 992px) {
+    position: sticky;
+    top: 24px;
   }
 }
