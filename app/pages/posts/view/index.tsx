@@ -1,9 +1,12 @@
 'use client';
 
+import clsx from 'clsx';
 import { PostResponseType } from '../types';
 import { Categories } from './components/Categories';
 import { Content } from './components/Content';
 import ImageCarousel from './components/ImageCarousel';
+import { MessageArea } from './components/MessageArea';
+import Share from './components/Share';
 import { Title } from './components/Title';
 import styles from './index.module.scss';
 
@@ -16,15 +19,15 @@ export const View: React.FC<ViewProps> = ({
   images,
 }: ViewProps) => {
   return (
-    <div className="container">
+    <div className={clsx('container', styles.layout)}>
       <div className={styles.mainContentArea}>
         <Title title={subject} />
-
         <ImageCarousel images={images} />
-
+        <Share isMobile />
         <Content content={content} />
         <Categories categories={topics} />
       </div>
+      <MessageArea />
     </div>
   );
 };

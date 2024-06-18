@@ -1,0 +1,7 @@
+.MessageArea {
+  background: red;
+  width: calc(100% - 704px);
+  @media (max-width: 992px) {
+    width: 100%;
+  }
+}

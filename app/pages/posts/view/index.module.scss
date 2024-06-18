@@ -2,3 +2,11 @@
   max-width: 696px;
   padding: 0 1rem;
 }
+
+.layout {
+  display: flex;
+  column-gap: 8px;
+  @media (max-width: 992px) {
+    flex-direction: column;
+  }
+}
