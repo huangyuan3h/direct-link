@@ -159,7 +159,7 @@ const getPrompt = (text: string) => `
 type PostType = {
   subject: string; // 文章的标题
   content: string; // 文章的内容, html 格式，标题可以用h4,h5, 内容可以包裹在p 和li 里面
-  category: "immigration"|"studyAbroad"|"house"|"car"|"jobs"|"general"; // 在固定的类型中选一个
+  category: "immigration"|"studyAbroad"|"house"|"car"|"jobs"|"news"|"general"; // 在固定的类型中选一个
   topics: string[]; // 文章末尾的hashtag 不超过5个
 };
 

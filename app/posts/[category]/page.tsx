@@ -36,6 +36,7 @@ type TitleConfig = {
 type DescriptionConfig = TitleConfig;
 
 const config: URLConfig = {
+  news: 'news',
   'studying-abroad': 'studyAbroad',
   immigration: 'immigration',
   house: 'house',
@@ -49,6 +50,7 @@ const titleConfig: TitleConfig = {
   house: '买房&租房',
   car: '买车&租车',
   jobs: '工作',
+  news: '新闻',
 };
 
 const descriptionConfig: DescriptionConfig = {
