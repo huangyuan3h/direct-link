@@ -4,13 +4,17 @@ import './globals.scss';
 import { ToastContainer } from 'react-toastify';
 import { UserProvider } from '@/components/user-context';
 import GoogleAnalytics from '@/components/google-analytics';
+import { DOMAIN_URL } from '@/config/domain';
 
 const san = Open_Sans({ subsets: ['latin'] });
 
+const title = 'North Path - 北美新移民综合信息平台 | 北径信息';
+const description =
+  'North Path - 专为北美新移民打造的综合平台，提供最新生活信息、实用经验分享和互助交流。探索如何在北美顺利安家，工作，和融入社区。';
+
 export const metadata: Metadata = {
-  title: 'North Path - 北美新移民综合信息平台 | 北径信息',
-  description:
-    'North Path - 专为北美新移民打造的综合平台，提供最新生活信息、实用经验分享和互助交流。探索如何在北美顺利安家，工作，和融入社区。',
+  title,
+  description,
   applicationName: '北径信息',
   authors: { name: 'Yuan Huang', url: 'https://github.com/huangyuan3h' },
   keywords: [
@@ -42,6 +46,13 @@ export const metadata: Metadata = {
     },
   ],
   manifest: '/site.webmanifest',
+  openGraph: {
+    title,
+    description,
+    url: DOMAIN_URL,
+    type: 'website',
+    images: ['/opengraph.png'],
+  },
 };
 
 export default function RootLayout({
