@@ -4,10 +4,18 @@ import MessageForm from './MessageForm';
 import Share from '../Share';
 
 interface MessageAreaProps {
-  authEmail: string;
+  subject: string;
+  topics: string[];
+  images: string[];
+  email: string;
 }
 
-export const MessageArea: React.FC<MessageAreaProps> = ({ authEmail }) => {
+export const MessageArea: React.FC<MessageAreaProps> = ({
+  subject,
+  topics,
+  images,
+  email,
+}) => {
   const initialized = useComponentInitialized();
 
   if (!initialized) {
@@ -17,8 +25,13 @@ export const MessageArea: React.FC<MessageAreaProps> = ({ authEmail }) => {
   return (
     <div className={styles.MessageArea}>
       <div className={styles.MessageContent}>
-        <Share isMobile={false} />
-        <MessageForm authEmail={authEmail} />
+        <Share
+          isMobile={false}
+          subject={subject}
+          topics={topics}
+          images={images}
+        />
+        <MessageForm authEmail={email} />
       </div>
     </div>
   );

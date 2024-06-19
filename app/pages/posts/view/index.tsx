@@ -24,11 +24,16 @@ export const View: React.FC<ViewProps> = ({
       <div className={styles.mainContentArea}>
         <Title title={subject} />
         <ImageCarousel images={images} />
-        <Share isMobile />
+        <Share isMobile topics={topics} images={images} subject={subject} />
         <Content content={content} />
         <Categories categories={topics} />
       </div>
-      <MessageArea authEmail={email} />
+      <MessageArea
+        topics={topics}
+        images={images}
+        subject={subject}
+        email={email}
+      />
     </div>
   );
 };
