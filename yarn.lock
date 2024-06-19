@@ -6431,7 +6431,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:2.6.9":
+"debug@npm:2.6.9, debug@npm:^2.1.3":
   version: 2.6.9
   resolution: "debug@npm:2.6.9"
   dependencies:
@@ -6660,6 +6660,7 @@ __metadata:
     react-markdown: "npm:^9.0.1"
     react-quill: "npm:^2.0.0"
     react-responsive-masonry: "npm:^2.2.0"
+    react-share: "npm:^5.1.0"
     react-toastify: "npm:^10.0.5"
     sanitize-html: "npm:^2.13.0"
     sass: "npm:^1.71.1"
@@ -9072,6 +9073,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jsonp@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "jsonp@npm:0.2.1"
+  dependencies:
+    debug: "npm:^2.1.3"
+  checksum: 10c0/744b828f50062cd691d70936c0ee796dc8cb1c78c96327c25c173ae8e2183b82295ec26a99fe3b092cc9b22e08c14a491bf8af639d576615798edbb50ab99f9b
+  languageName: node
+  linkType: hard
+
 "jsonschema@npm:^1.4.1":
   version: 1.4.1
   resolution: "jsonschema@npm:1.4.1"
@@ -11222,6 +11232,18 @@ __metadata:
   version: 2.2.0
   resolution: "react-responsive-masonry@npm:2.2.0"
   checksum: 10c0/156285df87fbcc0b86cb3a18f2df36be5902a0b6ce3435006b96bc88bd1f8e44f9f0b7627f9bc319df49a5eab54d2c31d3c982a866950b24e807f1c1325de108
+  languageName: node
+  linkType: hard
+
+"react-share@npm:^5.1.0":
+  version: 5.1.0
+  resolution: "react-share@npm:5.1.0"
+  dependencies:
+    classnames: "npm:^2.3.2"
+    jsonp: "npm:^0.2.1"
+  peerDependencies:
+    react: ^17 || ^18
+  checksum: 10c0/4d43a54d69bf00d0f2b0e603f156eac0e951d56528f4ed78d76aa9fa7a2655de7735946073c3cd070a0899803887990d6b4882e53bbf868d20ca0898e50845ed
   languageName: node
   linkType: hard
 

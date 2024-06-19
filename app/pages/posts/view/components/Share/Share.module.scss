@@ -1,0 +1,28 @@
+.shareIcons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.shareIcon {
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.shareForm {
+  margin: 24px 0;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+}
+
+.shareTitle {
+  line-height: 1.6;
+  text-align: left;
+  font-weight: bold;
+  font-size: 16px;
+}

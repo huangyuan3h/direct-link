@@ -1,11 +1,14 @@
 'use client';
 
+import clsx from 'clsx';
 import { PostResponseType } from '../types';
 import { Categories } from './components/Categories';
 import { Content } from './components/Content';
-import FloatingActions from './components/FloatingActions';
 import ImageCarousel from './components/ImageCarousel';
+import { MessageArea } from './components/MessageArea';
+import Share from './components/Share';
 import { Title } from './components/Title';
+import styles from './index.module.scss';
 
 interface ViewProps extends PostResponseType {}
 
@@ -14,18 +17,23 @@ export const View: React.FC<ViewProps> = ({
   content,
   topics,
   images,
+  email,
 }: ViewProps) => {
   return (
-    <div>
-      <div className="container">
+    <div className={clsx('container', styles.layout)}>
+      <div className={styles.mainContentArea}>
         <Title title={subject} />
-      </div>
-      <ImageCarousel images={images} />
-      <div className="container">
+        <ImageCarousel images={images} />
+        <Share isMobile topics={topics} images={images} subject={subject} />
         <Content content={content} />
         <Categories categories={topics} />
       </div>
-      {/* <FloatingActions /> */}
+      <MessageArea
+        topics={topics}
+        images={images}
+        subject={subject}
+        email={email}
+      />
     </div>
   );
 };

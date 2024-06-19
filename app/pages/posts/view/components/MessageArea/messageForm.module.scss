@@ -1,0 +1,37 @@
+.messageForm {
+  margin-top: 24px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 12px;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+}
+
+.formDescription {
+  margin-bottom: 20px;
+  line-height: 1.6;
+  text-align: left;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.formInput {
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 16px;
+}
+
+.textArea {
+  padding: 10px;
+  border-radius: 4px;
+  resize: vertical;
+  margin-top: 16px;
+}
+
+.submitButton {
+  margin-top: 16px;
+  display: block;
+  width: 100%;
+  padding: 10px;
+  font-weight: 500;
+}

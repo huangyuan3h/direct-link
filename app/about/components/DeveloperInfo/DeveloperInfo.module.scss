@@ -1,13 +1,13 @@
 .developerInfoContainer {
-  background-color: #f8f9fa; //  浅灰色背景
+  background-color: #f8f9fa;
   border-radius: 8px;
   padding: 2rem;
   margin-bottom: 2rem;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); // 添加阴影
-  transition: transform 0.2s ease; // 添加悬停效果
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
 
   &:hover {
-    transform: translateY(-5px); //  悬停时向上移动
+    transform: translateY(-5px);
   }
 }
 

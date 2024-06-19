@@ -9,6 +9,10 @@ export const options: OptionType[] = [
     text: '一般',
   },
   {
+    value: 'news',
+    text: '新闻',
+  },
+  {
     value: 'studyAbroad',
     text: '留学',
   },

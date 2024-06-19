@@ -48,6 +48,13 @@ export const menuConfig: MenuInterface[] = [
     url: '/rcic',
   },
   // {
+  //   key: 'news',
+  //   title: '新闻',
+  //   Icon: Airplane,
+  //   url: '/posts/news',
+  //   showOnTopNav: true,
+  // },
+  // {
   //   key: 'house',
   //   title: '买房&租房',
   //   url: '/posts/house',
