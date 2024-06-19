@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     description,
     url: DOMAIN_URL,
     type: 'website',
-    images: ['/opengraph.png'],
+    images: [`${DOMAIN_URL}opengraph.png`],
   },
 };
 
