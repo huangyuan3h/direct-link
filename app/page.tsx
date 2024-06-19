@@ -13,7 +13,7 @@ const getAllPosts = async (): Promise<PostsResponse> => {
   'use server';
   const client = new APIClient();
   return await client.post('/posts', {
-    limit: 50,
+    limit: 30,
     next_token: '',
     category: '',
   });

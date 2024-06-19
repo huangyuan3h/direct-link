@@ -8,11 +8,23 @@ import GoogleAnalytics from '@/components/google-analytics';
 const san = Open_Sans({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: '北径信息 - 北美华人社区',
-  description: '为北美新移民提供生活信息、经验分享和互助平台。',
+  title: 'North Path - 北美新移民综合信息平台 | 北径信息',
+  description:
+    'North Path - 专为北美新移民打造的综合平台，提供最新生活信息、实用经验分享和互助交流。探索如何在北美顺利安家，工作，和融入社区。',
   applicationName: '北径信息',
   authors: { name: 'Yuan Huang', url: 'https://github.com/huangyuan3h' },
-  keywords: ['北美华人社区', '加拿大', '加拿大华人', '移民加拿大'],
+  keywords: [
+    '北美华人社区',
+    '加拿大移民',
+    '加拿大华人',
+    '移民指南',
+    '留学加拿大',
+    '移民生活',
+    '新移民互助',
+    '加拿大生活信息',
+    '加拿大经验分享',
+    '北径信息',
+  ],
   icons: [
     { url: '/favicon.ico' },
     { url: '/apple-touch-icon.png', rel: 'apple-touch-icon', sizes: '180x180' },

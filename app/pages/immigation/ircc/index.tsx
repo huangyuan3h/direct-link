@@ -5,7 +5,7 @@ const IRCC = () => {
   return (
     <section className={styles.mainArea}>
       <div className="container">
-        <h3>验证持牌加拿大移民顾问（RCIC）</h3>
+        <h1>验证持牌加拿大移民顾问（RCIC）</h1>
 
         <div>
           <p>
