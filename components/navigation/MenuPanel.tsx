@@ -3,6 +3,7 @@ import { Button, Offcanvas } from 'react-bootstrap';
 import { Avatar } from '../avatar';
 import { Menus } from './Menus';
 import styles from './navButton.module.scss';
+import { OthersMenu } from './OthersMenu';
 
 export interface MenuPanelProps {
   showPanel: boolean;
@@ -29,6 +30,7 @@ export const MenuPanel: React.FC<MenuPanelProps> = ({
         )}
         <div className={styles.menuContainer}>
           <Menus isOverlayPanel />
+          <OthersMenu isOverlayPanel />
         </div>
       </Offcanvas.Body>
     </Offcanvas>

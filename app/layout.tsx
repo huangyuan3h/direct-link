@@ -46,12 +46,13 @@ export const metadata: Metadata = {
     },
   ],
   manifest: '/site.webmanifest',
+  metadataBase: new URL(DOMAIN_URL),
   openGraph: {
     title,
     description,
     url: DOMAIN_URL,
     type: 'website',
-    images: [`${DOMAIN_URL}opengraph.png`],
+    images: [`/opengraph.png`],
   },
 };
 
