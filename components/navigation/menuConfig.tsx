@@ -4,6 +4,9 @@ import {
   Icon,
   Airplane,
   PersonCheck,
+  Headset,
+  Person,
+  ShieldLock,
 } from 'react-bootstrap-icons';
 
 export interface MenuInterface {
@@ -80,4 +83,25 @@ export const menuConfig: MenuInterface[] = [
   //     },
   //   ],
   // },
+];
+
+export const otherMenus: MenuInterface[] = [
+  {
+    key: 'about',
+    title: '关于我们',
+    Icon: Person,
+    url: '/about',
+  },
+  {
+    key: 'contact',
+    title: '联系我们',
+    Icon: Headset,
+    url: '/contact',
+  },
+  {
+    key: 'privacy-policy',
+    title: '隐私政策',
+    Icon: ShieldLock,
+    url: '/privacy-policy',
+  },
 ];

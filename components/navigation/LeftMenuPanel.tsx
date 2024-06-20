@@ -4,6 +4,7 @@ import { Menus } from './Menus';
 import styles from './navButton.module.scss';
 import { breakpoints } from '@/utils/breakpoint';
 import { useEffect, useState } from 'react';
+import { OthersMenu } from './OthersMenu';
 
 export const LeftMenuPanel: React.FC = () => {
   const windowWidth = useWindowWidth();
@@ -20,6 +21,7 @@ export const LeftMenuPanel: React.FC = () => {
   return (
     <div className={styles.leftMenuArea}>
       <Menus />
+      <OthersMenu />
     </div>
   );
 };
