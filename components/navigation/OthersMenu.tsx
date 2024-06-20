@@ -11,7 +11,12 @@ export interface OthersMenuProps {
 export const OthersMenu: React.FC<OthersMenuProps> = ({ isOverlayPanel }) => {
   const pathname = usePathname();
   return (
-    <div className={styles.otherMenus}>
+    <div
+      className={clsx(
+        styles.otherMenus,
+        isOverlayPanel && styles.otherMenusLeftPanel
+      )}
+    >
       {otherMenus.map((menu) => {
         return (
           <NavButton
