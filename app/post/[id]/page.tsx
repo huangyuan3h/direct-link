@@ -6,6 +6,8 @@ import { DOMAIN_URL } from '@/config/domain';
 import APIClient from '@/utils/apiClient';
 import { getImageUrl } from '@/utils/getImageUrl';
 import { Metadata, ResolvingMetadata } from 'next';
+import { cookies } from 'next/headers';
+import { PostsResponse } from '@/app/pages/posts/types';
 
 interface ViewPostParamsProps {
   params: { id: string };
@@ -15,6 +17,18 @@ const getPostsById = async (id: string): Promise<PostResponseType> => {
   'use server';
   const client = new APIClient();
   return await client.get('/post/' + id);
+};
+
+const getPostsByCategory = async (category: string): Promise<PostsResponse> => {
+  'use server';
+  const cookieStore = cookies();
+  const authCookie = cookieStore.get('Authorization'); // the cookie is only to make sure use new data
+  const client = new APIClient(authCookie?.value);
+  return await client.post('/posts', {
+    limit: 8, // 3-7 link is the best for seo
+    next_token: '',
+    category,
+  });
 };
 
 type Props = {
@@ -52,11 +66,23 @@ export async function generateMetadata(
 export default async function Home({ params }: ViewPostParamsProps) {
   const posts = await getPostsById(params.id);
 
+  const category = posts.category;
+  const { results } = await getPostsByCategory(category);
+  const filteredList = results.filter((post) => post.postId !== params.id);
   // json ld
 
   const email = posts.email;
   const name = posts.email.slice(0, posts.email.indexOf('@'));
   const images = posts.images.map((url) => getImageUrl(url));
+
+  const relatedArticle = filteredList.map((a, idx) => {
+    return {
+      '@type': 'ListItem',
+      position: idx + 1,
+      name: a.subject,
+      url: a.images[0],
+    };
+  });
 
   const article = {
     '@context': 'https://schema.org',
@@ -81,6 +107,11 @@ export default async function Home({ params }: ViewPostParamsProps) {
         url: `${DOMAIN_URL}android-chrome-512x512.png`,
       },
     },
+    isPartOf: {
+      '@type': 'ItemList',
+      name: posts.subject,
+      itemListElement: relatedArticle,
+    },
     articleBody: posts.content,
   };
 
@@ -91,7 +122,7 @@ export default async function Home({ params }: ViewPostParamsProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(article) }}
       />
       <Header />
-      <View {...posts} />
+      <View {...posts} relateds={filteredList} />
       <div className="container">
         <Footer />
       </div>
