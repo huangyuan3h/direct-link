@@ -18,7 +18,7 @@ function removeHTMLTags(htmlString: string): string {
 const PostCard: React.FC<PostCardProps> = ({ post }) => {
   const content = removeHTMLTags(post.content);
   return (
-    <Link href={`/posts/${post.postId}`} className={styles.postLink}>
+    <Link href={`/post/${post.postId}`} className={styles.postLink}>
       <Card className={styles.postCard}>
         <Row>
           <Col xs={4} className={styles.imageContainer}>
