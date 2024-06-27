@@ -23,7 +23,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
     <Link href={`/post/${post.postId}`} className={styles.postLink}>
       <Card className={styles.postCard}>
         <Row>
-          <Col xs={4} className={styles.imageContainer}>
+          <Col md={4} className={styles.imageContainer}>
             {
               <Image
                 src={getImageUrl(post.images[0])}
@@ -34,7 +34,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
               />
             }
           </Col>
-          <Col xs={8}>
+          <Col md={8}>
             <Card.Body>
               <Card.Title>{post.subject}</Card.Title>
               <Card.Text className={styles.postContent}>
