@@ -15,6 +15,8 @@ function removeHTMLTags(htmlString: string): string {
   return htmlString.replace(regex, ''); // Replace tags with empty string
 }
 
+const contentLength = 120;
+
 const PostCard: React.FC<PostCardProps> = ({ post }) => {
   const content = removeHTMLTags(post.content);
   return (
@@ -36,8 +38,8 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
             <Card.Body>
               <Card.Title>{post.subject}</Card.Title>
               <Card.Text className={styles.postContent}>
-                {content.length > 100
-                  ? `${content.substring(0, 100)}...`
+                {content.length > contentLength
+                  ? `${content.substring(0, contentLength)}...`
                   : content}
               </Card.Text>
             </Card.Body>
