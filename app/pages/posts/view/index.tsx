@@ -23,7 +23,6 @@ export const View: React.FC<ViewProps> = ({
   email,
   relateds,
 }: ViewProps) => {
-  console.log(relateds);
   return (
     <div className={clsx('container', styles.layout)}>
       <div className={styles.mainContentArea}>
