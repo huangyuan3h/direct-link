@@ -10,6 +10,7 @@ import { DOMAIN_URL } from '@/config/domain';
 import APIClient from '@/utils/apiClient';
 import { getImageUrl } from '@/utils/getImageUrl';
 import { Metadata, ResolvingMetadata } from 'next';
+import { cookies } from 'next/headers';
 
 interface ViewPostParamsProps {
   params: { category: string };
@@ -17,7 +18,9 @@ interface ViewPostParamsProps {
 
 const getPostsByCategory = async (category: string): Promise<PostsResponse> => {
   'use server';
-  const client = new APIClient();
+  const cookieStore = cookies();
+  const authCookie = cookieStore.get('Authorization'); // the cookie is only to make sure use new data
+  const client = new APIClient(authCookie?.value);
   return await client.post('/posts', {
     limit: 30,
     next_token: '',
