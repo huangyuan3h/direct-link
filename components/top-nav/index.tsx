@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { menuConfig } from '../navigation/menuConfig';
@@ -12,8 +12,14 @@ const TopNav: React.FC = () => {
   const pathname = usePathname();
   const windowWidth = useWindowWidth();
 
-  if (windowWidth > breakpoints.md) {
-    return null;
+  const [display, setdisplay] = useState(false);
+
+  useEffect(() => {
+    setdisplay(windowWidth > breakpoints.md);
+  }, [windowWidth]);
+
+  if (display) {
+    return <></>;
   }
 
   const topNavMenu = menuConfig.filter((item) => item.showOnTopNav);
