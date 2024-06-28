@@ -49,6 +49,8 @@ export const PostList: React.FC<PostListProps> = ({
 
   const [loadMoreData, setLoadMoreData] = useState(false);
 
+  const [containTopNav, setContainTopNav] = useState(false);
+
   const { data, isLoading, mutate } = useSWR(
     loadMoreData ? `api/posts?nextToken=${nextToken}` : null,
     () => getPosts(nextToken, category),
@@ -67,6 +69,10 @@ export const PostList: React.FC<PostListProps> = ({
       return Array.from(set);
     });
   }, []);
+
+  useEffect(() => {
+    setContainTopNav(windowWidth < breakpoints.md);
+  }, [windowWidth]);
 
   useEffect(() => {
     if (!isLoading && data?.results) {
@@ -122,7 +128,7 @@ export const PostList: React.FC<PostListProps> = ({
     <div
       className={clsx(
         styles.scrollArea,
-        windowWidth < breakpoints.md && styles.scrollArea_containTopNav
+        containTopNav && styles.scrollArea_containTopNav
       )}
       ref={ref}
     >
