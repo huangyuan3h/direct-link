@@ -8,15 +8,21 @@ import { getImageUrl } from '@/utils/getImageUrl';
 import { Metadata, ResolvingMetadata } from 'next';
 import { cookies } from 'next/headers';
 import { PostsResponse } from '@/app/pages/posts/types';
+import { RedirectType, redirect } from 'next/navigation';
 
 interface ViewPostParamsProps {
   params: { id: string };
 }
 
-const getPostsById = async (id: string): Promise<PostResponseType> => {
+const getPostsById = async (id: string): Promise<PostResponseType | null> => {
   'use server';
-  const client = new APIClient();
-  return await client.get('/post/' + id);
+  try {
+    const client = new APIClient();
+    return await client.get('/post/' + id);
+  } catch (e) {
+    // find nothing
+    return null;
+  }
 };
 
 const getPostsByCategory = async (category: string): Promise<PostsResponse> => {
@@ -39,10 +45,14 @@ type Props = {
 export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata
-): Promise<Metadata> {
+): Promise<Metadata | null> {
   const id = params.id;
 
-  const p: PostResponseType = await getPostsById(id);
+  const p: PostResponseType | null = await getPostsById(id);
+
+  if (!p) {
+    return null;
+  }
 
   const title = p.subject;
   const description = p.content.slice(0, 150);
@@ -65,6 +75,10 @@ export async function generateMetadata(
 
 export default async function Home({ params }: ViewPostParamsProps) {
   const posts = await getPostsById(params.id);
+
+  if (!posts) {
+    return redirect(`/?notfound`, RedirectType.replace);
+  }
 
   const category = posts.category;
   const { results } = await getPostsByCategory(category);
