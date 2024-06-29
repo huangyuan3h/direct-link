@@ -15,7 +15,7 @@ const description =
 export const metadata: Metadata = {
   title,
   description,
-  applicationName: '北径信息',
+  applicationName: '北径移民资讯',
   authors: { name: 'Yuan Huang', url: 'https://github.com/huangyuan3h' },
   keywords: [
     '加拿大新移民',

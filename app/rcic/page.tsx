@@ -4,11 +4,11 @@ import Footer from '@/components/footer';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: '北径信息 | RCIC 验证服务 | 加拿大移民顾问认证',
+  title: '北径移民资讯 | RCIC 验证服务 | 加拿大移民顾问认证',
   description:
-    '北径信息为您提供专业的RCIC验证服务，确保您的加拿大移民顾问认证顺利进行。我们的专家团队帮助您遵循最新的移民法规，为您的移民申请提供全程支持和指导。',
+    '北径移民资讯为您提供专业的RCIC验证服务，确保您的加拿大移民顾问认证顺利进行。我们的专家团队帮助您遵循最新的移民法规，为您的移民申请提供全程支持和指导。',
   keywords: [
-    '北径信息',
+    '北径移民资讯',
     'RCIC 验证服务',
     '加拿大移民顾问',
     '移民顾问认证',

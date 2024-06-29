@@ -61,7 +61,7 @@ export async function generateMetadata(
   const images = p.images;
 
   return {
-    title: `${title} - 北径信息`,
+    title: `${title} - 北径移民资讯`,
     description,
     keywords: keywords,
     alternates: {
@@ -115,7 +115,7 @@ export default async function Home({ params }: ViewPostParamsProps) {
     },
     publisher: {
       '@type': 'Organization',
-      name: '北径信息',
+      name: '北径移民资讯',
       logo: {
         '@type': 'ImageObject',
         url: `${DOMAIN_URL}android-chrome-512x512.png`,

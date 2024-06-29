@@ -30,9 +30,10 @@ export default async function Home() {
   const website = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: '北径信息',
+    name: '北径移民资讯',
     url: DOMAIN_URL,
-    description: '为北美新移民提供生活信息、经验分享和互助平台。',
+    description:
+      '北径移民资讯 - 为加拿大新移民提供全方位信息，涵盖移民流程、留学指南、住房市场、汽车购买、就业机会、新闻动态和旅游建议，帮助新移民融入加拿大生活。',
   };
 
   const articles = data.results.map((r, idx) => {
@@ -58,7 +59,7 @@ export default async function Home() {
         },
         publisher: {
           '@type': 'Organization',
-          name: '北径信息',
+          name: '北径移民资讯',
           logo: {
             '@type': 'ImageObject',
             url: `${DOMAIN_URL}android-chrome-512x512.png`,
