@@ -2584,6 +2584,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@google/generative-ai@npm:^0.14.0":
+  version: 0.14.0
+  resolution: "@google/generative-ai@npm:0.14.0"
+  checksum: 10c0/2ec2009483fc82e6cbdb5608153dff09fe38b2987821671344f5d6a2975f5c3d1688ed1349c383341a4527fe816620197c1e4f53f64c289ec1f019013777c331
+  languageName: node
+  linkType: hard
+
 "@graphql-tools/executor@npm:^0.0.18":
   version: 0.0.18
   resolution: "@graphql-tools/executor@npm:0.0.18"
@@ -6629,6 +6636,7 @@ __metadata:
   dependencies:
     "@aws-sdk/client-s3": "npm:^3.556.0"
     "@aws-sdk/s3-request-presigner": "npm:^3.556.0"
+    "@google/generative-ai": "npm:^0.14.0"
     "@react-oauth/google": "npm:^0.12.1"
     "@types/bootstrap": "npm:^5"
     "@types/node": "npm:^20"

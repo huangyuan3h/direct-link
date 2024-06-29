@@ -4,10 +4,60 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { randomUUID } from 'crypto';
 import dotenv from 'dotenv';
 import { PostType } from '@/app/pages/posts/types';
+import {
+  HarmBlockThreshold,
+  HarmCategory,
+  GoogleGenerativeAI,
+  SafetySetting,
+  GenerateContentResponse,
+} from '@google/generative-ai';
 
 dotenv.config({ path: './.env.prod' });
 
-const cookie = `acw_tc=1415296922c829c923094bc416c496b2a959e381fd4dc9f97f9faf4c6f1a117a; abRequestId=70f1ceb7-951e-5a1a-a343-3bff28d2d4cf; webBuild=4.22.4; a1=19056e7d357lhqbxoow8dfhsbqlu2ebe7abum096m30000297189; webId=54fff6bdbe678b19ac6025a9ad958b15; web_session=030037a14ff1ac09da8e94e304214a2905c9fe; gid=yj82KdWfWiWyyj82KdWfq08j2W1xADCllEYfDK6ixMDA17q87JdDd6888JjWyYj8q84ff08d; xsecappid=xhs-pc-web; websectiga=29098a4cf41f76ee3f8db19051aaa60c0fc7c5e305572fec762da32d457d76ae; sec_poison_id=1b440219-6cc0-435a-9074-90803682fed4`;
+const getGoogleGeminiClient = () => {
+  if (!process.env.GEMINI_KEY) return undefined;
+  const genAI = new GoogleGenerativeAI(process.env.GEMINI_KEY);
+
+  const safetySettings: SafetySetting[] = [
+    {
+      category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+      threshold: HarmBlockThreshold.BLOCK_NONE,
+    },
+    {
+      category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+      threshold: HarmBlockThreshold.BLOCK_NONE,
+    },
+    {
+      category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+      threshold: HarmBlockThreshold.BLOCK_NONE,
+    },
+    {
+      category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+      threshold: HarmBlockThreshold.BLOCK_NONE,
+    },
+  ];
+
+  const model = genAI.getGenerativeModel({
+    model: 'gemini-1.5-flash-latest',
+    generationConfig: {
+      temperature: 1,
+      responseMimeType: 'application/json',
+    },
+    safetySettings,
+  });
+  return model;
+};
+
+export function fileToGenerativePart(content: string, mimeType: string) {
+  return {
+    inlineData: {
+      data: content,
+      mimeType,
+    },
+  };
+}
+
+const cookie = `acw_tc=42ed4ad25ab3ce6d5d42b9eb27ec2737670e1b262cca8465c8756cbaa4c7f236; abRequestId=31d4f2c8-2b35-5add-8f08-c4a823895c03; webBuild=4.23.1; a1=19062b48ee34eu0kzeqo6vmp0pq81yc0x6mqx6cfl30000188860; webId=96c9aa6f6a34f8cdcc38f5b7788a1c68; websectiga=6169c1e84f393779a5f7de7303038f3b47a78e47be716e7bec57ccce17d45f99; sec_poison_id=feb1a417-8b77-4365-8d40-f3f13c0a489b; web_session=030037a14cff530bc75f6bed07214aacabfe4e; gid=yj8KJD4jY4CWyj8KJD4YdKKSdq4d78TudAlK6i1h6U8UAAq8YyvS8C888yYYYK880dqqJ22j; xsecappid=xhs-pc-web`;
 
 const auth =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdmF0YXIiOiJodHRwczovL3Byb2Qtbm9ydGgtcGF0aC1hcGktc3RhY2stYXZhdGFyYnVja2V0ZDgwZGJkYjUtNXBzdXhidWJqbmdjLnMzLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tLzVlOTcyYTFjLThlMzQtNGQyNS1iZDI0LTQ1MWE1YzZjNjNhYy0xNzE2NTMzODUyIiwiZW1haWwiOiJodWFuZ3l1YW4zaEBnbWFpbC5jb20iLCJleHAiOjE3MjA2ODI5OTgsImlzcyI6Imh0dHA6Ly9ub3J0aC1wYXRoLnNpdGUiLCJ1c2VyTmFtZSI6Ium7hOe8mO-8iFl1YW4gSHVhbmfvvIkifQ.ASnezNyenOmYvlfzytpg9TzYPCgj4q7rmzOPc7UgDmo';
@@ -68,16 +118,20 @@ const getHTMLText = async (url: string): Promise<string> => {
   return await response.text();
 };
 
-const uploadImagesToS3 = async (images: string[]): Promise<string[]> => {
+const uploadImagesToS3 = async (
+  images: string[]
+): Promise<{ imageUrls: string[]; imageContents: string[] }> => {
   let imageUrls: string[] = [];
-
+  let imageContents: string[] = [];
   if (images && images.length > 0) {
     imageUrls = await Promise.all(
       images.map(async (imageUrl: string) => {
         try {
           const imageResponse = await fetch(imageUrl);
           const imageBlob = await imageResponse.blob();
-
+          const buffer = Buffer.from(await imageBlob.arrayBuffer());
+          const imageContent = buffer.toString('base64');
+          imageContents.push(imageContent);
           const uploadUrl = await generateSignedURL();
 
           const response = await fetch(uploadUrl, {
@@ -98,7 +152,7 @@ const uploadImagesToS3 = async (images: string[]): Promise<string[]> => {
     );
   }
 
-  return imageUrls;
+  return { imageUrls, imageContents };
 };
 
 type GeminiResponseType = {
@@ -148,18 +202,19 @@ const getPrompt = (text: string) => `
   文章内容不要出现引导联系我，我是移民顾问的内容
   文章中不要出现的类似联系我的信息
   不要出现类似“如果您对美国移民有任何疑问，欢迎咨询专业的移民顾问，获得个性化的移民方案规划。”这样的话术，来引导读者主动联系
+  在文章中去除作者名称，比如“七七老师”等
   
 ############################
 
-我会首先给出一篇文章, 你需要首先按照文章上述要求进行改写，然后返回一个JSON。
+我会首先给出一篇文章或者一些图片, 你需要首先按照文章或图片，更具上述要求进行改写,在改写的过程中尝试让文章内容更加丰富和连贯，更有人性，然后返回一个JSON。
 
 文章的内容是: ${text}
 
 以下是JSON 的定义
 type PostType = {
-  subject: string; // 文章的标题
+  subject: string; // 文章的标题, 少于20个字！
   content: string; // 文章的内容, html 格式，标题可以用h4,h5, 内容可以包裹在p 和li 里面
-  category: "immigration"|"studyAbroad"|"house"|"car"|"jobs"|"news"|"general"; // 在固定的类型中选一个
+  category: "immigration"|"studyAbroad"|"house"|"car"|"jobs"|"news"|"travel"｜"general"; // 在固定的类型中选一个
   topics: string[]; // 文章末尾的hashtag 不超过5个
 };
 
@@ -167,30 +222,35 @@ type PostType = {
 记住作为系统的一部分，你的输出会被直接执行JSON.parse, 所以不需要任何解释内容。
 `;
 
-const generatePayload = async (text: string): Promise<GeneratedPostType> => {
-  const prompts = {
-    contents: [{ parts: [{ text: getPrompt(text) }] }],
-    generationConfig: {
-      response_mime_type: 'application/json',
-    },
-  };
+const generatePayload = async (
+  text: string,
+  imageContents: string[]
+): Promise<GeneratedPostType> => {
+  const model = getGoogleGeminiClient();
 
-  const response = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${process.env.GEMINI_KEY}`,
-    {
-      method: 'POST',
-      body: JSON.stringify(prompts),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }
+  if (!model) {
+    throw new Error('Google Gemini client not found');
+  }
+
+  const imageParts = await Promise.all(
+    imageContents.map((content) => fileToGenerativePart(content, 'image/webp'))
   );
 
-  const result: GeminiResponseType = await response.json();
+  const content = await model.generateContent([getPrompt(text), ...imageParts]);
+
+  const result: GenerateContentResponse = await content.response;
+
+  if (!result.candidates) {
+    throw new Error('candidates not exist, generate error');
+  }
 
   const firstResult = result.candidates[0];
 
   const actualResult = firstResult.content.parts[0].text;
+
+  if (!actualResult) {
+    throw new Error('actualResult not exist, generate error');
+  }
 
   try {
     return JSON.parse(actualResult);
@@ -212,9 +272,9 @@ const handleData = async ({ url }: InputParams) => {
   console.log(text, images);
 
   // upload images
-  let imageUrls: string[] = await uploadImagesToS3(images);
+  let { imageUrls, imageContents } = await uploadImagesToS3(images);
 
-  const payload = await generatePayload(text);
+  const payload = await generatePayload(text, imageContents);
 
   // send to the server
 
