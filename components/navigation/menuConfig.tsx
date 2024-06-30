@@ -1,5 +1,6 @@
 import {
-  House,
+  HandThumbsUp,
+  Houses,
   AlphabetUppercase,
   Icon,
   Airplane,
@@ -26,7 +27,7 @@ export const menuConfig: MenuInterface[] = [
   {
     key: 'all',
     title: '推荐',
-    Icon: House,
+    Icon: HandThumbsUp,
     showOnTopNav: true,
     url: '/',
   },
@@ -45,6 +46,12 @@ export const menuConfig: MenuInterface[] = [
     showOnTopNav: true,
   },
   {
+    key: 'house',
+    title: '房',
+    Icon: Houses,
+    url: '/posts/house',
+  },
+  {
     key: 'rcic',
     title: '持牌验证',
     Icon: PersonCheck,
@@ -57,11 +64,7 @@ export const menuConfig: MenuInterface[] = [
   //   url: '/posts/news',
   //   showOnTopNav: true,
   // },
-  // {
-  //   key: 'house',
-  //   title: '买房&租房',
-  //   url: '/posts/house',
-  // },
+
   // {
   //   key: 'car',
   //   title: '买车&租车',
