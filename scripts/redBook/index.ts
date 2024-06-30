@@ -13,6 +13,23 @@ interface InputParams {
   url: string;
 }
 
+const fetchImage = async (url: string): Promise<Blob | null> => {
+  try {
+    const imageResponse = await fetch(url);
+    const imageBlob = await imageResponse.blob();
+    return imageBlob;
+  } catch (error) {
+    console.error(`fetch image ${url}:`, error);
+  }
+
+  return null;
+};
+
+const getImageContentFromBlob = async (blob: Blob): Promise<string> => {
+  const buffer = Buffer.from(await blob.arrayBuffer());
+  return buffer.toString('base64');
+};
+
 const handleData = async ({ url }: InputParams) => {
   const html = await getHTMLText(url);
   const text = extractTextFromHTML(html);
@@ -25,8 +42,16 @@ const handleData = async ({ url }: InputParams) => {
 
   console.log(text, images);
 
+  const imageBlobs = await Promise.all(images.map(fetchImage));
+
+  const imageBlobsWithData: Blob[] = imageBlobs.filter((b) => !!b) as Blob[];
+
+  const imageContents = await Promise.all(
+    imageBlobsWithData.map(getImageContentFromBlob)
+  );
+
   // upload images
-  let { imageUrls, imageContents } = await uploadImagesToS3(images);
+  let imageUrls = await uploadImagesToS3(imageBlobsWithData);
 
   const payload = await generatePayload(text, imageContents);
 

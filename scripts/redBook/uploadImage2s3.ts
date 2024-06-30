@@ -12,24 +12,18 @@ export const generateSignedURL = async (): Promise<string> => {
 };
 
 export const uploadImagesToS3 = async (
-  images: string[]
-): Promise<{ imageUrls: string[]; imageContents: string[] }> => {
+  imageBlobs: Blob[]
+): Promise<string[]> => {
   let imageUrls: string[] = [];
   let imageContents: string[] = [];
-  if (images && images.length > 0) {
+  if (imageBlobs && imageBlobs.length > 0) {
     imageUrls = await Promise.all(
-      images.map(async (imageUrl: string) => {
+      imageBlobs.map(async (blob: Blob, idx: number) => {
         try {
-          const imageResponse = await fetch(imageUrl);
-          const imageBlob = await imageResponse.blob();
-          const buffer = Buffer.from(await imageBlob.arrayBuffer());
-          const imageContent = buffer.toString('base64');
-          imageContents.push(imageContent);
           const uploadUrl = await generateSignedURL();
-
           const response = await fetch(uploadUrl, {
             method: 'PUT',
-            body: imageBlob,
+            body: blob,
             headers: {
               'Content-Type': 'image/webp',
               'Content-Disposition': `attachment; filename="${randomUUID()}.webp"`,
@@ -38,12 +32,12 @@ export const uploadImagesToS3 = async (
 
           return response.url.split('?')[0];
         } catch (error) {
-          console.error(`Error uploading image ${imageUrl}:`, error);
+          console.error(`Error uploading image ${idx}:`, error);
         }
         return '';
       })
     );
   }
 
-  return { imageUrls, imageContents };
+  return imageUrls;
 };
