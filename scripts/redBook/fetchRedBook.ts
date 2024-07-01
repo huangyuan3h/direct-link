@@ -1,4 +1,4 @@
-const cookie = `acw_tc=7092e9cf61c766ee4f338a4c188c0081d5678449f35ef97054d6b2762a981af3; abRequestId=c161cf5a-26ac-50a1-a89c-a14fdc0b9166; webBuild=4.23.1; a1=1906b759fa2p5i6f7cipi2y5g1hhipw16z8y8gzzz30000331115; webId=02703fbc61a8eaf97c024a043abb39cf; websectiga=2a3d3ea002e7d92b5c9743590ebd24010cf3710ff3af8029153751e41a6af4a3; sec_poison_id=6eeec404-6930-44da-8a2c-39b2724b29fe; web_session=030037a1b2bca91ca70d91aef9214aa6f445e3; gid=yj8KDW2044K8yj8KDW2jiuku0JU23KiWS3U3YuuJv2kyxvq8x3UEyY888qqyyy280S4Yq4qd; xsecappid=xhs-pc-web`;
+const cookie = `acw_tc=29def04c79864a6b5d3aa544661dd5ccfed05a905d03ac4ddcec2553235b5895; abRequestId=05179477-60cf-5869-b6de-7c5e20f60469; webBuild=4.23.1; a1=1906d9084f44aaat0hb2p2eytfgrv7eeziarrnu5y30000779728; webId=23f670b158cf6fa968d30fe30c305098; websectiga=29098a4cf41f76ee3f8db19051aaa60c0fc7c5e305572fec762da32d457d76ae; sec_poison_id=4ab4a1e0-4339-4b91-80bc-e6ece73ff9fd; web_session=030037a1b126a61c00f89e34fa214a65f9a7dc; gid=yj8Kfj8YYDudyj8Kfj8Y43I7i4400098xDJU02vJdv9ikFq8FhWddF888WWjWJY8dddY8f48; xsecappid=ranchi`;
 
 export const getHTMLText = async (url: string): Promise<string> => {
   const response = await fetch(url, {
