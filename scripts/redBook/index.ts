@@ -44,14 +44,18 @@ const handleData = async ({ url }: InputParams) => {
 
   const imageBlobs = await Promise.all(images.map(fetchImage));
 
-  const imageBlobsWithData: Blob[] = imageBlobs.filter((b) => !!b) as Blob[];
+  const imageBlobsWithData: Blob[] = imageBlobs.filter(
+    (b) => !!b && b.size !== 0
+  ) as Blob[];
 
-  const imageContents = await Promise.all(
+  let imageContents = await Promise.all(
     imageBlobsWithData.map(getImageContentFromBlob)
   );
 
   // upload images
   let imageUrls = await uploadImagesToS3(imageBlobsWithData);
+
+  imageUrls = imageUrls.filter((u) => !!u);
 
   const payload = await generatePayload(text, imageContents);
 
