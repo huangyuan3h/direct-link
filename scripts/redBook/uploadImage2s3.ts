@@ -15,7 +15,6 @@ export const uploadImagesToS3 = async (
   imageBlobs: Blob[]
 ): Promise<string[]> => {
   let imageUrls: string[] = [];
-  let imageContents: string[] = [];
   if (imageBlobs && imageBlobs.length > 0) {
     imageUrls = await Promise.all(
       imageBlobs.map(async (blob: Blob, idx: number) => {
