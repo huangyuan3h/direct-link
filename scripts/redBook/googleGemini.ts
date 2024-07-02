@@ -70,7 +70,7 @@ export const generatePayload = async (
     imageContents.map((content) => fileToGenerativePart(content, 'image/webp'))
   );
 
-  imageParts = imageParts.slice(0, 3);
+  imageParts = imageParts.slice(0, 5); // 给5张图片
 
   const content = await model.generateContent([getPrompt(text), ...imageParts]);
 
