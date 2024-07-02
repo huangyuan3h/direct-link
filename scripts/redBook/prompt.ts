@@ -8,7 +8,7 @@ export const getPrompt = (text: string) => `
 type PostType = {
   subject: string; // 文章标题，需包含关键词，吸引用户点击，长度不超过 20 个字。
   content: string; // 文章内容，HTML 格式，使用 h4、h5 标签构建清晰的层级结构，使用 p 和 li 标签组织段落和列表，长度不少于 1200 字。
-  category: "immigration"|"studyAbroad"|"house"|"car"|"jobs"|"news"|"travel"｜"general"; // 文章分类，从给定选项中选择一个最符合文章主题的分类。
+  category: "immigration"|"studyAbroad"|"house"|"travel"|"car"|"jobs"|"news"|"general"; // 文章分类，从给定选项中选择一个最符合文章主题的分类, 所有吃，喝，玩， 旅游，events 都分类在travel 里面
   topics: string[]; // 文章主题标签，用于 SEO 和内容分类，不超过 5 个，使用简洁、概括性的词语。
 };
 

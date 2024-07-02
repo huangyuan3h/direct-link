@@ -66,9 +66,11 @@ export const generatePayload = async (
     throw new Error('Google Gemini client not found');
   }
 
-  const imageParts = await Promise.all(
+  let imageParts = await Promise.all(
     imageContents.map((content) => fileToGenerativePart(content, 'image/webp'))
   );
+
+  imageParts = imageParts.slice(0, 3);
 
   const content = await model.generateContent([getPrompt(text), ...imageParts]);
 
@@ -89,7 +91,7 @@ export const generatePayload = async (
   try {
     return JSON.parse(actualResult);
   } catch (e) {
-    console.error(result);
+    console.error(JSON.stringify(result, null, 2));
     throw new Error('JSON parse ERROR');
   }
 };

@@ -52,12 +52,12 @@ const handleData = async ({ url }: InputParams) => {
     imageBlobsWithData.map(getImageContentFromBlob)
   );
 
+  const payload = await generatePayload(text, imageContents);
+
   // upload images
   let imageUrls = await uploadImagesToS3(imageBlobsWithData);
 
   imageUrls = imageUrls.filter((u) => !!u);
-
-  const payload = await generatePayload(text, imageContents);
 
   // send to the server
 
