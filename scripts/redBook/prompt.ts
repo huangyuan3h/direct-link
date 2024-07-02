@@ -6,10 +6,10 @@ export const getPrompt = (text: string) => `
 
 请严格按照以下 JSON 结构和要求生成文章，将文章要求整合到 JSON 结构定义中:
 type PostType = {
-  subject: string; // 文章标题，需包含关键词，吸引用户点击，长度不超过 20 个字。
-  content: string; // 文章内容，HTML 格式，使用 h4、h5 标签构建清晰的层级结构，使用 p 和 li 标签组织段落和列表，长度不少于 1200 字。
-  category: "immigration"|"studyAbroad"|"house"|"travel"|"car"|"jobs"|"news"|"general"; // 文章分类，从给定选项中选择一个最符合文章主题的分类, 所有吃，喝，玩， 旅游，events 都分类在travel 里面
-  topics: string[]; // 文章主题标签，用于 SEO 和内容分类，不超过 5 个，使用简洁、概括性的词语。
+  subject: string; // 标题：吸引用户点击，包含关键词，不超过20字
+  content: string; // 内容：HTML格式，h4/h5构建结构，p/li组织段落/列表，不少于1200字
+  category: "immigration" | "studyAbroad" | "house" | "travel" | "car" | "jobs" | "news" | "general"; // 分类：从选项中选最符合主题的，"travel"涵盖吃喝玩旅游events，"general"用于无法归类的
+  topics: string[]; // 主题标签：SEO/分类，不超过5个，简洁概括
 };
 
 请根据以下 SEO 指导，结合提供的图片和文本信息，对输入文本进行改写，生成一篇内容丰富、语言流畅、结构清晰、吸引用户阅读并符合 SEO 规范的文章：
