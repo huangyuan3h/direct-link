@@ -50,6 +50,7 @@ export const menuConfig: MenuInterface[] = [
     title: '房',
     Icon: Houses,
     url: '/posts/house',
+    showOnTopNav: true,
   },
   {
     key: 'rcic',

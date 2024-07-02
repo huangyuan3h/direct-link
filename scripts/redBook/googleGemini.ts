@@ -89,6 +89,7 @@ export const generatePayload = async (
   try {
     return JSON.parse(actualResult);
   } catch (e) {
+    console.error(result);
     throw new Error('JSON parse ERROR');
   }
 };
