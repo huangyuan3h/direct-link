@@ -29,31 +29,43 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const listpages: MetadataRoute.Sitemap = [
     {
-      url: `${DOMAIN_URL}posts/studying-abroad`,
+      url: `${DOMAIN_URL}posts/study-in-canada`,
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 0.8,
     },
     {
-      url: `${DOMAIN_URL}posts/immigration`,
+      url: `${DOMAIN_URL}posts/canada-immigration`,
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 0.8,
     },
     {
-      url: `${DOMAIN_URL}posts/house`,
+      url: `${DOMAIN_URL}posts/canada-real-estate`,
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 0.8,
     },
     {
-      url: `${DOMAIN_URL}posts/car`,
+      url: `${DOMAIN_URL}posts/canada-travel`,
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 0.8,
     },
     {
-      url: `${DOMAIN_URL}posts/jobs`,
+      url: `${DOMAIN_URL}posts/news`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.8,
+    },
+    {
+      url: `${DOMAIN_URL}posts/canada-car`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.8,
+    },
+    {
+      url: `${DOMAIN_URL}posts/canada-jobs`,
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 0.8,

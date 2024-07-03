@@ -8,6 +8,7 @@ import {
   Headset,
   Person,
   ShieldLock,
+  TrainFront,
 } from 'react-bootstrap-icons';
 
 export interface MenuInterface {
@@ -32,24 +33,31 @@ export const menuConfig: MenuInterface[] = [
     url: '/',
   },
   {
-    key: 'studying-abroad',
+    key: 'study-in-canada',
     title: '留学',
     Icon: AlphabetUppercase,
-    url: '/posts/studying-abroad',
+    url: '/posts/study-in-canada',
     showOnTopNav: true,
   },
   {
-    key: 'immigration',
+    key: 'canada-immigration',
     title: '移民',
     Icon: Airplane,
-    url: '/posts/immigration',
+    url: '/posts/canada-immigration',
     showOnTopNav: true,
   },
   {
-    key: 'house',
+    key: 'canada-real-estate',
     title: '房',
     Icon: Houses,
-    url: '/posts/house',
+    url: '/posts/canada-real-estate',
+    showOnTopNav: true,
+  },
+  {
+    key: 'canada-travel',
+    title: '逛吃逛吃',
+    Icon: TrainFront,
+    url: '/posts/canada-travel',
     showOnTopNav: true,
   },
   {
@@ -69,12 +77,12 @@ export const menuConfig: MenuInterface[] = [
   // {
   //   key: 'car',
   //   title: '买车&租车',
-  //   url: '/posts/car',
+  //   url: '/posts/canada-car',
   // },
   // {
   //   key: 'jobs',
   //   title: '工作',
-  //   url: '/posts/jobs',
+  //   url: '/posts/canada-jobs',
   // },
   // {
   //   key: 'utils',
