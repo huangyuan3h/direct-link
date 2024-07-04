@@ -8,28 +8,30 @@ import { DOMAIN_URL } from '@/config/domain';
 
 const san = Open_Sans({ subsets: ['latin'] });
 
-const title = '北径移民资讯 - 加拿大新移民综合平台 | 移民、留学、住房、就业';
+const title = '北径信息 - 加拿大新移民一站式服务平台';
 const description =
-  '北径移民资讯 - 为加拿大新移民提供全方位信息，涵盖移民流程、留学指南、住房市场、汽车购买、就业机会、新闻动态和旅游建议，帮助新移民融入加拿大生活。';
+  '北径信息 - 为加拿大新移民提供全方位分类信息，涵盖移民、留学、住房、汽车、就业、新闻、旅游等，助力新移民快速融入加拿大生活。';
 
 export const metadata: Metadata = {
   title,
   description,
-  applicationName: '北径移民资讯',
+  applicationName: '北径信息',
   authors: { name: 'Yuan Huang', url: 'https://github.com/huangyuan3h' },
   keywords: [
     '加拿大新移民',
-    '移民资讯',
-    '加拿大留学',
-    '住房市场',
-    '汽车购买',
-    '就业机会',
-    '新闻动态',
-    '旅游建议',
-    '北径移民资讯',
+    '分类信息',
+    '移民',
+    '留学',
+    '住房',
+    '租房',
+    '买房',
+    '汽车',
+    '二手车',
+    '就业',
+    '新闻',
+    '旅游',
+    '北径信息',
     '加拿大生活',
-    '移民流程',
-    '留学指南',
   ],
   icons: [
     { url: '/favicon.ico' },
