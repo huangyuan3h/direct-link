@@ -28,8 +28,8 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
               <Image
                 src={getImageUrl(post.images[0])}
                 alt={post.subject}
-                layout="fill"
-                objectFit="cover"
+                width={200}
+                height={200}
                 className={styles.image}
               />
             }
