@@ -10,7 +10,11 @@ export interface TitleProps {
 export const Title: React.FC<TitleProps> = ({ title }: TitleProps) => {
   return (
     <div className="mt-2 flex gap-x-4">
-      <Link href={'/'} className={styles.iconArea}>
+      <Link
+        href={'/'}
+        className={styles.iconArea}
+        aria-label="back to home page"
+      >
         <ChevronLeft width={18} height={18} />
       </Link>
       <h1>{title}</h1>

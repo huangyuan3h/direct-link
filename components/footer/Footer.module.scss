@@ -19,7 +19,7 @@
 
 .linkItem {
   margin: 0 10px;
-  color: #555;
+  color: rgba(black, 0.8);
   text-decoration: none;
 
   &:hover {
@@ -29,5 +29,5 @@
 
 .copyright {
   font-size: 0.8rem;
-  color: #888;
+  color: rgba(black, 0.8);
 }

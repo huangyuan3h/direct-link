@@ -52,6 +52,7 @@ const Share: React.FC<ShareProps> = ({ isMobile, topics, subject, images }) => {
             url={currentUrl}
             className={styles.shareIcon}
             title={subject}
+            aria-label="Whatsapp"
           >
             <WhatsappIcon size={32} round />
           </WhatsappShareButton>
@@ -59,6 +60,7 @@ const Share: React.FC<ShareProps> = ({ isMobile, topics, subject, images }) => {
             url={currentUrl}
             className={styles.shareIcon}
             hashtag={topics.join(',')}
+            aria-label="Facebook"
           >
             <FacebookIcon size={32} round />
           </FacebookShareButton>
@@ -67,6 +69,7 @@ const Share: React.FC<ShareProps> = ({ isMobile, topics, subject, images }) => {
             className={styles.shareIcon}
             title={subject}
             hashtags={topics}
+            aria-label="Twitter"
           >
             <XIcon size={32} round />
           </TwitterShareButton>
@@ -74,6 +77,7 @@ const Share: React.FC<ShareProps> = ({ isMobile, topics, subject, images }) => {
             url={currentUrl}
             className={styles.shareIcon}
             title={subject}
+            aria-label="Telegram"
           >
             <TelegramIcon size={32} round />
           </TelegramShareButton>
@@ -81,6 +85,7 @@ const Share: React.FC<ShareProps> = ({ isMobile, topics, subject, images }) => {
             url={currentUrl}
             className={styles.shareIcon}
             title={subject}
+            aria-label="Line"
           >
             <LineIcon size={32} round />
           </LineShareButton>
@@ -89,6 +94,7 @@ const Share: React.FC<ShareProps> = ({ isMobile, topics, subject, images }) => {
             className={styles.shareIcon}
             title={subject}
             image={images[0]}
+            aria-label="Weibo"
           >
             <WeiboIcon size={32} round />
           </WeiboShareButton>
@@ -96,6 +102,7 @@ const Share: React.FC<ShareProps> = ({ isMobile, topics, subject, images }) => {
             url={currentUrl}
             className={styles.shareIcon}
             title={subject}
+            aria-label="Reddit"
           >
             <RedditIcon size={32} round />
           </RedditShareButton>
