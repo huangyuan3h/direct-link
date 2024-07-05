@@ -164,6 +164,7 @@ export const PostList: React.FC<PostListProps> = ({
                   subject={post.subject}
                   images={post.images}
                   postId={post.postId}
+                  lazyloadImage={idx > 10}
                 />
               );
             })}

@@ -12,6 +12,7 @@ export interface PostTileProps
   onImageloaded?: () => void;
   onChecked?: (id: string) => void;
   checked?: boolean;
+  lazyloadImage?: boolean;
 }
 
 const noImageURL = '/images/no-image.png';
@@ -30,6 +31,7 @@ export const PostTile: React.FC<PostTileProps> = ({
   onImageloaded,
   onChecked,
   checked,
+  lazyloadImage = true,
 }: PostTileProps) => {
   const coverImage = getCoverImage(images);
   const [imageLoaded, setImageloaded] = useState(false);
@@ -56,7 +58,12 @@ export const PostTile: React.FC<PostTileProps> = ({
           />
         </div>
       )}
-      <Link href={`/post/${postId}`} className={styles.link} prefetch={false}>
+      <Link
+        href={`/post/${postId}`}
+        className={styles.link}
+        prefetch={false}
+        target="_blank"
+      >
         <div className="relative">
           <div className={styles.ImageArea}>
             <Image
@@ -64,7 +71,7 @@ export const PostTile: React.FC<PostTileProps> = ({
               alt={subject}
               width={600}
               height={600}
-              loading="lazy"
+              loading={lazyloadImage ? 'lazy' : 'eager'}
               placeholder="blur"
               blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
               onLoad={handleImageLoaded}

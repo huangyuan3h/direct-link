@@ -1,5 +1,4 @@
 import Script from 'next/script';
-import { ReactNode } from 'react';
 
 interface GoogleAnalyticsProps {
   trackingId: string;
@@ -8,12 +7,12 @@ interface GoogleAnalyticsProps {
 const GoogleAnalytics: React.FC<GoogleAnalyticsProps> = ({ trackingId }) => (
   <>
     <Script
-      strategy="afterInteractive"
+      strategy="lazyOnload"
       src={`https://www.googletagmanager.com/gtag/js?id=${trackingId}`}
     />
     <Script
       id="google-analytics-script"
-      strategy="afterInteractive"
+      strategy="lazyOnload"
       dangerouslySetInnerHTML={{
         __html: `
           window.dataLayer = window.dataLayer || [];
