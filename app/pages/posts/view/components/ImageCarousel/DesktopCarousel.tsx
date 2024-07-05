@@ -29,7 +29,7 @@ export const DesktopCarousel = ({
           alt={`Slide ${1}`}
           width={600}
           height={600}
-          loading="lazy"
+          loading="eager"
           className={clsx(styles.carouselImage, styles.showOneImage)}
           onClick={() => onImageClick(1)}
         />
@@ -94,7 +94,6 @@ export const DesktopCarousel = ({
           alt={`Slide ${1}`}
           width={600}
           height={600}
-          loading="lazy"
           className={clsx(styles.carouselImage, styles.firstImage)}
           onClick={() => onImageClick(1)}
         />
@@ -106,7 +105,6 @@ export const DesktopCarousel = ({
           alt={`Slide ${2}`}
           width={600}
           height={600}
-          loading="lazy"
           className={clsx(styles.carouselImage)}
           onClick={() => onImageClick(1)}
         />
@@ -115,7 +113,6 @@ export const DesktopCarousel = ({
           alt={`Slide ${3}`}
           width={600}
           height={600}
-          loading="lazy"
           className={clsx(styles.carouselImage)}
           onClick={() => onImageClick(1)}
         />
@@ -127,7 +124,6 @@ export const DesktopCarousel = ({
           alt={`Slide ${4}`}
           width={600}
           height={600}
-          loading="lazy"
           className={clsx(styles.carouselImage, styles.lastTopImage)}
           onClick={() => onImageClick(1)}
         />
@@ -136,7 +132,6 @@ export const DesktopCarousel = ({
           alt={`Slide ${5}`}
           width={600}
           height={600}
-          loading="lazy"
           className={clsx(styles.carouselImage, styles.lastBottomImage)}
           onClick={() => onImageClick(1)}
         />
