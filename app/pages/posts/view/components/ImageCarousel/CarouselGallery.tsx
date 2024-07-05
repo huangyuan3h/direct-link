@@ -34,7 +34,7 @@ export const CarouselGallery: React.FC<CarouselGalleryProps> = ({
                 alt={`Slide ${i}`}
                 width={600}
                 height={600}
-                loading="lazy"
+                loading={i === 0 ? 'eager' : 'lazy'}
                 style={{ height: windowWidth * goldenDivider }}
                 className={clsx(styles.galleryImage)}
               />
