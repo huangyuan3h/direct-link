@@ -4,14 +4,6 @@ export const getPrompt = (text: string) => `
 
 图片将以 base64 编码提供在末尾。
 
-请严格按照以下 JSON 结构和要求生成文章，将文章要求整合到 JSON 结构定义中:
-type PostType = {
-  subject: string; // 标题：吸引用户点击，包含关键词，不超过20字
-  content: string; // 内容：HTML格式，h4/h5构建结构，p/li组织段落/列表，不少于1200字
-  category: "immigration" | "studyAbroad" | "house" | "travel" | "car" | "jobs" | "news" | "general"; // 分类：从选项中选最符合主题的，"travel"涵盖吃喝玩旅游events，"general"用于无法归类的
-  topics: string[]; // 主题标签：SEO/分类，不超过5个，简洁概括
-};
-
 请根据以下 SEO 指导，结合提供的图片和文本信息，对输入文本进行改写，生成一篇内容丰富、语言流畅、结构清晰、吸引用户阅读并符合 SEO 规范的文章：
 ############################
 目标受众： 北美华人社区
@@ -40,5 +32,16 @@ type PostType = {
 
 文章的内容是: ${text}
 
-请严格按照上述 JSON 格式输出文章，确保输出结果可以直接被 “JSON.parse” 方法解析。
+important: 请严格按照上述 JSON 格式输出文章，确保输出结果可以直接被 “JSON.parse” 方法解析!
+
+
+请严格按照以下 JSON 结构和要求生成文章，将文章要求整合到 JSON 结构定义中:
+type PostType = {
+  subject: string; // 标题：吸引用户点击，包含关键词，不超过20字
+  content: string; // 内容：HTML格式，h4/h5构建结构，p/li组织段落/列表，不少于1200字
+  category: "immigration" | "studyAbroad" | "house" | "travel" | "car" | "jobs" | "news" | "general"; // 分类：从选项中选最符合主题的，"travel"涵盖吃喝玩旅游events，"general"用于无法归类的
+  topics: string[]; // 主题标签：SEO/分类，不超过5个，简洁概括
+};
+
+绝对不要给我一个不能用json解析的内容！
 `;
