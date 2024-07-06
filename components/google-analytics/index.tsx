@@ -1,3 +1,4 @@
+'use client';
 import Script from 'next/script';
 import { useEffect, useState } from 'react';
 
@@ -11,7 +12,7 @@ const GoogleAnalytics: React.FC<GoogleAnalyticsProps> = ({ trackingId }) => {
   useEffect(() => {
     setTimeout(() => {
       setShouldLoadGTM(true);
-    }, 3000); // loading gtm after 3 seconds
+    }, 5000); // loading gtm after 5 seconds
   }, []);
 
   if (!shouldLoadGTM) {
