@@ -4,7 +4,6 @@ import Footer from '@/components/footer';
 import { Header } from '@/components/header';
 import { DOMAIN_URL } from '@/config/domain';
 import APIClient from '@/utils/apiClient';
-import { getImageUrl } from '@/utils/getImageUrl';
 import { Metadata, ResolvingMetadata } from 'next';
 import { cookies } from 'next/headers';
 import { PostsResponse } from '@/app/pages/posts/types';
@@ -87,7 +86,7 @@ export default async function Home({ params }: ViewPostParamsProps) {
 
   const email = posts.email;
   const name = posts.email.slice(0, posts.email.indexOf('@'));
-  const images = posts.images.map((url) => getImageUrl(url));
+  const images = posts.images.map((url) => url);
 
   const relatedArticle = filteredList.map((a, idx) => {
     return {

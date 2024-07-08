@@ -7,7 +7,6 @@ import { PostList } from './pages/posts/list';
 import { PostsResponse } from './pages/posts/types';
 import APIClient from '@/utils/apiClient';
 import TopNav from '@/components/top-nav';
-import { getImageUrl } from '@/utils/getImageUrl';
 import { cookies } from 'next/headers';
 
 const getAllPosts = async (): Promise<PostsResponse> => {
@@ -16,7 +15,7 @@ const getAllPosts = async (): Promise<PostsResponse> => {
   const authCookie = cookieStore.get('Authorization'); // the cookie is only to make sure use new data
   const client = new APIClient(authCookie?.value);
   return await client.post('/posts', {
-    limit: 30,
+    limit: 12,
     next_token: '',
     category: '',
   });
@@ -39,7 +38,7 @@ export default async function Home() {
   const articles = data.results.map((r, idx) => {
     const email = r.email;
     const name = r.email.slice(0, r.email.indexOf('@'));
-    const images = r.images.map((url) => getImageUrl(url));
+    const images = r.images.map((url) => url);
     return {
       '@type': 'ListItem',
       position: idx + 1,

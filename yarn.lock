@@ -5524,7 +5524,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"aws-sdk@npm:^2.1501.0, aws-sdk@npm:^2.1542.0":
+"aws-sdk@npm:^2.1501.0":
   version: 2.1570.0
   resolution: "aws-sdk@npm:2.1570.0"
   dependencies:
@@ -5539,6 +5539,24 @@ __metadata:
     uuid: "npm:8.0.0"
     xml2js: "npm:0.6.2"
   checksum: 10c0/2b4cbdcec65411fa0ad8daa45c61853151e7fba902a41751405e020ce44364c54e833debbd73de32ba1a5891ca82a0dd3376d844fc412b472e9f2fb6c70028f8
+  languageName: node
+  linkType: hard
+
+"aws-sdk@npm:^2.1542.0":
+  version: 2.1655.0
+  resolution: "aws-sdk@npm:2.1655.0"
+  dependencies:
+    buffer: "npm:4.9.2"
+    events: "npm:1.1.1"
+    ieee754: "npm:1.1.13"
+    jmespath: "npm:0.16.0"
+    querystring: "npm:0.2.0"
+    sax: "npm:1.2.1"
+    url: "npm:0.10.3"
+    util: "npm:^0.12.4"
+    uuid: "npm:8.0.0"
+    xml2js: "npm:0.6.2"
+  checksum: 10c0/63a79d22040bb28e1b5d60381eb329287c8defa7cf3fdad8554cb8cdb2f2a5e1c492d88b4d628eb020f09b51f8e32344c1ac2ed0798cd07f269ef5085342aa5f
   languageName: node
   linkType: hard
 
@@ -6673,7 +6691,7 @@ __metadata:
     sanitize-html: "npm:^2.13.0"
     sass: "npm:^1.71.1"
     sharp: "npm:^0.33.4"
-    sst: "npm:^2.40.1"
+    sst: "npm:2.40.1"
     swr: "npm:^2.2.5"
     tailwindcss: "npm:^3.3.0"
     ts-node: "npm:^10.9.2"
@@ -12025,9 +12043,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sst@npm:^2.40.1":
-  version: 2.40.6
-  resolution: "sst@npm:2.40.6"
+"sst@npm:2.40.1":
+  version: 2.40.1
+  resolution: "sst@npm:2.40.1"
   dependencies:
     "@aws-cdk/aws-lambda-python-alpha": "npm:2.124.0-alpha.0"
     "@aws-cdk/cloud-assembly-schema": "npm:2.124.0"
@@ -12103,7 +12121,7 @@ __metadata:
       optional: true
   bin:
     sst: cli/sst.js
-  checksum: 10c0/6fdd3d5c20eaa1f0029c9f4d75978ec247b2097f2e5ac2e62764cbadf79f27cc60590ded7fef3d3fd27db8977e6c90455bf6e36f2061b01d30519ac74e464f74
+  checksum: 10c0/c51b7c9c48324ca26f37f62a19f10c24c38a7a0f1a2f9acfe200f202e876d67a389b0eca4f726237bbaf337bf5822c093d17961fd7aa9185bc53f15207ab19be
   languageName: node
   linkType: hard
 

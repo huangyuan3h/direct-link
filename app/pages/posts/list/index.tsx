@@ -13,9 +13,9 @@ import { useWindowWidth } from '@/utils/hooks/useWindowWidth';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { toast } from 'react-toastify';
 
-const limit = 50; // each time fetch posts number
+const limit = 10; // each time fetch posts number
 
-const reachBottomPercentage = 80; // when reach 80% load next page
+const reachBottomPercentage = 60; // when reach 80% load next page
 
 const getPosts = async (
   nextToken: string,

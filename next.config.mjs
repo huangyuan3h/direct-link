@@ -2,16 +2,11 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    unoptimized: true,
+    minimumCacheTTL: 60 * 60 * 24 * 365,
     remotePatterns: [
       {
         protocol: 'https',
         hostname: '**.s3.us-east-1.amazonaws.com',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'd1vlyyxijetslu.cloudfront.net',
         pathname: '/**',
       },
     ],

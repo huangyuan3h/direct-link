@@ -6,7 +6,6 @@ import { goldenDivider } from './config';
 import clsx from 'clsx';
 import styles from './imageCarousel.module.scss';
 import { useWindowWidth } from '@/utils/hooks/useWindowWidth';
-import { getImageUrl } from '@/utils/getImageUrl';
 
 export interface MobileCarouselProps {
   index: number;
@@ -38,11 +37,11 @@ export const MobileCarousel: React.FC<MobileCarouselProps> = ({
           style={{ cursor: 'pointer' }}
         >
           <Image
-            src={getImageUrl(imageUrl)}
+            src={imageUrl}
             alt={`Slide ${i}`}
-            width={600}
-            height={600}
-            loading="lazy"
+            width={100}
+            height={100}
+            loading={i === 0 ? 'eager' : 'lazy'}
             style={{ height: windowWidth * goldenDivider }}
             className={clsx(styles.carouselImage)}
           />
