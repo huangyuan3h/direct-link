@@ -24,7 +24,7 @@ const getCoverImage = (images?: string[]): string => {
   return images[0];
 };
 
-const Mobile_Size = 140;
+const Mobile_Size = 180;
 const Desktop_size = 300;
 
 export const PostTile: React.FC<PostTileProps> = ({
