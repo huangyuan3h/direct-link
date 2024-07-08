@@ -39,8 +39,8 @@ export const MobileCarousel: React.FC<MobileCarouselProps> = ({
           <Image
             src={imageUrl}
             alt={`Slide ${i}`}
-            width={300}
-            height={300}
+            width={200}
+            height={200}
             loading={i === 0 ? 'eager' : 'lazy'}
             style={{ height: windowWidth * goldenDivider }}
             className={clsx(styles.carouselImage)}
