@@ -1,9 +1,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from './postTile.module.scss';
-import { CSSProperties, useState } from 'react';
+import { CSSProperties, useEffect, useState } from 'react';
 import { PostType } from '@/app/pages/posts/types';
 import clsx from 'clsx';
+import { useWindowWidth } from '@/utils/hooks/useWindowWidth';
+import { breakpoints } from '@/utils/breakpoint';
 
 export interface PostTileProps
   extends Pick<PostType, 'postId' | 'subject' | 'images'> {
@@ -22,6 +24,9 @@ const getCoverImage = (images?: string[]): string => {
   return images[0];
 };
 
+const Mobile_Size = 240;
+const Desktop_size = 400;
+
 export const PostTile: React.FC<PostTileProps> = ({
   postId,
   subject,
@@ -34,6 +39,14 @@ export const PostTile: React.FC<PostTileProps> = ({
 }: PostTileProps) => {
   const coverImage = getCoverImage(images);
   const [imageLoaded, setImageloaded] = useState(false);
+
+  const windowWidth = useWindowWidth();
+
+  const [isMobile, setIsMobile] = useState(true);
+
+  useEffect(() => {
+    setIsMobile(windowWidth < breakpoints.sm);
+  }, [windowWidth]);
 
   const handleImageLoaded = () => {
     setImageloaded(true);
@@ -68,8 +81,8 @@ export const PostTile: React.FC<PostTileProps> = ({
             <Image
               src={coverImage}
               alt={subject}
-              width={600}
-              height={600}
+              width={isMobile ? Mobile_Size : Desktop_size}
+              height={isMobile ? Mobile_Size : Desktop_size}
               loading={lazyloadImage ? 'lazy' : 'eager'}
               placeholder="blur"
               blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
