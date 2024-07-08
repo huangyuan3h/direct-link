@@ -4,7 +4,6 @@ import styles from './postTile.module.scss';
 import { CSSProperties, useState } from 'react';
 import { PostType } from '@/app/pages/posts/types';
 import clsx from 'clsx';
-import { getImageUrl } from '@/utils/getImageUrl';
 
 export interface PostTileProps
   extends Pick<PostType, 'postId' | 'subject' | 'images'> {
@@ -20,7 +19,7 @@ const noImageURL = '/images/no-image.png';
 const getCoverImage = (images?: string[]): string => {
   if (!images || images.length === 0) return noImageURL;
 
-  return getImageUrl(images[0]);
+  return images[0];
 };
 
 export const PostTile: React.FC<PostTileProps> = ({

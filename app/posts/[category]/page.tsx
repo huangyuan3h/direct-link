@@ -8,7 +8,6 @@ import TopNav from '@/components/top-nav';
 import { DOMAIN_URL } from '@/config/domain';
 
 import APIClient from '@/utils/apiClient';
-import { getImageUrl } from '@/utils/getImageUrl';
 import { Metadata, ResolvingMetadata } from 'next';
 import { cookies } from 'next/headers';
 
@@ -137,7 +136,7 @@ export default async function Home({ params }: ViewPostParamsProps) {
   const articles = data.results.map((r, idx) => {
     const email = r.email;
     const name = r.email.slice(0, r.email.indexOf('@'));
-    const images = r.images.map((url) => getImageUrl(url));
+    const images = r.images.map((url) => url);
     return {
       '@type': 'ListItem',
       position: idx + 1,

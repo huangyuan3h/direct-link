@@ -4,7 +4,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import styles from './PostCard.module.scss';
 import { PostType } from '../../../types';
-import { getImageUrl } from '@/utils/getImageUrl';
 
 interface PostCardProps {
   post: PostType;
@@ -26,7 +25,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
           <Col md={4} className={styles.imageContainer}>
             {
               <Image
-                src={getImageUrl(post.images[0])}
+                src={post.images[0]}
                 alt={post.subject}
                 width={200}
                 height={200}

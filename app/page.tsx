@@ -7,7 +7,6 @@ import { PostList } from './pages/posts/list';
 import { PostsResponse } from './pages/posts/types';
 import APIClient from '@/utils/apiClient';
 import TopNav from '@/components/top-nav';
-import { getImageUrl } from '@/utils/getImageUrl';
 import { cookies } from 'next/headers';
 
 const getAllPosts = async (): Promise<PostsResponse> => {
@@ -39,7 +38,7 @@ export default async function Home() {
   const articles = data.results.map((r, idx) => {
     const email = r.email;
     const name = r.email.slice(0, r.email.indexOf('@'));
-    const images = r.images.map((url) => getImageUrl(url));
+    const images = r.images.map((url) => url);
     return {
       '@type': 'ListItem',
       position: idx + 1,

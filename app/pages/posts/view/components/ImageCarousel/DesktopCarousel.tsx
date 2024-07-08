@@ -5,7 +5,6 @@ import clsx from 'clsx';
 import { MobileCarousel, MobileCarouselProps } from './MobileCarousel';
 import { useWindowWidth } from '@/utils/hooks/useWindowWidth';
 import { breakpoints } from '@/utils/breakpoint';
-import { getImageUrl } from '@/utils/getImageUrl';
 
 export interface DesktopCarouselProps extends MobileCarouselProps {}
 
@@ -25,7 +24,7 @@ export const DesktopCarousel = ({
     return (
       <div className={styles.imageLargeSize}>
         <Image
-          src={getImageUrl(images[0])}
+          src={images[0]}
           alt={`Slide ${1}`}
           width={600}
           height={600}
@@ -90,7 +89,7 @@ export const DesktopCarousel = ({
     <div className={clsx(styles.desktopLayoutRow)}>
       <div className={styles.imageLargeSize}>
         <Image
-          src={getImageUrl(images[0])}
+          src={images[0]}
           alt={`Slide ${1}`}
           width={600}
           height={600}
@@ -101,7 +100,7 @@ export const DesktopCarousel = ({
 
       <div className={clsx(styles.desktopLayoutColumn, styles.imageSmallSize)}>
         <Image
-          src={getImageUrl(images[1])}
+          src={images[1]}
           alt={`Slide ${2}`}
           width={600}
           height={600}
@@ -109,7 +108,7 @@ export const DesktopCarousel = ({
           onClick={() => onImageClick(1)}
         />
         <Image
-          src={getImageUrl(images[2])}
+          src={images[2]}
           alt={`Slide ${3}`}
           width={600}
           height={600}
@@ -120,7 +119,7 @@ export const DesktopCarousel = ({
 
       <div className={clsx(styles.desktopLayoutColumn, styles.imageSmallSize)}>
         <Image
-          src={getImageUrl(images[3])}
+          src={images[3]}
           alt={`Slide ${4}`}
           width={600}
           height={600}
@@ -128,7 +127,7 @@ export const DesktopCarousel = ({
           onClick={() => onImageClick(1)}
         />
         <Image
-          src={getImageUrl(images[4])}
+          src={images[4]}
           alt={`Slide ${5}`}
           width={600}
           height={600}

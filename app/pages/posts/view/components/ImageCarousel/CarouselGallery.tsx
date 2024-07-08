@@ -7,7 +7,6 @@ import styles from './imageCarousel.module.scss';
 import clsx from 'clsx';
 import { useWindowWidth } from '@/utils/hooks/useWindowWidth';
 import { breakpoints } from '@/utils/breakpoint';
-import { getImageUrl } from '@/utils/getImageUrl';
 
 interface CarouselGalleryProps {
   images: string[];
@@ -29,7 +28,7 @@ export const CarouselGallery: React.FC<CarouselGalleryProps> = ({
           <div className={clsx(styles.galleryArea)}>
             {images.map((imageUrl, i) => (
               <Image
-                src={getImageUrl(imageUrl)}
+                src={imageUrl}
                 key={`image-gallery-${i}`}
                 alt={`Slide ${i}`}
                 width={600}
@@ -44,7 +43,7 @@ export const CarouselGallery: React.FC<CarouselGalleryProps> = ({
           <div className={clsx(styles.galleryAreaDesktop)}>
             {images.map((imageUrl, i) => (
               <Image
-                src={getImageUrl(imageUrl)}
+                src={imageUrl}
                 key={`image-gallery-${i}`}
                 alt={`Slide ${i}`}
                 width={600}
