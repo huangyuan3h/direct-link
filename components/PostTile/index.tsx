@@ -84,8 +84,6 @@ export const PostTile: React.FC<PostTileProps> = ({
               width={isMobile ? Mobile_Size : Desktop_size}
               height={isMobile ? Mobile_Size : Desktop_size}
               loading={lazyloadImage ? 'lazy' : 'eager'}
-              placeholder="blur"
-              blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
               onLoad={handleImageLoaded}
             />
           </div>
