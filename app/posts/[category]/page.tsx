@@ -48,7 +48,7 @@ type pageConfigType = {
 const pagesConfig: pageConfigType = {
   'study-in-canada': {
     category: 'studyAbroad',
-    title: '加拿大留学 - 北径信息',
+    title: '加拿大留学 - North Path | 北径信息',
     description:
       '加拿大留学申请攻略、院校排名、生活指南，北径信息助你圆梦海外！获取最新留学资讯，了解最佳申请策略，体验无忧留学生活。',
     keywords:
@@ -56,7 +56,7 @@ const pagesConfig: pageConfigType = {
   },
   'canada-immigration': {
     category: 'immigration',
-    title: '加拿大移民 - 北径信息',
+    title: '加拿大移民 - North Path | 北径信息',
     description:
       '最新加拿大移民政策解读、项目申请指南、成功案例分享，北径信息助你开启新生活！全面掌握移民动态，实现移民梦想。',
     keywords:
@@ -64,7 +64,7 @@ const pagesConfig: pageConfigType = {
   },
   'canada-real-estate': {
     category: 'house',
-    title: '加拿大买房&租房 - 北径信息',
+    title: '加拿大买房&租房 - North Path | 北径信息',
     description:
       '加拿大买房、租房全攻略，房源信息、价格走势、避坑指南，北径信息帮你找到理想家园！实用买房租房建议，助你做出最佳决策。',
     keywords:
@@ -72,7 +72,7 @@ const pagesConfig: pageConfigType = {
   },
   'canada-car': {
     category: 'car',
-    title: '加拿大买车&租车 - 北径信息',
+    title: '加拿大买车&租车 - North Path | 北径信息',
     description:
       '加拿大买车、租车一站式服务，车型推荐、价格对比、保险知识，北径信息让你轻松上路！全面了解汽车市场，做出明智选择。',
     keywords:
@@ -80,7 +80,7 @@ const pagesConfig: pageConfigType = {
   },
   'canada-jobs': {
     category: 'jobs',
-    title: '加拿大学习工作 - 北径信息',
+    title: '加拿大学习工作 - North Path | 北径信息',
     description:
       '加拿大热门行业招聘信息，求职技巧、简历优化、面试指南，北径信息助你找到心仪工作！探索职业机会，提升职业竞争力。',
     keywords:
@@ -88,7 +88,7 @@ const pagesConfig: pageConfigType = {
   },
   news: {
     category: 'news',
-    title: '加拿大最新新闻动态 - 北径信息',
+    title: '加拿大最新新闻动态 - North Path | 北径信息',
     description:
       '最新加拿大新闻动态，重大事件解读，热点话题分析，北径信息第一时间掌握加拿大资讯。了解最新新闻，紧跟时代步伐。',
     keywords:
@@ -96,7 +96,7 @@ const pagesConfig: pageConfigType = {
   },
   'canada-travel': {
     category: 'travel',
-    title: '加拿大旅游攻略 - 北径信息',
+    title: '加拿大旅游攻略 - North Path | 北径信息',
     description:
       '加拿大旅游景点推荐、行程规划、住宿指南、美食攻略，北径信息带你玩转枫叶之国！探索自然奇观，体验多元文化。',
     keywords:

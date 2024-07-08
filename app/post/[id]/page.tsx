@@ -60,7 +60,7 @@ export async function generateMetadata(
   const images = p.images;
 
   return {
-    title: `${title} - 北径信息`,
+    title: `${title} - North Path | 北径信息`,
     description,
     keywords: keywords,
     alternates: {
