@@ -31,8 +31,8 @@ export const CarouselGallery: React.FC<CarouselGalleryProps> = ({
                 src={imageUrl}
                 key={`image-gallery-${i}`}
                 alt={`Slide ${i}`}
-                width={600}
-                height={600}
+                width={360}
+                height={360}
                 loading={i === 0 ? 'eager' : 'lazy'}
                 style={{ height: windowWidth * goldenDivider }}
                 className={clsx(styles.galleryImage)}

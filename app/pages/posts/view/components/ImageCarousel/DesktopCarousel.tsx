@@ -8,6 +8,9 @@ import { breakpoints } from '@/utils/breakpoint';
 
 export interface DesktopCarouselProps extends MobileCarouselProps {}
 
+const MAIN_IMAGE_SIZE = 460;
+const VICE_IMAGE_SIZE = 240;
+
 export const DesktopCarousel = ({
   index,
   images,
@@ -26,8 +29,8 @@ export const DesktopCarousel = ({
         <Image
           src={images[0]}
           alt={`Slide ${1}`}
-          width={600}
-          height={600}
+          width={MAIN_IMAGE_SIZE}
+          height={MAIN_IMAGE_SIZE}
           loading="eager"
           className={clsx(styles.carouselImage, styles.showOneImage)}
           onClick={() => onImageClick(1)}
@@ -54,8 +57,8 @@ export const DesktopCarousel = ({
           <Image
             src={images[0]}
             alt={`Slide ${1}`}
-            width={600}
-            height={600}
+            width={MAIN_IMAGE_SIZE}
+            height={MAIN_IMAGE_SIZE}
             className={clsx(styles.carouselImage, styles.firstImage)}
             onClick={() => onImageClick(1)}
           />
@@ -67,16 +70,16 @@ export const DesktopCarousel = ({
           <Image
             src={images[1]}
             alt={`Slide ${2}`}
-            width={600}
-            height={600}
+            width={VICE_IMAGE_SIZE}
+            height={VICE_IMAGE_SIZE}
             className={clsx(styles.carouselImage, styles.lastTopImage)}
             onClick={() => onImageClick(1)}
           />
           <Image
             src={images[2]}
             alt={`Slide ${3}`}
-            width={600}
-            height={600}
+            width={VICE_IMAGE_SIZE}
+            height={VICE_IMAGE_SIZE}
             className={clsx(styles.carouselImage, styles.lastBottomImage)}
             onClick={() => onImageClick(1)}
           />
@@ -91,8 +94,8 @@ export const DesktopCarousel = ({
         <Image
           src={images[0]}
           alt={`Slide ${1}`}
-          width={600}
-          height={600}
+          width={MAIN_IMAGE_SIZE}
+          height={MAIN_IMAGE_SIZE}
           className={clsx(styles.carouselImage, styles.firstImage)}
           onClick={() => onImageClick(1)}
         />
@@ -102,16 +105,16 @@ export const DesktopCarousel = ({
         <Image
           src={images[1]}
           alt={`Slide ${2}`}
-          width={600}
-          height={600}
+          width={VICE_IMAGE_SIZE}
+          height={VICE_IMAGE_SIZE}
           className={clsx(styles.carouselImage)}
           onClick={() => onImageClick(1)}
         />
         <Image
           src={images[2]}
           alt={`Slide ${3}`}
-          width={600}
-          height={600}
+          width={VICE_IMAGE_SIZE}
+          height={VICE_IMAGE_SIZE}
           className={clsx(styles.carouselImage)}
           onClick={() => onImageClick(1)}
         />
@@ -121,16 +124,16 @@ export const DesktopCarousel = ({
         <Image
           src={images[3]}
           alt={`Slide ${4}`}
-          width={600}
-          height={600}
+          width={VICE_IMAGE_SIZE}
+          height={VICE_IMAGE_SIZE}
           className={clsx(styles.carouselImage, styles.lastTopImage)}
           onClick={() => onImageClick(1)}
         />
         <Image
           src={images[4]}
           alt={`Slide ${5}`}
-          width={600}
-          height={600}
+          width={VICE_IMAGE_SIZE}
+          height={VICE_IMAGE_SIZE}
           className={clsx(styles.carouselImage, styles.lastBottomImage)}
           onClick={() => onImageClick(1)}
         />
