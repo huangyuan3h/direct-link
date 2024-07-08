@@ -15,7 +15,7 @@ const getAllPosts = async (): Promise<PostsResponse> => {
   const authCookie = cookieStore.get('Authorization'); // the cookie is only to make sure use new data
   const client = new APIClient(authCookie?.value);
   return await client.post('/posts', {
-    limit: 30,
+    limit: 12,
     next_token: '',
     category: '',
   });

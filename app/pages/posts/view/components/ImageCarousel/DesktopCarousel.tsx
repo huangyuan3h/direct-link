@@ -59,6 +59,7 @@ export const DesktopCarousel = ({
             alt={`Slide ${1}`}
             width={MAIN_IMAGE_SIZE}
             height={MAIN_IMAGE_SIZE}
+            loading="eager"
             className={clsx(styles.carouselImage, styles.firstImage)}
             onClick={() => onImageClick(1)}
           />
@@ -96,6 +97,7 @@ export const DesktopCarousel = ({
           alt={`Slide ${1}`}
           width={MAIN_IMAGE_SIZE}
           height={MAIN_IMAGE_SIZE}
+          loading="eager"
           className={clsx(styles.carouselImage, styles.firstImage)}
           onClick={() => onImageClick(1)}
         />
