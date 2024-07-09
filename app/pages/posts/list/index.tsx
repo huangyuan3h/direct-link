@@ -12,10 +12,9 @@ import clsx from 'clsx';
 import { useWindowWidth } from '@/utils/hooks/useWindowWidth';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { toast } from 'react-toastify';
+import Spinner from 'react-bootstrap/Spinner';
 
 const limit = 10; // each time fetch posts number
-
-const reachBottomPercentage = 60; // when reach 80% load next page
 
 const getPosts = async (
   nextToken: string,
@@ -50,6 +49,7 @@ export const PostList: React.FC<PostListProps> = ({
   const [posts, setPosts] = useState<PostType[]>(initialPosts);
   const param = useSearchParams();
   const router = useRouter();
+  const loadingRef = useRef<HTMLDivElement>(null);
 
   // if the articles is not found, leave a message
   useEffect(() => {
@@ -101,36 +101,32 @@ export const PostList: React.FC<PostListProps> = ({
     }
   }, [imagesLoadedCount, data?.results.length]);
 
-  // loading more data
-
   useEffect(() => {
-    const container = ref.current;
-
-    const handleScroll = () => {
-      const { scrollHeight, clientHeight, scrollTop } = ref.current!;
-
-      const scrollPercentage =
-        (scrollTop / (scrollHeight - clientHeight)) * 100;
-
-      if (
-        scrollPercentage >= reachBottomPercentage &&
-        !isLoading &&
-        nextToken !== ''
-      ) {
-        setLoadMoreData(true);
+    const elementToObserve = loadingRef.current;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setLoadMoreData(true);
+          }
+        });
+      },
+      {
+        root: null,
+        threshold: 0,
       }
-    };
+    );
 
-    if (container) {
-      container.addEventListener('scroll', handleScroll);
+    if (elementToObserve) {
+      observer.observe(elementToObserve);
     }
 
     return () => {
-      if (container) {
-        container.removeEventListener('scroll', handleScroll);
+      if (elementToObserve) {
+        observer.unobserve(elementToObserve);
       }
     };
-  }, [isLoading, nextToken]);
+  }, []);
 
   useEffect(() => {
     if (!loadMoreData || nextToken === '' || isLoading) return;
@@ -169,6 +165,17 @@ export const PostList: React.FC<PostListProps> = ({
               );
             })}
           </Masonry>
+          <div className={styles.loadingContainer}>
+            <div className={styles.loadingArea} ref={loadingRef}>
+              <div className={styles.innerLoading}>
+                <Spinner animation="border" role="status">
+                  <span className="visually-hidden flex justify-center">
+                    Loading...
+                  </span>
+                </Spinner>
+              </div>
+            </div>
+          </div>
         </ResponsiveMasonry>
       </div>
     </>

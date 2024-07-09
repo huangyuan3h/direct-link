@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Open_Sans } from 'next/font/google';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './globals.scss';
+
 import { ToastContainer } from 'react-toastify';
 import { UserProvider } from '@/components/user-context';
 import GoogleAnalytics from '@/components/google-analytics';
