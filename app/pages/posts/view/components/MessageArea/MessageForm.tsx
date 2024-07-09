@@ -9,19 +9,21 @@ interface MessageFormProps {
   authEmail: string;
 }
 
-type fieldNameType = 'name' | 'message' | 'email';
+type fieldNameType = 'name' | 'message' | 'email' | 'phone';
 
 const MessageForm: React.FC<MessageFormProps> = ({ authEmail }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: '',
+    phone: '',
   });
 
   const [errors, setErrors] = useState({
     name: '',
     email: '',
     message: '',
+    phone: '',
   });
 
   const [messageSent, setMessageSent] = useState(false);
@@ -72,7 +74,7 @@ const MessageForm: React.FC<MessageFormProps> = ({ authEmail }) => {
     setErrors(newErrors);
 
     if (isValid) {
-      const { name, message, email } = formData;
+      const { name, message, email, phone } = formData;
 
       const sendMessage = async () => {
         try {
@@ -80,7 +82,8 @@ const MessageForm: React.FC<MessageFormProps> = ({ authEmail }) => {
 
           const response = await client.post('message/send', {
             subject: `来自${name}的消息`,
-            content: message + ' url: ' + window.location.href,
+            content:
+              message + '\n url: ' + window.location.href + ', phone:' + phone,
             fromEmail: email,
             toEmail: authEmail,
           });
@@ -143,6 +146,22 @@ const MessageForm: React.FC<MessageFormProps> = ({ authEmail }) => {
         />
         <Form.Control.Feedback type="invalid">
           {errors.email}
+        </Form.Control.Feedback>
+      </Form.Group>
+
+      <Form.Group controlId="formPhone">
+        <Form.Control
+          type="text"
+          name="phone"
+          placeholder="您的手机号"
+          value={formData.phone}
+          onChange={handleChange}
+          onBlur={handleChange}
+          isInvalid={!!errors.phone}
+          className={styles.formInput}
+        />
+        <Form.Control.Feedback type="invalid">
+          {errors.phone}
         </Form.Control.Feedback>
       </Form.Group>
 
