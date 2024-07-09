@@ -80,7 +80,7 @@ const MessageForm: React.FC<MessageFormProps> = ({ authEmail }) => {
 
           const response = await client.post('message/send', {
             subject: `来自${name}的消息`,
-            content: message,
+            content: message + ' url: ' + window.location.href,
             fromEmail: email,
             toEmail: authEmail,
           });

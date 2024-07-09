@@ -14,6 +14,7 @@ export interface PostTileProps
   onChecked?: (id: string) => void;
   checked?: boolean;
   lazyloadImage?: boolean;
+  priority?: boolean;
 }
 
 const noImageURL = '/images/no-image.png';
@@ -24,8 +25,8 @@ const getCoverImage = (images?: string[]): string => {
   return images[0];
 };
 
-const Mobile_Size = 200;
-const Desktop_size = 300;
+const Mobile_Size = 100;
+const Desktop_size = 200;
 
 export const PostTile: React.FC<PostTileProps> = ({
   postId,
@@ -36,6 +37,7 @@ export const PostTile: React.FC<PostTileProps> = ({
   onChecked,
   checked,
   lazyloadImage = true,
+  priority = false,
 }: PostTileProps) => {
   const coverImage = getCoverImage(images);
   const [imageLoaded, setImageloaded] = useState(false);
@@ -85,6 +87,7 @@ export const PostTile: React.FC<PostTileProps> = ({
               height={isMobile ? Mobile_Size : Desktop_size}
               loading={lazyloadImage ? 'lazy' : 'eager'}
               onLoad={handleImageLoaded}
+              priority={priority}
             />
           </div>
         </div>

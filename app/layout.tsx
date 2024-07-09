@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Open_Sans } from 'next/font/google';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './globals.scss';
+
 import { ToastContainer } from 'react-toastify';
 import { UserProvider } from '@/components/user-context';
 import GoogleAnalytics from '@/components/google-analytics';
@@ -8,9 +10,9 @@ import { DOMAIN_URL } from '@/config/domain';
 
 const san = Open_Sans({ subsets: ['latin'] });
 
-const title = '北径信息 - 加拿大新移民一站式服务平台';
+const title = 'North Path - 加拿大新移民综合信息平台 | 北径信息';
 const description =
-  '北径信息 - 为加拿大新移民提供全方位分类信息，涵盖移民、留学、住房、汽车、就业、新闻、旅游等，助力新移民快速融入加拿大生活。';
+  'North Path | 北径信息 - 为加拿大新移民打造的综合平台，提供最新生活信息、实用经验分享和互助交流。探索如何在北美顺利安家，工作，和融入社区。';
 
 export const metadata: Metadata = {
   title,
@@ -18,20 +20,16 @@ export const metadata: Metadata = {
   applicationName: '北径信息',
   authors: { name: 'Yuan Huang', url: 'https://github.com/huangyuan3h' },
   keywords: [
+    '华人社区',
     '加拿大新移民',
-    '分类信息',
+    '加拿大华人',
     '移民',
-    '留学',
-    '住房',
-    '租房',
-    '买房',
-    '汽车',
-    '二手车',
-    '就业',
-    '新闻',
-    '旅游',
+    '留学加拿大',
+    '移民生活',
+    '新移民互助',
+    '加拿大生活信息',
+    '加拿大经验分享',
     '北径信息',
-    '加拿大生活',
   ],
   icons: [
     { url: '/favicon.ico' },
