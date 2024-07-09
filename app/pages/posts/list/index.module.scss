@@ -22,10 +22,10 @@
 
 .loadingArea {
   position: absolute;
-  height: 1000px;
+  height: 800px;
   z-index: -1;
   width: calc(100% - 32px);
-  top: -800px;
+  top: -600px;
 }
 
 .innerLoading {

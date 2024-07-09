@@ -103,11 +103,12 @@ export const PostList: React.FC<PostListProps> = ({
 
   useEffect(() => {
     const elementToObserve = loadingRef.current;
+    if (!elementToObserve) return;
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setLoadMoreData(true);
+            setLoadMoreData((pre) => true);
           }
         });
       },
@@ -117,16 +118,12 @@ export const PostList: React.FC<PostListProps> = ({
       }
     );
 
-    if (elementToObserve) {
-      observer.observe(elementToObserve);
-    }
+    observer.observe(elementToObserve);
 
     return () => {
-      if (elementToObserve) {
-        observer.unobserve(elementToObserve);
-      }
+      observer.unobserve(elementToObserve);
     };
-  }, []);
+  }, [loadingRef]);
 
   useEffect(() => {
     if (!loadMoreData || nextToken === '' || isLoading) return;
@@ -161,22 +158,23 @@ export const PostList: React.FC<PostListProps> = ({
                   images={post.images}
                   postId={post.postId}
                   lazyloadImage={idx > 10}
+                  priority={idx < 5}
                 />
               );
             })}
           </Masonry>
-          <div className={styles.loadingContainer}>
-            <div className={styles.loadingArea} ref={loadingRef}>
-              <div className={styles.innerLoading}>
-                <Spinner animation="border" role="status">
-                  <span className="visually-hidden flex justify-center">
-                    Loading...
-                  </span>
-                </Spinner>
-              </div>
+        </ResponsiveMasonry>
+        <div className={styles.loadingContainer}>
+          <div className={styles.loadingArea} ref={loadingRef}>
+            <div className={styles.innerLoading}>
+              <Spinner animation="border" role="status">
+                <span className="visually-hidden flex justify-center">
+                  Loading...
+                </span>
+              </Spinner>
             </div>
           </div>
-        </ResponsiveMasonry>
+        </div>
       </div>
     </>
   );
