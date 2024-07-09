@@ -14,7 +14,7 @@ export interface PostTileProps
   onChecked?: (id: string) => void;
   checked?: boolean;
   lazyloadImage?: boolean;
-  priority: boolean;
+  priority?: boolean;
 }
 
 const noImageURL = '/images/no-image.png';
