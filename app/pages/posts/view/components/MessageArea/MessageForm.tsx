@@ -149,7 +149,7 @@ const MessageForm: React.FC<MessageFormProps> = ({ authEmail }) => {
         </Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group controlId="formEmail">
+      <Form.Group controlId="formPhone">
         <Form.Control
           type="text"
           name="phone"
