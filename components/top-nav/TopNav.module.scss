@@ -1,14 +1,25 @@
 .topNav {
   margin: 16px 16px 0;
+  overflow: hidden;
+  display: flex;
   ul {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    overflow-y: auto;
     list-style: none;
     margin: 0;
     padding: 0;
-
+    &::-webkit-scrollbar {
+      width: 0 !important;
+      height: 0 !important;
+      background: transparent !important;
+    }
     li {
       margin-right: 16px;
+      flex-grow: 1;
+      flex-basis: 0;
+      width: auto;
+      display: flex;
     }
   }
 }
@@ -22,6 +33,7 @@
   color: inherit;
   border-radius: 18px;
   background: white;
+  text-wrap: nowrap;
 }
 
 .active {
