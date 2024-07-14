@@ -84,7 +84,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       {
         method: 'POST',
         body: JSON.stringify({
-          limit: 50,
+          limit: 500,
           next_token: nextToken,
           category: '',
         }),

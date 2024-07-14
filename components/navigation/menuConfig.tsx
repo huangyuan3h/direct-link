@@ -48,14 +48,14 @@ export const menuConfig: MenuInterface[] = [
   },
   {
     key: 'canada-real-estate',
-    title: '房',
+    title: '住房',
     Icon: Houses,
     url: '/posts/canada-real-estate',
     showOnTopNav: true,
   },
   {
     key: 'canada-travel',
-    title: '逛吃逛吃',
+    title: '逛吃',
     Icon: TrainFront,
     url: '/posts/canada-travel',
     showOnTopNav: true,
