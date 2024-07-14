@@ -6,10 +6,18 @@ import clsx from 'clsx';
 import Image from 'next/image';
 import styles from './avatar.module.scss';
 import { Button } from 'react-bootstrap';
-import { LoginModal } from '../login-modal';
+
 import { useRouter } from 'next/navigation';
 import { routes } from '@/config/routes';
 import { defaultAvatarImage } from '@/config/avatar';
+import dynamic from 'next/dynamic';
+
+const LoginModal = dynamic(
+  () => import('../login-modal').then((mod) => mod.LoginModal),
+  {
+    ssr: false,
+  }
+);
 
 interface AvatarProps {
   className?: string | string[];
