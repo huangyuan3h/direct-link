@@ -5,12 +5,19 @@ import { List, PlusSquare } from 'react-bootstrap-icons';
 
 import styles from './header.module.scss';
 import clsx from 'clsx';
-import { MenuPanel } from '../navigation/MenuPanel';
 import { useWindowWidth } from '@/utils/hooks/useWindowWidth';
 import { breakpoints } from '@/utils/breakpoint';
 import { Avatar } from '../avatar';
 import Link from 'next/link';
 import { routes } from '@/config/routes';
+import dynamic from 'next/dynamic';
+
+const MenuPanel = dynamic(
+  () => import('../navigation/MenuPanel').then((mod) => mod.MenuPanel),
+  {
+    ssr: false,
+  }
+);
 
 export interface IconListProps {
   onMenuClick: () => void;
