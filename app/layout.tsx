@@ -19,6 +19,7 @@ export const metadata: Metadata = {
   description,
   applicationName: '北径信息',
   authors: { name: 'Yuan Huang', url: 'https://github.com/huangyuan3h' },
+  creator: 'Yuan Huang',
   keywords: [
     '华人社区',
     '加拿大新移民',
