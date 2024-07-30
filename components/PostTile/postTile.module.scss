@@ -44,6 +44,10 @@
     height: 100%;
     object-fit: cover;
     border-radius: 16px;
+    aspect-ratio: 3 / 4;
+  }
+  .horizontalImage {
+    aspect-ratio: 4 / 3;
   }
 }
 

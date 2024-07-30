@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from './postTile.module.scss';
-import { CSSProperties, useEffect, useState } from 'react';
+import { CSSProperties, useEffect, useRef, useState } from 'react';
 import { PostType } from '@/app/pages/posts/types';
 import clsx from 'clsx';
 import { useWindowWidth } from '@/utils/hooks/useWindowWidth';
@@ -46,12 +46,21 @@ export const PostTile: React.FC<PostTileProps> = ({
 
   const [isMobile, setIsMobile] = useState(true);
 
+  const [isVertical, setIsVertical] = useState(false);
+
+  const imageRef = useRef<HTMLImageElement>(null);
+
   useEffect(() => {
     setIsMobile(windowWidth < breakpoints.sm);
   }, [windowWidth]);
 
   const handleImageLoaded = () => {
     setImageloaded(true);
+    if (imageRef.current) {
+      const img = imageRef.current;
+      setIsVertical(img.naturalHeight > img.naturalWidth);
+    }
+
     if (onImageloaded) {
       onImageloaded();
     }
@@ -81,6 +90,7 @@ export const PostTile: React.FC<PostTileProps> = ({
         <div className="relative">
           <div className={styles.ImageArea}>
             <Image
+              ref={imageRef}
               src={coverImage}
               alt={subject}
               width={isMobile ? Mobile_Size : Desktop_size}
@@ -88,6 +98,9 @@ export const PostTile: React.FC<PostTileProps> = ({
               loading={lazyloadImage ? 'lazy' : 'eager'}
               onLoad={handleImageLoaded}
               priority={priority}
+              className={clsx(!isVertical && styles.horizontalImage)}
+              placeholder="blur"
+              blurDataURL="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMzAiIGhlaWdodD0iMzAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPGcircleIGN4PSI1MCIgd2lkdGg9IjUwIiBoZWlnaHQ9IjUwIiBmaWxsPSIjZWRlZWRlIi8+Cjwvc3ZnPg=="
             />
           </div>
         </div>
