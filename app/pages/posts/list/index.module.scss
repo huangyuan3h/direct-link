@@ -20,14 +20,6 @@
   z-index: -1;
 }
 
-.loadingArea {
-  position: absolute;
-  height: 800px;
-  z-index: -1;
-  width: calc(100% - 32px);
-  top: -600px;
-}
-
 .innerLoading {
   display: flex;
   width: 100%;

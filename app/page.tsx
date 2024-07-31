@@ -90,7 +90,7 @@ export default async function Home() {
       <Header v2Header />
       <div className="flex">
         <LeftMenuPanel />
-        <div className="w-full">
+        <div style={{ width: '100%' }}>
           <TopNav />
           <PostList
             category=""

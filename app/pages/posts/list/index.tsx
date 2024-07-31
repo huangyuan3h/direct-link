@@ -165,7 +165,16 @@ export const PostList: React.FC<PostListProps> = ({
           </Masonry>
         </ResponsiveMasonry>
         <div className={styles.loadingContainer}>
-          <div className={styles.loadingArea} ref={loadingRef}>
+          <div
+            ref={loadingRef}
+            style={{
+              position: 'absolute',
+              height: '800px',
+              zIndex: -1,
+              width: 'calc(100% - 32px)',
+              top: '-600px',
+            }}
+          >
             <div className={styles.innerLoading}>
               <Spinner animation="border" role="status">
                 <span className="visually-hidden flex justify-center">
