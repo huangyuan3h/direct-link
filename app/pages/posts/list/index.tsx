@@ -14,7 +14,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { toast } from 'react-toastify';
 import Spinner from 'react-bootstrap/Spinner';
 
-const limit = 10; // each time fetch posts number
+const limit = 20; // each time fetch posts number
 
 const getPosts = async (
   nextToken: string,
