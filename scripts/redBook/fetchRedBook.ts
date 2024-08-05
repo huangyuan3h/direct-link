@@ -2,7 +2,7 @@ const cookie = `acw_tc=69e23d4b5ea6ca961c5b8389345c4910490b1573ebde05728c5f8578d
 
 export const getHTMLText = async (id: string): Promise<string> => {
   const response = await fetch(
-    `https://www.xiaohongshu.com/explore/${id}?note_flow_source=wechat&xsec_token=CB1iy7a1zRHzvRZmZaSh7Av0TkYc44Qwi0R57455ffVj8=`,
+    `https://www.xiaohongshu.com/explore/${id}?note_flow_source=wechat&xsec_token=CBQikgrZo_Z4U2gx_Bray3Hlqmi0FQExcDnyPGiSv-qVw=`,
     {
       headers: {
         accept:
