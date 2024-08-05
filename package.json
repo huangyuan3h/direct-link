@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "publish:prod": "rm -rf .open-next .next && sst deploy --stage=prod && ts-node scripts/clear-cache",
+    "publish:prod": "rm -rf .open-next .next && sst deploy --stage=prod",
     "prepare": "husky",
     "crawl:redbook": "ts-node scripts/redbook"
   },
