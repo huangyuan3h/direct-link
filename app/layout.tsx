@@ -7,6 +7,7 @@ import { ToastContainer } from 'react-toastify';
 import { UserProvider } from '@/components/user-context';
 import GoogleAnalytics from '@/components/google-analytics';
 import { DOMAIN_URL } from '@/config/domain';
+import GoogleAdSense from '@/components/google-adsense';
 
 const san = Open_Sans({ subsets: ['latin'] });
 
@@ -72,6 +73,7 @@ export default function RootLayout({
         <GoogleAnalytics
           trackingId={`${process.env.NEXT_PUBLIC_GA_TRACKING_ID}`}
         />
+        <GoogleAdSense id={process.env.NEXT_PUBLIC_ADSENSE_KEY ?? ''} />
       </body>
     </html>
   );
