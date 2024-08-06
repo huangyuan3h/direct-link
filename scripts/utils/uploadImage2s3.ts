@@ -12,7 +12,8 @@ export const generateSignedURL = async (): Promise<string> => {
 };
 
 export const uploadImagesToS3 = async (
-  imageBlobs: Blob[]
+  imageBlobs: Blob[],
+  type: string = 'webp'
 ): Promise<string[]> => {
   let imageUrls: string[] = [];
   if (imageBlobs && imageBlobs.length > 0) {
@@ -24,8 +25,8 @@ export const uploadImagesToS3 = async (
             method: 'PUT',
             body: blob,
             headers: {
-              'Content-Type': 'image/webp',
-              'Content-Disposition': `attachment; filename="${randomUUID()}.webp"`,
+              'Content-Type': 'image/' + type,
+              'Content-Disposition': `attachment; filename="${randomUUID()}.${type}"`,
             },
           });
 

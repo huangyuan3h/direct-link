@@ -28,7 +28,7 @@ export const generatePayload = async (
   }
 
   let imageParts = await Promise.all(
-    imageContents.map((content) => fileToGenerativePart(content, 'image/webp'))
+    imageContents.map((content) => fileToGenerativePart(content, 'image/jpg'))
   );
 
   imageParts = imageParts.slice(0, 5); // 给5张图片

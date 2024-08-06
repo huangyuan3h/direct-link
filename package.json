@@ -10,7 +10,8 @@
     "lint": "next lint",
     "publish:prod": "rm -rf .open-next .next && sst deploy --stage=prod",
     "prepare": "husky",
-    "crawl:redbook": "ts-node scripts/redbook"
+    "crawl:redbook": "ts-node scripts/redbook",
+    "crawl:cbc": "ts-node scripts/cbc"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.556.0",
