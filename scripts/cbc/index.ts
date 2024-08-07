@@ -9,7 +9,12 @@ dotenv.config({ path: './.env.prod' });
 
 const cbcDomain = 'https://www.cbc.ca';
 
-const cbc_list = ['https://www.cbc.ca/news/canada/calgary'];
+const cbc_list = [
+  'https://www.cbc.ca/news/canada/toronto',
+  'https://www.cbc.ca/news/canada/british-columbia',
+  'https://www.cbc.ca/news/canada/calgary',
+  'https://www.cbc.ca/news/canada/edmonton',
+];
 
 const sync_single = async (url: string) => {
   const html = await getHTMLText(url);
@@ -58,7 +63,9 @@ const sync_single = async (url: string) => {
 };
 
 const sync_cbc = async () => {
-  cbc_list.forEach(async (url: string) => {
+  for (let i = 0; i < cbc_list.length; i++) {
+    const url = cbc_list[i];
+
     const html = await getHTMLText(url);
 
     const urls = extractUrlFromLocal(html);
@@ -67,12 +74,13 @@ const sync_cbc = async () => {
 
     const url2Crawl = filtered.map((i) => cbcDomain + i.url);
 
-    console.log(url2Crawl);
-
-    sync_single(url2Crawl[0]);
-  });
+    for (let j = 0; j < url2Crawl.length; j++) {
+      if (url2Crawl[j]) {
+        await sync_single(url2Crawl[j]);
+        await new Promise((resolve) => setTimeout(resolve, 10000));
+      }
+    }
+  }
 };
 
-sync_single(
-  'https://www.cbc.ca/news/canada/edmonton/justin-trudeau-danielle-smith-jasper-fire-1.7285757'
-);
+sync_cbc();

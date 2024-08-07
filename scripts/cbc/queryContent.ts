@@ -7,7 +7,10 @@ export const extractUrlFromLocal = (html: string) => {
     .map((_, el) => {
       const text = $(el).text();
 
-      return { url: $(el).attr('href'), today: text.includes('hours ago') };
+      return {
+        url: $(el).attr('href'),
+        today: text.includes('hours ago') || text.includes('minutes ago'),
+      };
     })
     .toArray();
 
@@ -16,9 +19,10 @@ export const extractUrlFromLocal = (html: string) => {
   if (ele.length > 0) {
     const item = $(ele[0]);
 
+    const text = item.text();
     const obj = {
       url: item.attr('href'),
-      today: item.text().includes('hours ago'),
+      today: text.includes('hours ago') || text.includes('minutes ago'),
     };
 
     list = [...list, obj];
