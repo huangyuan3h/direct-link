@@ -11,9 +11,9 @@ const cbcDomain = 'https://www.cbc.ca';
 
 const cbc_list = [
   'https://www.cbc.ca/news/canada/toronto',
+  'https://www.cbc.ca/news/canada/montreal',
   'https://www.cbc.ca/news/canada/british-columbia',
   'https://www.cbc.ca/news/canada/calgary',
-  'https://www.cbc.ca/news/canada/edmonton',
 ];
 
 const sync_single = async (url: string) => {
@@ -62,6 +62,29 @@ const sync_single = async (url: string) => {
   console.log(result);
 };
 
+async function retryWithBackoff(
+  fn: Function,
+  url: string,
+  retries = 3,
+  delay = 1000
+) {
+  let attempt = 1;
+  while (attempt <= retries) {
+    try {
+      await fn();
+      return; // Success, break the loop
+    } catch (error) {
+      console.warn(`Error on attempt ${attempt} for ${url}:`, error);
+      attempt++;
+      await new Promise((resolve) => setTimeout(resolve, delay));
+      delay *= 2; // Increase delay for next retry
+    }
+  }
+  throw new Error(
+    `Failed to call sync_single for ${url} after ${retries} retries`
+  );
+}
+
 const sync_cbc = async () => {
   for (let i = 0; i < cbc_list.length; i++) {
     const url = cbc_list[i];
@@ -76,8 +99,11 @@ const sync_cbc = async () => {
 
     for (let j = 0; j < url2Crawl.length; j++) {
       if (url2Crawl[j]) {
-        await sync_single(url2Crawl[j]);
-        await new Promise((resolve) => setTimeout(resolve, 10000));
+        await retryWithBackoff(
+          async () => await sync_single(url2Crawl[j]),
+          url2Crawl[j]
+        );
+        await new Promise((resolve) => setTimeout(resolve, 20000));
       }
     }
   }
