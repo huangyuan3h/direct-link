@@ -69,5 +69,6 @@ const handleData = async ({ url }: InputParams) => {
 
 const args = process.argv.slice(2);
 const url = args[0];
+const xscode = args[1];
 
 handleData({ url });

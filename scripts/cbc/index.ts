@@ -11,7 +11,6 @@ const cbcDomain = 'https://www.cbc.ca';
 
 const cbc_list = [
   'https://www.cbc.ca/news/canada/toronto',
-  'https://www.cbc.ca/news/canada/montreal',
   'https://www.cbc.ca/news/canada/british-columbia',
   'https://www.cbc.ca/news/canada/calgary',
 ];
