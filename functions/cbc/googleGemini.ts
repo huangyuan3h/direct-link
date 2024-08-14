@@ -1,16 +1,10 @@
-import {
-  HarmBlockThreshold,
-  HarmCategory,
-  GoogleGenerativeAI,
-  SafetySetting,
-  GenerateContentResponse,
-} from '@google/generative-ai';
+import { GenerateContentResponse } from '@google/generative-ai';
 import { PostType } from '@/app/pages/posts/types';
-import { getPrompt } from './prompt';
+import { getPrompt } from '../../scripts/cbc/prompt';
 import {
   fileToGenerativePart,
   getGoogleGeminiClient,
-} from '../utils/googleGemini';
+} from '../../scripts/utils/googleGemini';
 
 type GeneratedPostType = Pick<
   PostType,
