@@ -1,1 +1,1 @@
-export const auth = process.env.AUTH_KEY ?? '';
+export const auth = () => process.env.AUTH_KEY ?? '';

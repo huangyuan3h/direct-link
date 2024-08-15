@@ -1,5 +1,5 @@
 import { SSTConfig } from 'sst';
-import { Cron, NextjsSite, Bucket } from 'sst/constructs';
+import { NextjsSite, Bucket } from 'sst/constructs';
 import { Certificate } from 'aws-cdk-lib/aws-certificatemanager';
 
 const certArn =
@@ -15,11 +15,6 @@ export default {
   stacks(app) {
     app.stack(function Site({ stack }) {
       const bucket = new Bucket(stack, 'public-image');
-
-      const cbc = new Cron(stack, 'cbc', {
-        schedule: 'cron(0 8 * * ? *)',
-        job: 'functions/cbc/index.handler',
-      });
 
       const customDomain = {
         domainName: 'www.north-path.site',

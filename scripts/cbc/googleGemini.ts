@@ -1,10 +1,10 @@
 import { GenerateContentResponse } from '@google/generative-ai';
 import { PostType } from '@/app/pages/posts/types';
-import { getPrompt } from '../../scripts/cbc/prompt';
+import { getPrompt } from './prompt';
 import {
   fileToGenerativePart,
   getGoogleGeminiClient,
-} from '../../scripts/utils/googleGemini';
+} from '../utils/googleGemini';
 
 type GeneratedPostType = Pick<
   PostType,

@@ -57,7 +57,7 @@ const handleData = async ({ url }: InputParams) => {
       body: JSON.stringify(overallPayload),
       credentials: 'include',
       headers: {
-        Cookie: `Authorization=${auth}`,
+        Cookie: `Authorization=${auth()}`,
       },
     }
   );
