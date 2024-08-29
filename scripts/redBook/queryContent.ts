@@ -1,18 +1,9 @@
-import * as cheerio from 'cheerio';
+import { NoteCard } from './fetchRedBook';
 
-export const extractTextFromHTML = (html: string): string => {
-  const $ = cheerio.load(html);
-
-  return $('.note-content')
-    .map((_, el) => $(el).text().trim())
-    .get()
-    .join('\n');
+export const extractTextFromHTML = (item: NoteCard): string => {
+  return item.displayTitle + '\n' + item.desc;
 };
 
-export const extractImagesFromHTML = (html: string): string[] => {
-  const $ = cheerio.load(html);
-
-  return $('meta[name="og:image"]')
-    .map((_, el) => $(el).attr('content'))
-    .get();
+export const extractImagesFromHTML = (item: NoteCard): string[] => {
+  return item.imageList.map((i) => i.urlDefault);
 };
