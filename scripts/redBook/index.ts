@@ -13,9 +13,14 @@ interface InputParams {
 }
 
 const handleData = async ({ url }: InputParams) => {
-  const html = await getHTMLText(url);
-  const text = extractTextFromHTML(html);
-  const images = extractImagesFromHTML(html);
+  const item = await getHTMLText(url);
+  if (!item) {
+    console.log('feedsArray 获取失败');
+    return;
+  }
+
+  const text = extractTextFromHTML(item);
+  const images = extractImagesFromHTML(item);
 
   if (!text || text.length === 0 || !images || images.length === 0) {
     console.log('cookie 过期....');
