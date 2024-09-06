@@ -1,1 +1,1 @@
-export const DOMAIN_URL = 'https://www.north-path.site/';
+export const DOMAIN_URL = 'https://north-path.it-t.xyz/';

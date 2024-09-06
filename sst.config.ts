@@ -3,7 +3,7 @@ import { NextjsSite, Bucket } from 'sst/constructs';
 import { Certificate } from 'aws-cdk-lib/aws-certificatemanager';
 
 const certArn =
-  'arn:aws:acm:us-east-1:319653899185:certificate/a54f1d93-e441-42eb-9165-29ca329446ad';
+  'arn:aws:acm:us-east-1:319653899185:certificate/dde24c52-09e4-4058-b1d0-2a7769f24e3a';
 
 export default {
   config(_input) {
@@ -17,7 +17,7 @@ export default {
       const bucket = new Bucket(stack, 'public-image');
 
       const customDomain = {
-        domainName: 'www.north-path.site',
+        domainName: 'north-path.it-t.xyz',
         isExternalDomain: true,
         cdk: {
           certificate: Certificate.fromCertificateArn(stack, 'MyCert', certArn),
