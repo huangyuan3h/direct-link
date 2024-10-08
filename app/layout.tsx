@@ -73,7 +73,6 @@ export default function RootLayout({
         <GoogleAnalytics
           trackingId={`${process.env.NEXT_PUBLIC_GA_TRACKING_ID}`}
         />
-        <GoogleAdSense id={process.env.NEXT_PUBLIC_ADSENSE_KEY ?? ''} />
       </body>
     </html>
   );
