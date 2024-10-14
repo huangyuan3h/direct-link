@@ -1,5 +1,6 @@
 import styles from './ircc.module.scss';
 import { SearchSection } from './components/SearchSection';
+import QrCode from '@/components/qr-code';
 
 const IRCC = () => {
   return (
@@ -34,7 +35,7 @@ const IRCC = () => {
       <div className="container mt-8">
         <h6>官网链接</h6>
 
-        <div>
+        <div className="flex justify-between">
           <ul className="list-unstyled">
             <li>
               <a href="https://college-ic.ca/protecting-the-public/find-an-immigration-consultant?l=en-CA">
@@ -52,6 +53,7 @@ const IRCC = () => {
               </a>
             </li>
           </ul>
+          <QrCode />
         </div>
       </div>
     </section>
