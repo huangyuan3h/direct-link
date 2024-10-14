@@ -24,6 +24,7 @@ import styles from './Share.module.scss';
 import { useWindowWidth } from '@/utils/hooks/useWindowWidth';
 import { breakpoints } from '@/utils/breakpoint';
 import { useComponentInitialized } from '@/utils/hooks/useComponentInitialized';
+import QrCode from '@/components/qr-code';
 
 interface ShareProps {
   isMobile: boolean;
@@ -47,6 +48,7 @@ const Share: React.FC<ShareProps> = ({ isMobile, topics, subject, images }) => {
     return (
       <div className={styles.shareForm}>
         <p className={styles.shareTitle}>💡 分享出去，让更多人受益吧！</p>
+        <QrCode className="hidden md:flex m-4" />
         <div className={styles.shareIcons}>
           <WhatsappShareButton
             url={currentUrl}
