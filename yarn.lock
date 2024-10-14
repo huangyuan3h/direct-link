@@ -6883,6 +6883,7 @@ __metadata:
     postcss: "npm:^8"
     prettier: "npm:^3.2.5"
     puppeteer: "npm:^23.2.0"
+    qrcode.react: "npm:^4.0.1"
     react: "npm:^18"
     react-bootstrap: "npm:^2.10.1"
     react-bootstrap-icons: "npm:^1.11.3"
@@ -11499,6 +11500,15 @@ __metadata:
   version: 1.1.3
   resolution: "pvutils@npm:1.1.3"
   checksum: 10c0/23489e6b3c76b6afb6964a20f891d6bef092939f401c78bba186b2bfcdc7a13904a0af0a78f7933346510f8c1228d5ab02d3c80e968fd84d3c76ff98d8ec9aac
+  languageName: node
+  linkType: hard
+
+"qrcode.react@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "qrcode.react@npm:4.0.1"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 10c0/b4c1b8874f88dd1f42573c6c9d753d3ee3e8cd4ee799962e530ae51e7fad0b020a8bd3f016a6ab4f69e2151aadf019405b16e46c11f532c2b51fc4b8159fcc73
   languageName: node
   linkType: hard
 
