@@ -5,15 +5,22 @@ import { DisplayImages } from './display-images';
 
 const MAX_NUMBER = 9;
 
-function removeDuplicateFile(array: File[]): File[] {
-  const uniqueFiles: File[] = [];
+function removeDuplicateFile(array: (File | string)[]): (File | string)[] {
+  const uniqueFiles: (File | string)[] = [];
   const filePaths: Set<string> = new Set();
 
   for (const file of array) {
-    const filePath = file.name;
-    if (!filePaths.has(filePath)) {
-      filePaths.add(filePath);
-      uniqueFiles.push(file);
+    if (typeof file === 'string') {
+      if (!filePaths.has(file)) {
+        filePaths.add(file);
+        uniqueFiles.push(file);
+      }
+    } else {
+      const filePath = file.name;
+      if (!filePaths.has(filePath)) {
+        filePaths.add(filePath);
+        uniqueFiles.push(file);
+      }
     }
   }
 
@@ -21,8 +28,8 @@ function removeDuplicateFile(array: File[]): File[] {
 }
 
 export interface ImageUploadViewProps {
-  images: File[];
-  onImageChange: (images: File[]) => void;
+  images: (File | string)[];
+  onImageChange: (images: (File | string)[]) => void;
 }
 
 export const ImageUploadView: React.FC<ImageUploadViewProps> = ({
@@ -73,7 +80,7 @@ export const ImageUploadView: React.FC<ImageUploadViewProps> = ({
     uploadFileProcess(uploadedFiles);
   };
 
-  const handleChange = (files: File[]) => {
+  const handleChange = (files: (File | string)[]) => {
     onImageChange(files);
   };
 

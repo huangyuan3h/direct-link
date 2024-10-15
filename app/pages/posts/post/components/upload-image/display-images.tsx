@@ -6,8 +6,8 @@ import { ImageItem } from './ImageItem';
 import { DropArea } from './DropArea';
 
 export interface DisplayImagesProps {
-  images: File[];
-  onChange: (images: File[]) => void;
+  images: (File | string)[];
+  onChange: (images: (File | string)[]) => void;
 }
 
 export const DisplayImages: React.FC<DisplayImagesProps> = ({
@@ -16,14 +16,20 @@ export const DisplayImages: React.FC<DisplayImagesProps> = ({
 }: DisplayImagesProps) => {
   const handleDelete = (name: string) => {
     const updatedFiles = [...images];
-    const index = updatedFiles.findIndex((file) => file.name === name);
-    updatedFiles.splice(index, 1);
-    onChange(updatedFiles);
+    const index = updatedFiles.findIndex((file) =>
+      typeof file === 'string' ? file === name : file.name === name
+    );
+    if (index !== -1) {
+      updatedFiles.splice(index, 1);
+      onChange(updatedFiles);
+    }
   };
 
   const handleDrop = (item: File, targetIndex: number) => {
-    const index = images.findIndex((file) => file.name === item.name);
-    if (index == targetIndex) {
+    const index = images.findIndex((file) =>
+      typeof file === 'string' ? false : file.name === item.name
+    );
+    if (index === -1 || index === targetIndex) {
       return;
     }
 
@@ -42,12 +48,12 @@ export const DisplayImages: React.FC<DisplayImagesProps> = ({
         {images.map((file, index) => (
           <DropArea
             index={index}
-            key={`drop-area-${file.name}`}
+            key={`drop-area-${typeof file === 'string' ? file : file.name}`}
             onDrop={handleDrop}
           >
             <ImageItem
               file={file}
-              key={`image-item-${file.name}`}
+              key={`image-item-${typeof file === 'string' ? file : file.name}`}
               onDelete={handleDelete}
             />
           </DropArea>

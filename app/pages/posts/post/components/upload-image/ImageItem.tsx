@@ -5,7 +5,7 @@ import { useDrag } from 'react-dnd';
 import { DragType, ImageDragItem } from './dragItem';
 
 interface ImageItemProps {
-  file: File;
+  file: File | string;
   onDelete: (name: string) => void;
 }
 
@@ -22,11 +22,18 @@ export const ImageItem: React.FC<ImageItemProps> = ({
   }));
 
   const handleDelete = () => {
-    onDelete(file.name);
+    if (typeof file === 'string') {
+      onDelete(file);
+    } else {
+      onDelete(file.name);
+    }
   };
+
+  const imageSrc = typeof file === 'string' ? file : URL.createObjectURL(file);
+
   return (
     <div
-      key={`display-image-${file.name}`}
+      key={`display-image-${typeof file === 'string' ? file : file.name}`}
       ref={drag}
       className={styles.imageDragArea}
       style={{
@@ -35,8 +42,8 @@ export const ImageItem: React.FC<ImageItemProps> = ({
       }}
     >
       <Image
-        src={URL.createObjectURL(file)}
-        alt={`Image ${file.name}`}
+        src={imageSrc}
+        alt={`Image ${typeof file === 'string' ? file : file.name}`}
         width={100}
         height={100}
         className={styles.image}
