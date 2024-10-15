@@ -6,12 +6,14 @@ import { PostType } from '@/app/pages/posts/types';
 import clsx from 'clsx';
 import { useWindowWidth } from '@/utils/hooks/useWindowWidth';
 import { breakpoints } from '@/utils/breakpoint';
-
+import { Button } from 'react-bootstrap';
+import { PencilFill } from 'react-bootstrap-icons';
 export interface PostTileProps
   extends Pick<PostType, 'postId' | 'subject' | 'images'> {
   style?: CSSProperties;
   onImageloaded?: () => void;
   onChecked?: (id: string) => void;
+  onEdit?: (id: string) => void;
   checked?: boolean;
   lazyloadImage?: boolean;
   priority?: boolean;
@@ -35,6 +37,7 @@ export const PostTile: React.FC<PostTileProps> = ({
   style,
   onImageloaded,
   onChecked,
+  onEdit,
   checked,
   lazyloadImage = true,
   priority = false,
@@ -79,6 +82,13 @@ export const PostTile: React.FC<PostTileProps> = ({
             checked={checked}
             onClick={() => onChecked(postId)}
           />
+        </div>
+      )}
+      {onEdit && (
+        <div className={styles.edit}>
+          <Button variant="outline-light" onClick={() => onEdit(postId)}>
+            <PencilFill />
+          </Button>
         </div>
       )}
       <Link

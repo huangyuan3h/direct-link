@@ -56,10 +56,10 @@ export const setCategories = (topics: string[]): SetTopics => {
 
 export interface SetImages {
   type: Action.SET_IMAGES;
-  images: File[];
+  images: (File | string)[];
 }
 
-export const setImages = (images: File[]): SetImages => {
+export const setImages = (images: (File | string)[]): SetImages => {
   return {
     type: Action.SET_IMAGES,
     images,

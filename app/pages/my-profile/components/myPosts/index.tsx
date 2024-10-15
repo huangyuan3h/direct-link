@@ -12,6 +12,7 @@ import { toast } from 'react-toastify';
 import { Button } from 'react-bootstrap';
 import useSWR from 'swr';
 import { PostTile } from '@/components/PostTile';
+import { useRouter } from 'next/navigation';
 
 interface MyPostsProps {
   posts: PostType[];
@@ -46,6 +47,8 @@ const MyPosts: React.FC<MyPostsProps> = ({
   nextToken: token,
 }: MyPostsProps) => {
   const [posts, setPosts] = useState<PostType[]>(ps);
+
+  const router = useRouter();
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -149,6 +152,10 @@ const MyPosts: React.FC<MyPostsProps> = ({
     }
   };
 
+  const handleEdit = (postId: string) => {
+    router.push(`/edit/${postId}`);
+  };
+
   return (
     <div className={clsx(styles.scrollArea, 'container')} ref={ref}>
       <DeleteModal
@@ -181,6 +188,7 @@ const MyPosts: React.FC<MyPostsProps> = ({
               postId={post.postId}
               subject={post.subject}
               images={post.images}
+              onEdit={handleEdit}
               onChecked={handleCheckClick}
             />
           ))}

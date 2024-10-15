@@ -5,7 +5,7 @@ export type PostFormType = {
   topics: string[];
   category: string;
   location: string;
-  images: File[];
+  images: (File | string)[];
   updatedDate?: string;
   createdDate?: string;
 };

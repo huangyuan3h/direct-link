@@ -18,6 +18,15 @@
   z-index: 3;
 }
 
+.edit {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 3;
+}
+
 .ImageArea {
   outline: 1px solid rgba(0, 0, 0, 0.08);
   outline-offset: -1;

@@ -24,10 +24,16 @@ import { routes } from '@/config/routes';
 import { PostResponseType } from '../types';
 import { Category } from './components/category';
 
-export const Post: React.FC = () => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+interface PostProps {
+  posts?: PostResponseType;
+}
+
+export const Post: React.FC<PostProps> = ({ posts }: PostProps) => {
+  const [state, dispatch] = useReducer(reducer, posts ? posts : initialState);
+
   const [loading, setLoading] = useState(false);
-  const { subject, category, location, content, topics, images } = state;
+  const { postId, subject, category, location, content, topics, images } =
+    state;
 
   const router = useRouter();
 
@@ -42,7 +48,7 @@ export const Post: React.FC = () => {
   const handleCategoriesChange = (cs: string[]) => {
     dispatch(setCategories(cs));
   };
-  const handleImagesChange = (imgs: File[]) => {
+  const handleImagesChange = (imgs: (File | string)[]) => {
     dispatch(setImages(imgs));
   };
   const handleCategoryChange = (category: string) => {
@@ -67,7 +73,8 @@ export const Post: React.FC = () => {
       // step 3 post success and do redirect
 
       const client = new APIClient();
-      const post = (await client.post('post/create', {
+      const post = (await client.post('post/createOrUpdate', {
+        postId,
         subject,
         content,
         category,
