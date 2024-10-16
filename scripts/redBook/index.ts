@@ -56,7 +56,7 @@ const handleData = async ({ url }: InputParams) => {
   console.log(overallPayload);
 
   const response = await fetch(
-    process.env.NEXT_PUBLIC_BACKEND_API + 'post/create',
+    process.env.NEXT_PUBLIC_BACKEND_API + 'post/createOrUpdate',
     {
       method: 'POST',
       body: JSON.stringify(overallPayload),
