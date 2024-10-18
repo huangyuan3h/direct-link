@@ -4,11 +4,13 @@ import { SubjectInput } from './components/subject';
 import { reducer } from './state/reducer';
 import { initialState } from './state/state';
 import {
+  setBilibili,
   setCategories,
   setCategory,
   setContent,
   setImages,
   setSubject,
+  setYoutube,
 } from './state/action';
 import { ContentInput } from './components/content';
 import 'react-quill/dist/quill.snow.css';
@@ -23,6 +25,7 @@ import { useRouter } from 'next/navigation';
 import { routes } from '@/config/routes';
 import { PostResponseType } from '../types';
 import { Category } from './components/category';
+import { VideoInputInput } from './components/video';
 
 interface PostProps {
   posts?: PostResponseType;
@@ -32,8 +35,17 @@ export const Post: React.FC<PostProps> = ({ posts }: PostProps) => {
   const [state, dispatch] = useReducer(reducer, posts ? posts : initialState);
 
   const [loading, setLoading] = useState(false);
-  const { postId, subject, category, location, content, topics, images } =
-    state;
+  const {
+    postId,
+    subject,
+    category,
+    location,
+    content,
+    topics,
+    images,
+    bilibili,
+    youtube,
+  } = state;
 
   const router = useRouter();
 
@@ -55,6 +67,13 @@ export const Post: React.FC<PostProps> = ({ posts }: PostProps) => {
     dispatch(setCategory(category));
   };
 
+  const handleBilibiliChange = (bilibili: string) => {
+    dispatch(setBilibili(bilibili));
+  };
+
+  const handleYoutubeChange = (youtube: string) => {
+    dispatch(setYoutube(youtube));
+  };
   const handleClickPost = async () => {
     setLoading(true);
     // step 1 check if the content is satisified to post
@@ -81,6 +100,8 @@ export const Post: React.FC<PostProps> = ({ posts }: PostProps) => {
         location,
         topics,
         images,
+        bilibili,
+        youtube,
       })) as PostResponseType;
 
       setTimeout(() => {
@@ -103,6 +124,12 @@ export const Post: React.FC<PostProps> = ({ posts }: PostProps) => {
       <h5>发布帖子：</h5>
       <SubjectInput subject={subject} onChange={handleSubjectChange} />
       <ContentInput content={content} onChange={handleContentChange} />
+      <VideoInputInput
+        bilibili={bilibili}
+        youtube={youtube}
+        onBilibiliChange={handleBilibiliChange}
+        onYoutubeChange={handleYoutubeChange}
+      />
       <Category category={category} onChange={handleCategoryChange} />
       <Topics topics={topics} onChange={handleCategoriesChange} />
       <ImageUploadView images={images} onImageChange={handleImagesChange} />

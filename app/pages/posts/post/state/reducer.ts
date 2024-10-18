@@ -31,6 +31,16 @@ export const reducer = (
         ...state,
         images: [...action.images],
       };
+    case Action.SET_BILIBILI:
+      return {
+        ...state,
+        bilibili: action.bilibili,
+      };
+    case Action.SET_YOUTUBE:
+      return {
+        ...state,
+        youtube: action.youtube,
+      };
     default:
       return state;
   }

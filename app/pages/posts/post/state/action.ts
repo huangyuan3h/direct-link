@@ -4,6 +4,8 @@ export enum Action {
   SET_CONTENT = 'SET_CONTENT',
   SET_TOPICS = 'SET_TOPICS',
   SET_IMAGES = 'SET_IMAGES',
+  SET_BILIBILI = 'SET_BILIBILI',
+  SET_YOUTUBE = 'SET_YOUTUBE',
 }
 
 export interface SetSubject {
@@ -27,6 +29,30 @@ export const setCategory = (category: string): SetCategory => {
   return {
     type: Action.SET_CATEGORY,
     category,
+  };
+};
+
+export interface SetBilibili {
+  type: Action.SET_BILIBILI;
+  bilibili: string;
+}
+
+export const setBilibili = (bilibili: string): SetBilibili => {
+  return {
+    type: Action.SET_BILIBILI,
+    bilibili,
+  };
+};
+
+export interface SetYoutube {
+  type: Action.SET_YOUTUBE;
+  youtube: string;
+}
+
+export const setYoutube = (youtube: string): SetYoutube => {
+  return {
+    type: Action.SET_YOUTUBE,
+    youtube,
   };
 };
 
@@ -71,4 +97,6 @@ export type ActionType =
   | SetCategory
   | SetContent
   | SetTopics
-  | SetImages;
+  | SetImages
+  | SetBilibili
+  | SetYoutube;

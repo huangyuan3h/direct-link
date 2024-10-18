@@ -5,6 +5,8 @@ export type PostFormType = {
   topics: string[];
   category: string;
   location: string;
+  bilibili: string;
+  youtube: string;
   images: (File | string)[];
   updatedDate?: string;
   createdDate?: string;
@@ -16,6 +18,8 @@ export type PostType = {
   content: string;
   category: string;
   location: string;
+  bilibili: string;
+  youtube: string;
   topics: string[];
   images: string[];
   updatedDate?: string;
@@ -28,6 +32,8 @@ export type PostResponseType = {
   content: string;
   category: string;
   location: string;
+  bilibili: string;
+  youtube: string;
   topics: string[];
   images: string[];
   email: string;
