@@ -26,7 +26,7 @@ export const VideoInputInput: React.FC<VideoInputProps> = ({
       <label className="font-bold">Video url:</label>
       <Form.Control
         type="url"
-        maxLength={50}
+        maxLength={200}
         value={bilibili}
         onChange={handleBilibiliChange}
         placeholder="bilibili url"
@@ -34,7 +34,7 @@ export const VideoInputInput: React.FC<VideoInputProps> = ({
       <Form.Control
         type="url"
         className="mt-2"
-        maxLength={50}
+        maxLength={200}
         value={youtube}
         onChange={handleYoutubeChange}
         placeholder="youtube url"

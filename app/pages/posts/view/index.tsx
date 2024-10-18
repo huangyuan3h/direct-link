@@ -10,6 +10,7 @@ import Share from './components/Share';
 import { Title } from './components/Title';
 import styles from './index.module.scss';
 import RelatedPosts from './components/RelatedPosts';
+import VideoComponent from './components/Video';
 
 interface ViewProps extends PostResponseType {
   relateds: PostType[];
@@ -22,12 +23,18 @@ export const View: React.FC<ViewProps> = ({
   images,
   email,
   relateds,
+  bilibili,
+  youtube,
 }: ViewProps) => {
   return (
     <div className={clsx('container', styles.layout)}>
       <div className={styles.mainContentArea}>
         <Title title={subject} />
+
+        <VideoComponent bilibiliUrl={bilibili} youtubeUrl={youtube} />
+
         <ImageCarousel images={images} />
+
         <Share isMobile topics={topics} images={images} subject={subject} />
         <Content content={content} />
         <Categories categories={topics} />
