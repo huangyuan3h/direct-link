@@ -21,6 +21,7 @@ export const getPrompt = (text: string) => `
   文章的字数应不少于 1200 字。
   文章的语言应简洁明了，避免使用过于复杂的句式和词汇。
   文章的排版应清晰美观，易于阅读。
+  文章中不需要出现总结，活着呼吁怎么做的内容
   结尾生成5个中文的hashtag
   段落之间使用 <br/> 或 <p></p> 标签进行分隔，提高文章可读性。
   避免使用 Markdown 标记，因为文章会直接用于网页展示。
@@ -30,6 +31,7 @@ export const getPrompt = (text: string) => `
   在文章中加入一些人情味，假如文章不属于新闻，可以加入一些幽默元素和修辞手法，使语言更加生动有趣
   属于新闻类的文章，不需要写呼吁行动的话术，实事求是，写有深度的见解
   假如文章里有多余的“*”要清除
+
 ############################
 
 文章的内容是: ${text}
@@ -44,6 +46,4 @@ type PostType = {
   category: "immigration" | "studyAbroad" | "house" | "travel" | "car" | "jobs" | "news" | "general"; // 分类：从选项中选最符合主题的，"travel"涵盖吃喝玩旅游events，"general"用于无法归类的
   topics: string[]; // 主题标签：SEO/分类，不超过5个，简洁概括
 };
-
-绝对不要给我一个不能用json解析的内容！
 `;
