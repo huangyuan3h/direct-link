@@ -130,7 +130,7 @@ export async function generateMetadata(
 }
 
 export default async function Home({ params }: ViewPostParamsProps) {
-  const { category } = pagesConfig[params.category as CategoryUrlType];
+  const { title, category } = pagesConfig[params.category as CategoryUrlType];
 
   const data = await getPostsByCategory(category);
 
@@ -174,8 +174,6 @@ export default async function Home({ params }: ViewPostParamsProps) {
     numberOfItems: data.results.length,
     itemListElement: articles,
   };
-
-  const { title } = pagesConfig[category as CategoryUrlType];
 
   return (
     <main className="">
