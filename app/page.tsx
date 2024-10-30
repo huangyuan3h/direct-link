@@ -8,6 +8,10 @@ import { PostsResponse } from './pages/posts/types';
 import APIClient from '@/utils/apiClient';
 import TopNav from '@/components/top-nav';
 import { cookies } from 'next/headers';
+import { Metadata } from 'next';
+import Title from '@/components/title';
+
+const title = 'North Path - 加拿大新移民综合信息平台 | 北径信息';
 
 const getAllPosts = async (): Promise<PostsResponse> => {
   'use server';
@@ -20,6 +24,14 @@ const getAllPosts = async (): Promise<PostsResponse> => {
     category: '',
   });
 };
+
+export async function generateMetadata(): Promise<Metadata | null> {
+  return {
+    alternates: {
+      canonical: `${DOMAIN_URL}`,
+    },
+  };
+}
 
 export default async function Home() {
   const data = await getAllPosts();
@@ -88,6 +100,7 @@ export default async function Home() {
       />
 
       <Header v2Header />
+      <Title text={title} />
       <div className="flex">
         <LeftMenuPanel />
         <div style={{ width: '100%' }}>

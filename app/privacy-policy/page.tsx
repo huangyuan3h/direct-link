@@ -1,4 +1,28 @@
 import { Header } from '@/components/header';
+import { DOMAIN_URL } from '@/config/domain';
+import { Metadata } from 'next';
+
+export async function generateMetadata(): Promise<Metadata | null> {
+  return {
+    title: `隐私政策 - North Path | 北径信息`,
+    description:
+      '了解北径信息（North Path）如何保护您的个人隐私。我们的隐私政策详细说明了数据收集、使用和保护措施，确保您的个人信息安全。',
+    keywords: [
+      '隐私政策',
+      '数据保护',
+      '个人信息',
+      '用户隐私',
+      '隐私保护',
+      '北径信息',
+      'North Path',
+      '移民隐私政策',
+      '数据安全',
+    ],
+    alternates: {
+      canonical: `${DOMAIN_URL}privacy-policy`,
+    },
+  };
+}
 
 export default async function Home() {
   return (

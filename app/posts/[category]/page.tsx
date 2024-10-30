@@ -3,6 +3,7 @@ import { PostsResponse } from '@/app/pages/posts/types';
 import { Header } from '@/components/header';
 
 import { LeftMenuPanel } from '@/components/navigation/LeftMenuPanel';
+import Title from '@/components/title';
 import TopNav from '@/components/top-nav';
 
 import { DOMAIN_URL } from '@/config/domain';
@@ -174,6 +175,8 @@ export default async function Home({ params }: ViewPostParamsProps) {
     itemListElement: articles,
   };
 
+  const { title } = pagesConfig[category as CategoryUrlType];
+
   return (
     <main className="">
       <script
@@ -181,6 +184,7 @@ export default async function Home({ params }: ViewPostParamsProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(listArticles) }}
       />
       <Header v2Header />
+      <Title text={title} />
       <div className="flex">
         <LeftMenuPanel />
         <div style={{ width: '100%' }}>
