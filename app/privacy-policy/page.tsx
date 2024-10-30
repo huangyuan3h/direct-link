@@ -11,13 +11,13 @@ export default async function Home() {
         </small>
         <p>
           North-Parth (“we,” “us,” or “our”) operates the{' '}
-          <a href="www.north-parth.site">www.north-parth.site</a> website and
-          the North-Parth Forum (the “Site”). This page informs you of our
-          policies regarding the collection, use, and disclosure of personal
-          data when you use our Site and the choices you have associated with
-          that data. We use your data to provide and improve the Site. By using
-          the Site, you agree to the collection and use of information in
-          accordance with this policy.
+          <a href="https://north-path.it-t.xyz">https://north-path.it-t.xyz</a>{' '}
+          website and the North-Parth Forum (the “Site”). This page informs you
+          of our policies regarding the collection, use, and disclosure of
+          personal data when you use our Site and the choices you have
+          associated with that data. We use your data to provide and improve the
+          Site. By using the Site, you agree to the collection and use of
+          information in accordance with this policy.
         </p>
 
         <h3>Information We Collect</h3>
