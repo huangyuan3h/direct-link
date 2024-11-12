@@ -9,13 +9,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${DOMAIN_URL}`,
       lastModified: new Date(),
       changeFrequency: 'daily',
-      priority: 1,
+      priority: 1.0,
     },
     {
       url: `${DOMAIN_URL}rcic`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
-      priority: 1,
+      priority: 1.0,
     },
     {
       url: `${DOMAIN_URL}about`,
