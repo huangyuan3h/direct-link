@@ -60,12 +60,12 @@ export const menuConfig: MenuInterface[] = [
     url: '/posts/canada-travel',
     showOnTopNav: true,
   },
-  {
-    key: 'rcic',
-    title: '持牌验证',
-    Icon: PersonCheck,
-    url: '/rcic',
-  },
+  // {
+  //   key: 'rcic',
+  //   title: '持牌验证',
+  //   Icon: PersonCheck,
+  //   url: '/rcic',
+  // },
   // {
   //   key: 'news',
   //   title: '新闻',
